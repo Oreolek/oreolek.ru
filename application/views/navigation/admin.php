@@ -1,0 +1,1 @@
+<li><?php echo HTML::anchor('pages', 'Страницы'); ?></li>

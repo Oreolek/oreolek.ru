@@ -1,0 +1,180 @@
+@basesize: 1em;
+
+body{
+  font-family: "Lucida Sans", "Lucida Grande", "Lucida Sans Unicode", sans-serif;
+  margin: 0;
+	padding: 0;
+	font-size: @basesize;
+}
+
+#footer {
+  a{
+    font-size: 0.75 * @basesize;
+  }
+}
+
+#header #title{
+  float: right;
+  font-size: 3 * @basesize;
+  line-height: 1;
+  margin-bottom: 0.5 * @basesize;
+  margin-top: 0.5 * @basesize;
+}
+
+.authortext{
+  font-style: italic;
+  text-align: center;
+  margin: @basesize auto;
+}
+
+.actor{
+  text-align: center;
+  margin: @basesize auto;
+}
+
+/*---------------*/
+/**  Заголовки  **/
+/*---------------*/
+
+h1,h2,h3,h4,h5,h6 {
+  font-weight: normal;
+  img{
+    margin: 0;
+  }
+}
+
+h1 {
+  font-size: 3 * @basesize;
+  line-height: 1;
+  margin-bottom: 0.5 * @basesize;
+}
+h2 {
+  font-size: 2 * @basesize;
+  margin-bottom: 0.75 * @basesize;
+}
+h3 {
+  font-size: 1.5 * @basesize;
+  line-height: 1;
+  margin-bottom: @basesize;
+}
+h4 {
+  font-size: 1.2 * @basesize;
+  line-height: 1.25;
+  margin-bottom: 1.25 * @basesize;
+}
+h5 {
+  font-size: @basesize;
+  font-weight: bold;
+  margin-bottom: 1.5em;
+}
+h6 { 
+  font-size: @basesize;
+  font-weight: bold;
+}
+
+/*---------------*/
+/**    Текст    **/
+/*---------------*/
+
+p {
+  margin: 0 0 1.5 * @basesize;
+  text-indent: 1 * @basesize;
+}
+
+.floatleft { float: left; }
+.floatright { float: right; }
+
+p .floatleft {
+  margin: 1.5 * @basesize 1.5 * @basesize 1.5 * @basesize 0;
+  padding: 0;
+}
+
+p .floatright {
+  margin: 1.5 * @basesize 0 1.5 * @basesize 1.5 * @basesize;
+  padding: 0;
+}
+
+a {
+	text-decoration:none;
+  img{
+    border:none;
+  }
+}
+
+a:hover {
+	text-decoration:underline;
+}
+
+blockquote {
+  margin: 1.5 * @basesize;
+  font-style: italic;
+}
+
+sup, sub {
+  line-height: 0;
+}
+
+pre { 
+  margin: 1.5 * @basesize 0;
+  white-space: pre;
+}
+pre,code,tt {
+  font-family: "PT Mono", "Courier New", "Courier", monospace;
+  line-height: 1.5;
+}
+
+
+/*---------------*/
+/**   Списки    **/
+/*---------------*/
+
+li ul,li ol {
+  margin: 0;
+}
+
+ul, ol {
+  margin: 0 1.5 * @basesize 1.5 * @basesize 0;
+  padding-left: 1.5 * @basesize;
+}
+
+ul {
+  list-style-type: disc;
+}
+
+ol {
+  list-style-type: decimal;
+}
+
+dl {
+  margin: 0 0 1.5 * @basesize 0;
+  dt{
+    font-weight: bold;
+    float: left;
+    margin: 0;
+    margin-right:1.5 * @basesize;
+  }
+  dd{
+    margin: 0;
+  }
+}
+
+/*---------------*/
+/**   Таблицы   **/
+/*---------------*/
+
+table {
+  margin-bottom: 1.4 * @basesize;
+  width:100%;
+}
+
+th {
+  font-weight: bold;
+}
+
+th,td,caption {
+  padding: 0.3 * @basesize 0.7 * @basesize 0.3 * @basesize 0.4 * @basesize;
+}
+
+tfoot {
+  font-style: italic;
+}
