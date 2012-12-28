@@ -4,6 +4,7 @@ class Controller_Header extends Controller_Template {
  public $template = 'header';
  public function action_standard() {
   $this->template->title = $this->request->post('title');
+  $this->template->stylesheet = Less::compile(APPPATH.'assets/stylesheets/style');
   $scripts = $this->request->post('scripts');
   $temp = "";
   if (is_array($scripts)) foreach($scripts as $script):

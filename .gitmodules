@@ -13,3 +13,6 @@
 [submodule "modules/markdown"]
 	path = modules/markdown
 	url = git://github.com/aptgraph/kohana-markdown.git
+[submodule "modules/less"]
+	path = modules/less
+	url = git://github.com/mongeslani/kohana-less.git

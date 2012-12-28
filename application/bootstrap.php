@@ -80,7 +80,7 @@ if (isset($_SERVER['KOHANA_ENV']))
  * - boolean  caching     enable or disable internal caching                 FALSE
  */
 Kohana::init(array(
- 'base_url'   => '/',
+ 'base_url'   => '/phunt',
  'index_file' => FALSE,
  'errors'     => TRUE,
  'profile'    => (Kohana::$environment == Kohana::DEVELOPMENT), 
@@ -110,6 +110,7 @@ Kohana::modules(array(
 	// 'unittest'   => MODPATH.'unittest',   // Unit testing
 	// 'userguide'  => MODPATH.'userguide',  // User guide and API documentation
 		'markdown'      => MODPATH.'markdown',      // Markdown module
+    'less' => MODPATH.'less'
 	));
 
 /**

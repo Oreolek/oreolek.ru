@@ -4,7 +4,7 @@
 <title><?php echo $title ?></title>
 <meta charset="utf-8">
 <link href='<?php echo URL::site('favicon.ico')?>' rel='shortcut icon' type='image/x-icon'/>
-<link rel="stylesheet" type="text/css" media="all" href="<?php echo URL::site('assets/stylesheets/main.css') ?>">
+<?php echo $stylesheet ?>
 <?php echo $scripts ?>
 </head>
 <body>
