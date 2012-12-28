@@ -3,17 +3,17 @@
 // -- Environment setup --------------------------------------------------------
 
 // Load the core Kohana class
-require SYSPATH.'classes/kohana/core'.EXT;
+require SYSPATH.'classes/Kohana/Core'.EXT;
 
-if (is_file(APPPATH.'classes/kohana'.EXT))
+if (is_file(APPPATH.'classes/Kohana'.EXT))
 {
 	// Application extends the core
-	require APPPATH.'classes/kohana'.EXT;
+	require APPPATH.'classes/Kohana'.EXT;
 }
 else
 {
 	// Load empty core extension
-	require SYSPATH.'classes/kohana'.EXT;
+	require SYSPATH.'classes/Kohana'.EXT;
 }
 
 /**
@@ -98,6 +98,11 @@ Kohana::$log->attach(new Log_File(APPPATH.'logs'));
 Kohana::$config->attach(new Config_File);
 
 /**
+ * Set cookie salt (required)
+ */
+Cookie::$salt = 'Dz75cE_QoUDXvo2';
+
+/**
  * Enable modules. Modules are referenced by a relative or absolute path.
  */
 Kohana::modules(array(
@@ -119,11 +124,11 @@ Kohana::modules(array(
  */
 Route::set('error', 'error/<action>(/<message>)', array('action' => '[0-9]++','message' => '.+'))
  ->defaults(array( 
-  'controller' => 'error',
+  'controller' => 'Error',
 ));
 
 Route::set('default', '(<controller>(/<action>(/<id>)))')
  ->defaults(array(
-  'controller' => 'error',
-  'action'     => 'view',
+  'controller' => 'Error',
+  'action'     => '404',
  ));
