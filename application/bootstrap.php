@@ -81,7 +81,7 @@ if (isset($_SERVER['KOHANA_ENV']))
  */
 Kohana::init(array(
  'base_url'   => '/phunt',
- 'index_file' => FALSE,
+ 'index_file' => 'index.php',
  'errors'     => TRUE,
  'profile'    => (Kohana::$environment == Kohana::DEVELOPMENT), 
  'caching'    => (Kohana::$environment == Kohana::PRODUCTION) 
