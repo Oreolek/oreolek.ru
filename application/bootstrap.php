@@ -80,8 +80,8 @@ if (isset($_SERVER['KOHANA_ENV']))
  * - boolean  caching     enable or disable internal caching                 FALSE
  */
 Kohana::init(array(
- 'base_url'   => '/phunt',
- 'index_file' => 'index.php',
+ 'base_url'   => '/',
+ 'index_file' => false,
  'errors'     => TRUE,
  'profile'    => (Kohana::$environment == Kohana::DEVELOPMENT), 
  'caching'    => (Kohana::$environment == Kohana::PRODUCTION) 
@@ -100,7 +100,7 @@ Kohana::$config->attach(new Config_File);
 /**
  * Set cookie salt (required)
  */
-Cookie::$salt = 'Dz75cE_QoUDXvo2';
+Cookie::$salt = 'Dz75cE_TgeDXvo2';
 
 /**
  * Enable modules. Modules are referenced by a relative or absolute path.
@@ -129,6 +129,6 @@ Route::set('error', 'error/<action>(/<message>)', array('action' => '[0-9]++','m
 
 Route::set('default', '(<controller>(/<action>(/<id>)))')
  ->defaults(array(
-  'controller' => 'Error',
-  'action'     => '404',
+  'controller' => 'Login',
+  'action'     => 'view',
  ));
