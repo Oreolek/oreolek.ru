@@ -16,3 +16,6 @@
 [submodule "modules/less"]
 	path = modules/less
 	url = git://github.com/mongeslani/kohana-less.git
+[submodule "modules/kostache"]
+	path = modules/kostache
+	url = git@github.com:zombor/KOstache.git
