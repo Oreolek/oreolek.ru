@@ -13,7 +13,7 @@ class Controller_Header extends Controller_Template {
   $scripts = $this->request->post('scripts');
   $temp = "";
   if (is_array($scripts)) foreach($scripts as $script):
-   $temp .= '<script type="text/javascript" charset="utf-8" src="'.URL::site('assets/javascript/'.$script).'"></script>'."\n";
+   $temp .= '<script type="text/javascript" charset="utf-8" src="'.URL::site('application/assets/javascript/'.$script).'"></script>'."\n";
   endforeach;
   $this->template->scripts = $temp;
  }

@@ -12,7 +12,4 @@
  <div id="header">
   <h1><?php echo Kohana::$config->load('common.title')?></h1>
  </div>
- <div id="menu">
-  <?php echo Request::factory('navigation/actions')->execute() ?>
- </div>
  <div id="column_text">

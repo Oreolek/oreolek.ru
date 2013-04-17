@@ -8,6 +8,13 @@ class Model_Post extends ORM
       'content' => array(
         'not_empty'  => true,
         'min_length' => array(4),
+        'regex' => Markdown::$validate
         ),
+      );
+  protected $_has_many = array(
+      'comments' => array(
+        'model' => 'Comment',
+        'foreign_key' => 'post_id'
+        )
       );
 }
