@@ -14,9 +14,8 @@ class Controller_Page extends Controller_Template
     $id = $this->request->param('id');
     $page = ORM::factory('Page', $id);
     if (!$page->loaded()) $this->redirect('error/404');
-    $this->template->title = $page->id;
-    $this->template->content = $page->content;
-    if ($page->is_markdown) $this->template->content = Markdown::instance()->transform($this->template->content);
+    $this->template->title = $page->name;
+    $this->template->content = Markdown::instance()->transform($page->content);
   }
   /**
    * Create a page (for admin)
