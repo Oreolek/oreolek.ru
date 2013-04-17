@@ -1,0 +1,58 @@
+@import "smalkil";
+@columns: 6;
+body {
+  font: "PT Sans", "Arial", sans-serif;
+}
+
+.navigation{
+  ul {
+    .horizontal();
+    .centered(33%, 33%);
+  }
+}
+
+.container_page{
+  .grid();
+}
+
+.header,
+.navigation, 
+h3 {
+  .col(@columns);
+}
+
+
+.container_nested .additional {
+  .col(3);
+}
+
+h3.center {
+  text-align: center;
+}
+
+
+.side {
+  .col(2);
+}
+
+.list {
+  .col(2);
+  p {
+    text-align: left;
+    text-indent: 0;
+  }
+}
+
+.story{
+  .col(4);
+}
+
+.container_table {
+  .col(3);
+  table {
+    td {
+      text-align: center;
+      padding: 0.5 * @basesize;
+    }
+  }
+}

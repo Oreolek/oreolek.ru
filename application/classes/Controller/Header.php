@@ -4,12 +4,8 @@ class Controller_Header extends Controller_Template {
  public $template = 'header';
  public function action_standard() {
   $this->template->title = $this->request->post('title');
-  $stylesheets = array(
-    APPPATH.'assets/stylesheets/base',
-    APPPATH.'assets/stylesheets/colors',
-    APPPATH.'assets/stylesheets/layout',
-  );
-  $this->template->stylesheet = Less::compile($stylesheets);
+  ini_set('memory_limit', '168M');
+  $this->template->stylesheet = Less::compile(APPPATH.'assets/stylesheets/main');
   $scripts = $this->request->post('scripts');
   $temp = "";
   if (is_array($scripts)) foreach($scripts as $script):

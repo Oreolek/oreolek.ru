@@ -1,0 +1,36 @@
+@import 'normalize';
+@import 'colors';
+@import 'layout';
+
+.horizontal {
+  li {
+    display: inline;
+    list-style-type: none;
+    padding-right: @basesize;
+  }
+}
+
+.centered(@width: auto, @margin: auto) {
+  width: @width;
+  margin: 0 @margin;
+}
+
+img {
+  @margin: 0.5 * @basesize;
+  margin-bottom: @margin;
+  margin-top: @margin;
+  &.left {
+    float: left;
+    margin-left: 0;
+    margin-right: @margin;
+  }
+  &.right {
+    float: right;
+    margin-left: @margin;
+    margin-right: 0;
+  }
+  &.center {
+    display: block;
+    .centered();
+  }
+}

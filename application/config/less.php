@@ -2,7 +2,8 @@
 
 return array(
 
-	'compress' => TRUE,
+	'compress' => false,
 	'path'     => 'application/cache/css/',
+  'vendor_internal'   => FALSE
 
 );
