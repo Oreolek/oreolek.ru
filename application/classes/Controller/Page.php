@@ -5,8 +5,6 @@ class Controller_Page extends Controller_Template
   public $template = 'page/view';
   /**
    * View a page.
-   * @todo if page not found redirect to 404
-   * @todo page model
    **/
   public function action_view()
   {
@@ -16,6 +14,12 @@ class Controller_Page extends Controller_Template
     if (!$page->loaded()) $this->redirect('error/404');
     $this->template->title = $page->name;
     $this->template->content = Markdown::instance()->transform($page->content);
+  }
+  public function action_index()
+  {
+    $this->template = new View('page/index');
+    $this->template->title = 'Содержание';
+    $this->template->pages = ORM::factory('Page')->order_by('posted_at', 'DESC')->find_all(); 
   }
   /**
    * Create a page (for admin)

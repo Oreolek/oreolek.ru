@@ -11,13 +11,13 @@ body {
   }
 }
 
-.container_page{
+.main_container{
   .grid();
 }
 
 .header,
 .navigation, 
-h3 {
+.content {
   .col(@columns);
 }
 
@@ -26,13 +26,48 @@ h3 {
   .col(3);
 }
 
-h3.center {
+.text_center {
   text-align: center;
 }
 
+.table_index {
+  .date {
+    .col(2);
+  }
+  .link {
+    .col(4);
+  }
+}
 
 .side {
   .col(2);
+}
+
+.sidequote {
+  .col(2);
+  color: @foreground4;
+  font-size: @basesize * 1.5;
+  margin-top: @basesize / 2;
+  margin-bottom: @basesize / 2;
+}
+
+.sidequote_left {
+  .sidequote;
+  padding-left: @basesize / 2;
+}
+
+.sidequote_right {
+  .sidequote;
+  float: right;
+  padding-right: @basesize / 2;
+}
+
+.f_right {
+  float: right;
+}
+
+.f_left {
+  float: left;
 }
 
 .list {
@@ -46,13 +81,9 @@ h3.center {
 .story{
   .col(4);
 }
-
-.container_table {
-  .col(3);
-  table {
-    td {
-      text-align: center;
-      padding: 0.5 * @basesize;
-    }
-  }
+.footer {
+  margin-top: @basesize;
+  .text_center;
+  font-size: @basesize / 1.5;
+  color: @foreground2;
 }

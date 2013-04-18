@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html lang="ru">
 <head>
 <title><?php echo $title ?></title>
 <meta charset="utf-8">
@@ -8,8 +8,8 @@
 <?php echo $scripts ?>
 </head>
 <body>
- <div id="main_container">
- <div id="header">
+ <div class = "main_container">
+ <div class = "header text_center">
   <h1><?php echo Kohana::$config->load('common.title')?></h1>
  </div>
- <div id="column_text">
+<div class="content">

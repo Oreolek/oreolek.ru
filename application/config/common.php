@@ -1,5 +1,5 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
 return array(
- 'title' => "Простой сайт",
+ 'title' => "Личный сайт Александра Яковлева",
 );
