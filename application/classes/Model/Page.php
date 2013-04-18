@@ -21,9 +21,4 @@ class Model_Page extends ORM {
     'name' => 'Заголовок',
     'content' => 'Текст страницы'
   );
-
-  public function get_label($field)
-  {
-    return Arr::get($this->_labels, $field);
-  }
 }

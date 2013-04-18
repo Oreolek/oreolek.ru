@@ -1,7 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-class Controller_Page extends Controller_Template
-{
+class Controller_Page extends Controller_Template {
   public $template = 'page/view';
   /**
    * View a page.
@@ -58,6 +57,7 @@ class Controller_Page extends Controller_Template
         $this->redirect('page/view/' . $page->id);
       }
     }
+    $this->template->page = $page;
   }
   /**
    * Edit a page (for admin)

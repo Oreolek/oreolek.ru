@@ -10,7 +10,7 @@ class Model_Comment extends ORM
       'content' => array(
         'not_empty'  => true,
         'min_length' => array(4),
-        'regex' => Markdown::$validate
+        'regex' => '/[[:punct:][:space:]]{0,}/'
         ),
       'post_id' => array (
         'numeric' => true,
@@ -22,4 +22,13 @@ class Model_Comment extends ORM
         'foreign_key' => 'post_id'
         )
       );
+  /**
+   * Array of field labels.
+   * Used in forms.
+   **/
+  protected $_labels = array(
+    'author_name' => 'Имя комментатора',
+    'author_email' => 'Ваш e-mail',
+    'content' => 'Комментарий'
+  );
 }
