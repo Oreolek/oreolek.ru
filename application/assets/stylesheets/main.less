@@ -22,6 +22,10 @@ body {
   .col(@columns);
 }
 
+.content {
+  text-align: justify;
+}
+
 .text_center {
   text-align: center;
 }
@@ -54,7 +58,7 @@ form {
   .col(2);
 }
 
-.sidequote {
+.sidequote() {
   .col(2);
   color: @foreground4;
   font-size: @basesize * 1.5;
@@ -64,13 +68,13 @@ form {
 
 .sidequote_left {
   .sidequote;
-  padding-left: @basesize / 2;
+  padding-left: 0;
+  padding-right: @gutter;
 }
 
 .sidequote_right {
   .sidequote;
   float: right;
-  padding-right: @basesize / 2;
 }
 
 .f_right {
