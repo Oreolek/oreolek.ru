@@ -1,5 +1,6 @@
 @import "smalkil";
 @columns: 6;
+@gutter: 2%;
 body {
   font: "PT Sans", "Arial", sans-serif;
 }
@@ -11,7 +12,7 @@ body {
   }
 }
 
-.main_container{
+.container{
   .grid();
 }
 
@@ -21,21 +22,31 @@ body {
   .col(@columns);
 }
 
-
-.container_nested .additional {
-  .col(3);
-}
-
 .text_center {
   text-align: center;
 }
 
 .table_index {
-  .date {
-    .col(2);
+  .link_view {
+    .col(3);
   }
-  .link {
-    .col(4);
+  .date,
+  .link_delete,
+  .link_edit {
+    .col(1);
+  }
+}
+
+form {
+  label {
+    .col(1);
+  }
+  input[type='text'],
+  input[type='password'],
+  textarea {
+    .col(5);
+    border: 0px;
+    background: @background2;
   }
 }
 
@@ -70,17 +81,6 @@ body {
   float: left;
 }
 
-.list {
-  .col(2);
-  p {
-    text-align: left;
-    text-indent: 0;
-  }
-}
-
-.story{
-  .col(4);
-}
 .footer {
   margin-top: @basesize;
   .text_center;

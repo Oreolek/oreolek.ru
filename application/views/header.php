@@ -8,7 +8,7 @@
 <?php echo $scripts ?>
 </head>
 <body>
- <div class = "main_container">
+ <div class = "container">
  <div class = "header text_center">
   <h1><?php echo Kohana::$config->load('common.title')?></h1>
  </div>
