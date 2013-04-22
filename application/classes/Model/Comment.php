@@ -14,6 +14,7 @@ class Model_Comment extends ORM
         ),
       'post_id' => array (
         'numeric' => true,
+        'not_empty'  => true,
         ),
       );
   protected $_belongs_to = array(

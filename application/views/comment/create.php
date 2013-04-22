@@ -1,5 +1,5 @@
 <?php
-echo Form::open();
+echo Form::open('comment/create');
 echo Form::orm_input($comment, 'author_name');
 echo Form::hidden('email', '');
 echo Form::hidden('post_id', $comment->post_id);

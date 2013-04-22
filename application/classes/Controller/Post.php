@@ -11,8 +11,10 @@ class Controller_Post extends Controller_Template {
     $id = $this->request->param('id');
     $post = ORM::factory('Post', $id);
     if (!$post->loaded()) $this->redirect('error/404');
-    $this->template->title = $post->name;
-    $this->template->id = $post->id;
+    $this->template->header = Request::factory('header/standard')->post('title',$post->name)->execute();
+    $this->template->footer = Request::factory('footer/standard')->execute();
+    $this->template->comments = Request::factory('comment/view/' . $id)->execute();
+    $this->template->create_comment = Request::factory('comment/create/' . $id)->execute();
     $this->template->content = Markdown::instance()->transform($post->content);
   }
 

@@ -8,7 +8,8 @@ body {
 .navigation{
   ul {
     .horizontal();
-    .centered(33%, 33%);
+    .centered();
+    .text_center;
   }
 }
 
@@ -18,11 +19,11 @@ body {
 
 .header,
 .navigation, 
-.content {
+.main_content {
   .col(@columns);
 }
 
-.content {
+.main_content {
   text-align: justify;
 }
 
@@ -75,6 +76,15 @@ form {
 .sidequote_right {
   .sidequote;
   float: right;
+}
+
+.comment {
+  .author {
+    .col(2);
+  }
+  .content {
+    .col(4);
+  }
 }
 
 .f_right {

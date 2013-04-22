@@ -1,10 +1,11 @@
-<?php echo Request::factory('header/standard')->post('title',$title)->execute() ?>
-
+<?php echo $header; ?>
 <div class="hyphenate">
   <?php echo $content ?>
   <div class="comment_section">
-    <?php echo Request::factory('comment/view')->post('post_id', $id)->execute() ?>
+    <?php
+      echo $comments;
+      echo $create_comment;
+    ?>
   </div>
 </div>
-
-<?php echo Request::factory('footer/standard')->execute() ?>
+<?php echo $footer; ?>
