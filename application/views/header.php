@@ -17,7 +17,7 @@
           <li><a href="<?php echo URL::site('/post/fresh') ?>">Свежие записи дневника</a></li>
           <li><a href="<?php echo URL::site('/post/index') ?>">Содержание дневника</a></li>
           <li><a href="<?php echo URL::site('/page/index') ?>">Список страниц</a></li>
-          <li><a href="<?php echo URL::site('/page/1') ?>">О сайте</a></li>
+          <li><a href="<?php echo URL::site('/page/view/1') ?>">О сайте</a></li>
         </ul>
       </div>
       <div class = "main_content">
