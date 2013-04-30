@@ -25,11 +25,38 @@ class Controller_Post extends Controller_Template {
     $this->template->posts = ORM::factory('Post')->order_by('posted_at', 'DESC')->find_all(); 
   }
 
+  /**
+   * 10 fresh posts
+   **/
   public function action_fresh()
   {
     $this->template = new View('post/index');
     $this->template->title = 'Cвежие записи';
     $this->template->posts = ORM::factory('Post')->order_by('posted_at', 'DESC')->limit(10)->find_all(); 
+  }
+
+  /**
+   * Atom feed for fresh posts
+   **/
+  public function action_feed()
+  {
+    $this->auto_render = false;
+    $posts = ORM::factory('Post')->order_by('posted_at', 'DESC')->limit(10)->find_all(); 
+    $info = array(
+      'title' => Kohana::$config->load('common.title'),
+      'author' => Kohana::$config->load('common.author'),
+      'pubDate' => $posts[0]->posted_at,
+    );
+    $items = array();
+    foreach ($posts as $post)
+    {
+      array_push($items, array(
+        'title' => $post->name,
+        'description' => Markdown::instance()->transform($post->content),
+        'link' => 'post/view/' . $post->id,
+      ));
+    }
+    $this->response->body( Feed::create($info, $items) );
   }
 
   /**
