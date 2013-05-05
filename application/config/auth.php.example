@@ -4,7 +4,7 @@ return array(
 
 	'driver'       => 'ORM',
 	'hash_method'  => 'sha256',
-	'hash_key'     => "bananas are passengers too says opera",
+	'hash_key'     => "choose your own hash key",
 	'lifetime'     => 1209600,
 	'session_key'  => 'auth_user',
 

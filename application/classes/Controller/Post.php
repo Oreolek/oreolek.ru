@@ -1,7 +1,12 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-class Controller_Post extends Controller_Template {
+class Controller_Post extends Controller_Layout {
   public $template = 'post/view';
+  protected $secure_actions = array(
+    'create' => array('login','admin'),
+		'edit' => array('login','admin'),
+	  'delete' => array('login','admin')
+  );
   /**
    * View a post.
    **/
@@ -12,7 +17,6 @@ class Controller_Post extends Controller_Template {
     $post = ORM::factory('Post', $id);
     if (!$post->loaded()) $this->redirect('error/404');
     $this->template->header = Request::factory('header/standard')->post('title',$post->name)->execute();
-    $this->template->footer = Request::factory('footer/standard')->execute();
     $this->template->comments = Request::factory('comment/view/' . $id)->execute();
     $this->template->create_comment = Request::factory('comment/create/' . $id)->execute();
     $this->template->content = Markdown::instance()->transform($post->content);
@@ -21,7 +25,7 @@ class Controller_Post extends Controller_Template {
   public function action_index()
   {
     $this->template = new View('post/index');
-    $this->template->title = 'Содержание';
+    $this->template->header = Request::factory('header/standard')->post('title','Содержание')->execute();
     $this->template->posts = ORM::factory('Post')->order_by('posted_at', 'DESC')->find_all(); 
   }
 
@@ -31,7 +35,8 @@ class Controller_Post extends Controller_Template {
   public function action_fresh()
   {
     $this->template = new View('post/index');
-    $this->template->title = 'Cвежие записи';
+    $title = 'Cвежие записи';
+    $this->template->header = Request::factory('header/standard')->post('title',$title)->execute();
     $this->template->posts = ORM::factory('Post')->order_by('posted_at', 'DESC')->limit(10)->find_all(); 
   }
 
@@ -66,7 +71,8 @@ class Controller_Post extends Controller_Template {
   public function action_create()
   {
     $this->template = new View('post/create');
-    $this->template->title = 'Новая запись';
+    $title = 'Новая запись';
+    $this->template->header = Request::factory('header/standard')->post('title',$title)->execute();
     $post = ORM::factory('Post');
     if (HTTP_Request::POST == $this->request->method()) {
       $post->content = $this->request->post('content');

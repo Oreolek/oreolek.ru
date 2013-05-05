@@ -1,7 +1,7 @@
-<?php echo Request::factory('header/standard')->post('title',$title)->execute() ?>
+<?php echo $header ?>
 
 <div class="hyphenate">
   <?php echo $content ?>
 </div>
 
-<?php echo Request::factory('footer/standard')->execute() ?>
+<?php echo $footer ?>

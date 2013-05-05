@@ -1,4 +1,4 @@
-<?php echo Request::factory('header/standard')->post('title',$title)->execute();
+<?php echo $header;
 
 echo Form::open('page/delete') ?>
 <p><?php echo Form::label('confirmation','Действительно удалить страницу?'); echo Form::checkbox('confirmation', 'confirmation', false) ?></p>
@@ -9,4 +9,4 @@ echo Form::open('page/delete') ?>
 <p><?php echo Form::submit('submit','Отправить') ?></p>
 <?php echo Form::close();
 
-echo Request::factory('footer/standard')->execute() ?>
+echo $footer; ?>
