@@ -9,6 +9,14 @@ class Form extends Kohana_Form {
     $html .= '</div>';
     return $html;
   }
+  public static function orm_password($model, $name, array $attributes = NULL)
+  {
+    $html = '<div class="container">';
+    $html .= self::label($name, $model->get_label($name));
+    $html .= self::password($name,$model->get($name), $attributes);
+    $html .= '</div>';
+    return $html;
+  }
   public static function orm_textarea($model, $name, array $attributes = NULL)
   {
     $html = '<div class="container">';

@@ -27,6 +27,7 @@ class Controller_Post extends Controller_Layout {
     $this->template = new View('post/index');
     $this->template->header = Request::factory('header/standard')->post('title','Содержание')->execute();
     $this->template->posts = ORM::factory('Post')->order_by('posted_at', 'DESC')->find_all(); 
+    $this->template->footer = Request::factory('footer/standard')->execute(); 
   }
 
   /**
@@ -38,6 +39,7 @@ class Controller_Post extends Controller_Layout {
     $title = 'Cвежие записи';
     $this->template->header = Request::factory('header/standard')->post('title',$title)->execute();
     $this->template->posts = ORM::factory('Post')->order_by('posted_at', 'DESC')->limit(10)->find_all(); 
+    $this->template->footer = Request::factory('footer/standard')->execute(); 
   }
 
   /**
@@ -83,5 +85,6 @@ class Controller_Post extends Controller_Layout {
       }
     }
     $this->template->post = $post;
+    $this->template->footer = Request::factory('footer/standard')->execute(); 
   }
 }

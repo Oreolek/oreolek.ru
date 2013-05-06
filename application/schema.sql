@@ -42,9 +42,9 @@ CREATE TABLE `pages` (
 
 /* User management */
 
-DROP TABLE IF EXISTS `auth_roles`;
+DROP TABLE IF EXISTS `roles`;
 
-CREATE TABLE `auth_roles` (
+CREATE TABLE `roles` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(32) NOT NULL,
   `description` VARCHAR(255) NOT NULL,
@@ -52,7 +52,7 @@ CREATE TABLE `auth_roles` (
   UNIQUE KEY `uniq_name` (`name`)
 ) ENGINE=INNODB  DEFAULT CHARSET=utf8 ;
  
-INSERT INTO `auth_roles` (`id`, `name`, `description`) VALUES
+INSERT INTO `roles` (`id`, `name`, `description`) VALUES
 (1, 'login', 'Login privileges, granted after account confirmation'),
 (2, 'admin', 'Administrative user, has access to everything.');
  
@@ -97,7 +97,7 @@ CREATE TABLE `user_tokens` (
  
 ALTER TABLE `roles_users`
   ADD CONSTRAINT `roles_users_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `roles_users_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `auth_roles` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `roles_users_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE;
  
 ALTER TABLE `user_tokens`
   ADD CONSTRAINT `user_tokens_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;

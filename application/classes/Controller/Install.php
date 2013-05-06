@@ -35,7 +35,6 @@ class Controller_Install extends Controller_Template {
     }
 
     $count_users = ORM::factory('User')->count_all();
-    Log::instance()->add(Log::INFO, $count_users);
     if ($count_users > 0) $this->redirect('install/finished');
     $this->template->errors = array();
     if (HTTP_Request::POST == $this->request->method()) {

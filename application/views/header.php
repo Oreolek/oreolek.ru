@@ -10,7 +10,16 @@
   <body>
     <div class = "container">
       <div class = "header text_center">
-        <h1><?php echo Kohana::$config->load('common.title')?></h1>
+      <?php 
+      if (Auth::instance()->logged_in())
+      {
+        echo '<h1>Добро пожаловать, '.Auth::instance()->get_user()->username.'</h1>';
+      }
+      else
+      {
+        echo '<h1>'.Kohana::$config->load('common.title').'</h1>';
+      }
+      ?>
       </div>
       <div class = "navigation">
         <ul>
