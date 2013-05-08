@@ -19,3 +19,6 @@
 [submodule "modules/kostache"]
 	path = modules/kostache
 	url = git@github.com:zombor/KOstache.git
+[submodule "modules/debug-toolbar"]
+	path = modules/debug-toolbar
+	url = git://github.com/biakaveron/debug-toolbar.git

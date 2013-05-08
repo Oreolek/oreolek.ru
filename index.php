@@ -107,6 +107,6 @@ require APPPATH.'bootstrap'.EXT;
  * If no source is specified, the URI will be automatically detected.
  */
 echo Request::factory()
-	->execute()
-	->send_headers()
-	->body();
+  ->execute()
+  ->send_headers()
+  ->body();

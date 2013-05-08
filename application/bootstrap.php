@@ -106,15 +106,16 @@ Cookie::$salt = 'Dz75cE_TgeDXvo2';
  * Enable modules. Modules are referenced by a relative or absolute path.
  */
 Kohana::modules(array(
-	 'auth'       => MODPATH.'auth',       // Basic authentication
-	// 'cache'      => MODPATH.'cache',      // Caching with multiple backends
-	// 'codebench'  => MODPATH.'codebench',  // Benchmarking tool
-	 'database'   => MODPATH.'database',   // Database access
-	// 'image'      => MODPATH.'image',      // Image manipulation
-	 'orm'        => MODPATH.'orm',        // Object Relationship Mapping
-	// 'unittest'   => MODPATH.'unittest',   // Unit testing
-		'markdown'  => MODPATH.'markdown',      // Markdown module
-    'less'      => MODPATH.'less',    // LEaner CSS
+	 'auth'       => MODPATH.'auth',              // Basic authentication
+	 'database'   => MODPATH.'database',          // Database access
+	 'orm'        => MODPATH.'orm',               // Object Relationship Mapping
+		'markdown'  => MODPATH.'markdown',          // Markdown module
+    'less'      => MODPATH.'less',              // LEaner CSS
+    'debug-toolbar' => MODPATH.'debug-toolbar', // Debug toolbar
+	// 'cache'      => MODPATH.'cache',             // Caching with multiple backends
+	// 'codebench'  => MODPATH.'codebench',         // Benchmarking tool
+	// 'image'      => MODPATH.'image',             // Image manipulation
+	// 'unittest'   => MODPATH.'unittest',          // Unit testing
 	));
 
 /**
