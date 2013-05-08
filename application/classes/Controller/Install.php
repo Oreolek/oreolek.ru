@@ -42,8 +42,8 @@ class Controller_Install extends Controller_Template {
       $user->values($post);
       try {
         $user->create();
-        $login_role = new Model_Auth_Role(array('name' =>'login'));
-        $admin_role = new Model_Auth_Role(array('name' =>'admin'));
+        $login_role = new Model_Role(array('name' =>'login'));
+        $admin_role = new Model_Role(array('name' =>'admin'));
         $user->add('roles',$login_role);
         $user->add('roles',$admin_role);
         Auth::instance()->login($user->username, $user->password);
@@ -54,6 +54,7 @@ class Controller_Install extends Controller_Template {
         $this->template->errors = $e->errors();
       }
     }
+    $user->password = '';
     $this->template->user = $user;
     $this->template->header = Request::factory('header/standard')->post('title', 'Настройка административного аккаунта')->execute();
     $this->template->footer = Request::factory('footer/standard')->execute();

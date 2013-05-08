@@ -14,7 +14,6 @@ class Controller_User extends Controller_Layout {
   {
     if (Auth::instance()->logged_in()) $this->redirect('post/index');
     $this->template->header = Request::factory('header/standard')->post('title', 'Вход на сайт')->execute();
-    $user = ORM::factory('User');
     $this->template->errors = array();
     if (HTTP_Request::POST == $this->request->method()) {
       $validation = Validation::factory($this->request->post())
@@ -24,8 +23,7 @@ class Controller_User extends Controller_Layout {
         ))
         ->rule('password', 'not_empty');
       if ($validation->check()) {
-        $user->values($this->request->post());
-        if (Auth::instance()->login($this->request->post('username'), $this->request->post('password'), true))
+        if (Auth::instance()->login( $this->request->post('username'), $this->request->post('password')))
         {
           $this->redirect('post/index');
         }
@@ -39,7 +37,7 @@ class Controller_User extends Controller_Layout {
         $this->template->errors = $validation->errors();
       }
     }
-    $this->template->user = $user;
+    $this->template->user = ORM::factory('User');
   }
 
   /**
@@ -60,7 +58,7 @@ class Controller_User extends Controller_Layout {
         ->rule('password', 'not_empty');
       if ($validation->check()) {
         $user->values($this->request->post());
-        $user->update()
+        $user->update();
         $this->redirect('post/index');
       }
       else

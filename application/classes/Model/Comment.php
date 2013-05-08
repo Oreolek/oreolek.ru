@@ -3,9 +3,12 @@ class Model_Comment extends ORM
 {
   protected $_rules = array (
       'author_name' => array (
+        'not_empty'  => true,
+        'max_length' => array(32),
         ),
       'author_email' => array (
         'email' => true,
+        'max_length' => array(127),
         ),
       'content' => array(
         'not_empty'  => true,

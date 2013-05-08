@@ -8,5 +8,6 @@ Oreolek.
 
 * Copy `application/config/database.php.example` to `application/config/database.php` and edit it.
 * Copy `application/config/auth.php.example` to `application/config/auth.php` and edit it.
+* Import SQL schema from schema.sql (autoinstall currently not working)
 * Open in browser `SERVER_ADDR/install`
 * Set server variable `KOHANA_ENV` to `production` when you're done hacking

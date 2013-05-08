@@ -14,8 +14,8 @@ CREATE TABLE `posts` (
 
 CREATE TABLE `comments` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `author_name` text,
-  `author_email` text,
+  `author_name` VARCHAR(32) NOT NULL,
+  `author_email` VARCHAR(127) NOT NULL,
   `content` mediumtext NOT NULL,
   `posted_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `post_id` int(11) NOT NULL,
@@ -70,7 +70,6 @@ DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `email` VARCHAR(127) NOT NULL,
-  `name` VARCHAR(255) NOT NULL DEFAULT '',
   `username` VARCHAR(32) NOT NULL DEFAULT '',
   `password` CHAR(50) NOT NULL,
   `logins` INT(10) UNSIGNED NOT NULL DEFAULT '0',

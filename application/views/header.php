@@ -27,6 +27,9 @@
           <li><a href="<?php echo URL::site('/post/index') ?>">Содержание дневника</a></li>
           <li><a href="<?php echo URL::site('/page/index') ?>">Список страниц</a></li>
           <li><a href="<?php echo URL::site('/page/view/1') ?>">О сайте</a></li>
+          <?php if (!(Auth::instance()->logged_in())) { ?>
+            <li><a href="<?php echo URL::site('/user/signin') ?>">Вход</a></li>
+          <?php } ?>
         </ul>
       </div>
       <div class = "main_content">

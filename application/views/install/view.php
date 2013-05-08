@@ -12,7 +12,6 @@ if ($errors)
   echo '</ul>';
 }
 echo Form::orm_input($user, 'username');
-echo Form::orm_input($user, 'name');
 echo Form::orm_input($user, 'email');
 echo Form::orm_input($user, 'password');
 echo Form::submit('submit','Отправить');
