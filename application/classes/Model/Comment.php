@@ -1,25 +1,29 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 class Model_Comment extends ORM 
 {
-  protected $_rules = array (
-      'author_name' => array (
-        'not_empty'  => true,
-        'max_length' => array(32),
-        ),
-      'author_email' => array (
-        'email' => true,
-        'max_length' => array(127),
-        ),
+  public function rules()
+	{
+		return array(
+      'author_name' => array(
+				array('not_empty'),
+				array('max_length', array(':value', 32)),
+      ),
+      'author_email' => array(
+				array('not_empty'),
+        array('email'),
+				array('max_length', array(':value', 127)),
+      ),
       'content' => array(
-        'not_empty'  => true,
-        'min_length' => array(4),
-        'regex' => '/[[:punct:][:space:]]{0,}/'
-        ),
-      'post_id' => array (
-        'numeric' => true,
-        'not_empty'  => true,
-        ),
-      );
+				array('not_empty'),
+				array('min_length', array(':value', 4)),
+      ),
+      'post_id' => array(
+        array('not_empty'),
+        array('numeric')
+      )
+		);
+	}
+
   protected $_belongs_to = array(
       'post' => array(
         'model' => 'Post',

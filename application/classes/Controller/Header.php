@@ -16,6 +16,7 @@ class Controller_Header extends Controller_Template {
    $temp .= '<script type="text/javascript" charset="utf-8" src="'.URL::site('application/assets/javascript/'.$script).'"></script>'."\n";
   endforeach;
   $this->template->scripts = $temp;
+  $this->template->logged_in = Auth::instance()->logged_in();
   unset ($temp);
  }
  public function action_view(){$this->request->redirect('');}

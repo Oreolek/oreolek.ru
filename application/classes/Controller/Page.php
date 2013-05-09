@@ -3,6 +3,7 @@
 class Controller_Page extends Controller_Layout {
   public $template = 'page/view';
   protected $secure_actions = array(
+    'drafts' => array('login','admin'),
     'create' => array('login','admin'),
 		'edit' => array('login','admin'),
 	  'delete' => array('login','admin')
@@ -12,22 +13,28 @@ class Controller_Page extends Controller_Layout {
    **/
   public function action_view()
   {
-    $this->template = new View('page/view');
     $id = $this->request->param('id');
     $page = ORM::factory('Page', $id);
     if (!$page->loaded()) $this->redirect('error/404');
-    $this->template->title = $page->name;
+    if ($page->is_draft == true AND !Auth::instance()->logged_in('admin')) $this->redirect('error/403');
+    $title = $page->name;
+    if ($page->is_draft) $title .= ' (черновик)';
+    $this->template->header = Request::factory('header/standard')->post('title',$title)->execute();
     $this->template->content = Markdown::instance()->transform($page->content);
   }
   /**
    * Page index
-   * @todo user index (without edit/delete links)
    **/
   public function action_index()
   {
     $this->template = new View('page/index');
-    $this->template->title = 'Содержание';
-    $this->template->pages = ORM::factory('Page')->order_by('posted_at', 'DESC')->find_all(); 
+    $title = 'Содержание';
+    $this->template->header = Request::factory('header/standard')->post('title',$title)->execute();
+    $this->template->pages = ORM::factory('Page')
+      ->where('is_draft', '=', '0')
+      ->order_by('posted_at', 'DESC')
+      ->find_all(); 
+    $this->template->footer = Request::factory('footer/standard')->execute(); 
   }
   public function action_delete()
   {
@@ -35,9 +42,11 @@ class Controller_Page extends Controller_Layout {
     $id = $this->request->param('id');
     $page = ORM::factory('Page', $id);
     if (!$page->loaded()) $this->redirect('error/404');
-    $this->template->title = 'Удаление страницы';
+    $title = 'Удаление страницы';
+    $this->template->header = Request::factory('header/standard')->post('title',$title)->execute();
     $this->template->page_title = $page->name;
     $this->template->page_content = Markdown::instance()->transform($page->content);
+    $this->template->footer = Request::factory('footer/standard')->execute(); 
 
     $confirmation = $this->request->param('confirmation');
     if ($confirmation === 'yes') {
@@ -47,12 +56,12 @@ class Controller_Page extends Controller_Layout {
   }
   /**
    * Create a page (for admin)
-   * @todo check for admin privileges
    **/
   public function action_create()
   {
     $this->template = new View('page/create');
-    $this->template->title = 'Новая страница';
+    $title = 'Новая страница';
+    $this->template->header = Request::factory('header/standard')->post('title',$title)->execute();
     $page = ORM::factory('Page');
     if (HTTP_Request::POST == $this->request->method()) {
       $page->content = $this->request->post('content');
@@ -63,15 +72,17 @@ class Controller_Page extends Controller_Layout {
       }
     }
     $this->template->page = $page;
+    $this->template->footer = Request::factory('footer/standard')->execute(); 
   }
   /**
    * Edit a page (for admin)
-   * @todo check for admin privileges
    **/
   public function action_edit()
   {
     $this->template = new View('page/edit');
-    $this->template->title = 'Редактирование страницы';
+    $title = 'Редактирование страницы';
+    $this->template->header = Request::factory('header/standard')->post('title',$title)->execute();
+    $this->template->footer = Request::factory('footer/standard')->execute(); 
     $id = $this->request->param('id');
     $page = ORM::factory('Page', $id);
     if (!$page->loaded()) $this->redirect('error/404');
@@ -87,4 +98,18 @@ class Controller_Page extends Controller_Layout {
     }
   }
 
+  /**
+   * Draft index
+   **/
+  public function action_drafts()
+  {
+    $this->template = new View('page/index');
+    $title = 'Содержание (черновики)';
+    $this->template->header = Request::factory('header/standard')->post('title',$title)->execute();
+    $this->template->pages = ORM::factory('Page')
+      ->where('is_draft', '=', '1')
+      ->order_by('posted_at', 'DESC')
+      ->find_all(); 
+    $this->template->footer = Request::factory('footer/standard')->execute(); 
+  }
 }

@@ -8,6 +8,7 @@ CREATE TABLE `posts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` text NOT NULL,
   `content` longtext NOT NULL,
+  `is_draft` int(1) NOT NULL DEFAULT 0,
   `posted_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -29,16 +30,15 @@ CREATE TABLE `comments` (
 --
 
 DROP TABLE IF EXISTS `pages`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
 CREATE TABLE `pages` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` text NOT NULL,
   `content` longtext NOT NULL,
+  `is_draft` int(1) NOT NULL DEFAULT 0,
   `posted_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 /* User management */
 

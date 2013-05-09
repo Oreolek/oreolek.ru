@@ -25,4 +25,18 @@ class Form extends Kohana_Form {
     $html .= '</div>';
     return $html;
   }
+
+  /**
+   * Checkbox ORM generation.
+   * Assumes $name a boolean attribute
+   **/
+  public static function orm_checkbox($model, $name, array $attributes = NULL)
+  {
+    $html = '<div class="container">';
+    $html .= self::label($name, $model->get_label($name));
+    $html .= self::checkbox($name, 1, (int) $model->get($name), $attributes);
+    $html .= '</div>';
+    return $html;
+  }
+
 }

@@ -10,8 +10,8 @@
   <body>
     <div class = "container">
       <div class = "header text_center">
-      <?php 
-      if (Auth::instance()->logged_in())
+      <?php
+      if ($logged_in)
       {
         echo '<h1>Добро пожаловать, '.Auth::instance()->get_user()->username.'</h1>';
       }
@@ -27,8 +27,11 @@
           <li><a href="<?php echo URL::site('/post/index') ?>">Содержание дневника</a></li>
           <li><a href="<?php echo URL::site('/page/index') ?>">Список страниц</a></li>
           <li><a href="<?php echo URL::site('/page/view/1') ?>">О сайте</a></li>
-          <?php if (!(Auth::instance()->logged_in())) { ?>
+          <?php if (!$logged_in) { ?>
             <li><a href="<?php echo URL::site('/user/signin') ?>">Вход</a></li>
+          <?php } else { ?>
+            <li><a href="<?php echo URL::site('/post/drafts') ?>">Черновики дневника</a></li>
+            <li><a href="<?php echo URL::site('/page/drafts') ?>">Черновики страниц</a></li>
           <?php } ?>
         </ul>
       </div>

@@ -23,7 +23,7 @@ class Controller_User extends Controller_Layout {
         ))
         ->rule('password', 'not_empty');
       if ($validation->check()) {
-        if (Auth::instance()->login( $this->request->post('username'), $this->request->post('password')))
+        if (Auth::instance()->login( $this->request->post('username'), $this->request->post('password'), true))
         {
           $this->redirect('post/index');
         }

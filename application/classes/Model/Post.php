@@ -1,14 +1,20 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 class Model_Post extends ORM {
-  protected $_rules = array(
-    'name' => array(
-      'not_empty'  => true,
-    ),
-    'content' => array(
-      'not_empty'  => true,
-      'min_length' => array(4),
-    ),
-  );
+  public function rules()
+	{
+		return array(
+      'name' => array(
+				array('not_empty'),
+      ),
+      'content' => array(
+				array('not_empty'),
+				array('min_length', array(':value', 4)),
+      ),
+      'draft' => array(
+        array('numeric')
+      )
+		);
+	}
 
   protected $_has_many = array(
     'comments' => array(
@@ -24,5 +30,6 @@ class Model_Post extends ORM {
   protected $_labels = array(
     'name' => 'Заголовок',
     'content' => 'Текст записи',
+    'is_draft' => 'Черновик'
   );
 }

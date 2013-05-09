@@ -3,15 +3,21 @@ class Model_Page extends ORM {
   /**
    * Validation rules array
    **/
-  protected $_rules = array (
-      'name' => array (
-        'not_empty'  => true,
-        ),
+  public function rules()
+	{
+		return array(
+      'name' => array(
+				array('not_empty'),
+      ),
       'content' => array(
-        'not_empty'  => true,
-        'min_length' => array(4),
-        ),
-      );
+				array('not_empty'),
+				array('min_length', array(':value', 4)),
+      ),
+      'draft' => array(
+        array('numeric')
+      )
+		);
+	}
 
   /**
    * Array of field labels.
@@ -19,6 +25,7 @@ class Model_Page extends ORM {
    **/
   protected $_labels = array(
     'name' => 'Заголовок',
-    'content' => 'Текст страницы'
+    'content' => 'Текст страницы',
+    'is_draft' => 'Черновик'
   );
 }
