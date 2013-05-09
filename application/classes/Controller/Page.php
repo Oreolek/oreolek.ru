@@ -63,13 +63,18 @@ class Controller_Page extends Controller_Layout {
     $title = 'Новая страница';
     $this->template->header = Request::factory('header/standard')->post('title',$title)->execute();
     $page = ORM::factory('Page');
+    $this->template->errors = array();
     if (HTTP_Request::POST == $this->request->method()) {
       $page->content = $this->request->post('content');
       $page->name = $this->request->post('title');
-      if ($page->check()) {
-        $page->create();
-        $this->redirect('page/view/' . $page->id);
+      try {
+        if ($page->check()) $page->create();
       }
+      catch (ORM_Validation_Exception $e)
+      {
+        $this->template->errors = $e->errors();
+      }
+      if (empty($this->template->errors)) $this->redirect('page/view/' . $page->id);
     }
     $this->template->page = $page;
     $this->template->footer = Request::factory('footer/standard')->execute(); 
