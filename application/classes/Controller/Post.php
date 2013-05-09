@@ -20,6 +20,7 @@ class Controller_Post extends Controller_Layout {
     $this->template->comments = Request::factory('comment/view/' . $id)->execute();
     $this->template->create_comment = Request::factory('comment/create/' . $id)->execute();
     $this->template->content = Markdown::instance()->transform($post->content);
+    $this->template->footer = Request::factory('footer/standard')->execute(); 
   }
 
   public function action_index()
