@@ -30,7 +30,7 @@ class Controller_Post extends Controller_Layout {
   public function action_edit()
   {
     $this->template = new View('post/edit');
-    $title = 'Редактирование страницы';
+    $title = 'Редактирование записи';
     $this->template->header = Request::factory('header/standard')->post('title',$title)->execute();
     $this->template->footer = Request::factory('footer/standard')->execute(); 
     $id = $this->request->param('id');
