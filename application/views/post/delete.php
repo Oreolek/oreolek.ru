@@ -1,11 +1,11 @@
 <?php echo $header;
 
 echo Form::open() ?>
-<p><?php echo Form::label('confirmation','Действительно удалить страницу?'); 
+<p><?php echo Form::label('confirmation','Действительно удалить запись?');
 echo Form::checkbox('confirmation', 'yes', false) ?></p>
 
-<h3><?php echo $page_title; ?></h3>
-<?php echo $page_content; ?>
+<h3><?php echo $title; ?></h3>
+<?php echo $content; ?>
 
 <p><?php echo Form::submit('submit','Отправить') ?></p>
 <?php echo Form::close();

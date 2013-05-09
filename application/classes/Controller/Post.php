@@ -86,14 +86,20 @@ class Controller_Post extends Controller_Layout {
 
   public function action_delete()
   {
-    $id = $this->request->post('id');
-    $post = ORM::factory('Post')->where('id', '=', $id);
+    $this->template = new View('post/delete');
+    $id = $this->request->param('id');
+    $post = ORM::factory('Post', $id);
     if (!$post->loaded()) $this->redirect('error/404');
-    if ($post->delete()) {
-      $this->template = new View('post/deleted');
-      $title = 'Запись удалена';
-      $this->template->header = Request::factory('header/standard')->post('title',$title)->execute();
-      $this->template->footer = Request::factory('footer/standard')->execute(); 
+    $title = 'Удаление записи дневника';
+    $this->template->header = Request::factory('header/standard')->post('title',$title)->execute();
+    $this->template->title = $post->name;
+    $this->template->content = Markdown::instance()->transform($post->content);
+    $this->template->footer = Request::factory('footer/standard')->execute(); 
+
+    $confirmation = $this->request->post('confirmation');
+    if ($confirmation === 'yes') {
+      $post->delete();
+      $this->redirect('page/index');
     }
   }
 

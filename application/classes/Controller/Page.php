@@ -48,7 +48,7 @@ class Controller_Page extends Controller_Layout {
     $this->template->page_content = Markdown::instance()->transform($page->content);
     $this->template->footer = Request::factory('footer/standard')->execute(); 
 
-    $confirmation = $this->request->param('confirmation');
+    $confirmation = $this->request->post('confirmation');
     if ($confirmation === 'yes') {
       $page->delete();
       $this->redirect('page/index');
