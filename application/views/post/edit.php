@@ -11,9 +11,9 @@ if ($errors)
   }
   echo '</ul>';
 }
-echo Form::orm_input($page, 'name');
-echo Form::orm_textarea($page, 'content');
-echo Form::orm_checkbox($page, 'is_draft');
+echo Form::orm_input($post, 'name');
+echo Form::orm_textarea($post, 'content');
+echo Form::orm_checkbox($post, 'is_draft');
 echo Form::submit('submit','Отправить');
 echo Form::close();
 

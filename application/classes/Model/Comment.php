@@ -1,6 +1,9 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 class Model_Comment extends ORM 
 {
+  /**
+   * @return array validation rules
+   **/
   public function rules()
 	{
 		return array(

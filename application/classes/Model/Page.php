@@ -1,7 +1,8 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 class Model_Page extends ORM {
+
   /**
-   * Validation rules array
+   * @return array validation rules
    **/
   public function rules()
 	{

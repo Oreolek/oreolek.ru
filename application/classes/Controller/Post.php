@@ -27,6 +27,32 @@ class Controller_Post extends Controller_Layout {
     $this->template->footer = Request::factory('footer/standard')->execute(); 
   }
 
+  public function action_edit()
+  {
+    $this->template = new View('post/edit');
+    $title = 'Редактирование страницы';
+    $this->template->header = Request::factory('header/standard')->post('title',$title)->execute();
+    $this->template->footer = Request::factory('footer/standard')->execute(); 
+    $id = $this->request->param('id');
+    $post = ORM::factory('Post', $id);
+    if (!$post->loaded()) $this->redirect('error/404');
+    $this->template->errors = array();
+    if (HTTP_Request::POST == $this->request->method()) {
+      $post->content = $this->request->post('content');
+      $post->name = $this->request->post('name');
+      $post->is_draft = $this->request->post('is_draft');
+      try {
+        if ($post->check()) $post->update();
+      }
+      catch (ORM_Validation_Exception $e)
+      {
+        $this->template->errors = $e->errors();
+      }
+      if (empty($this->template->errors)) $this->redirect('post/view/' . $post->id);
+    }
+    $this->template->post = $post;
+  }
+
   public function action_index()
   {
     $this->template = new View('post/index');
@@ -99,7 +125,7 @@ class Controller_Post extends Controller_Layout {
     $confirmation = $this->request->post('confirmation');
     if ($confirmation === 'yes') {
       $post->delete();
-      $this->redirect('page/index');
+      $this->redirect('post/index');
     }
   }
 

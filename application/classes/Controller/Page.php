@@ -62,11 +62,12 @@ class Controller_Page extends Controller_Layout {
     $this->template = new View('page/create');
     $title = 'Новая страница';
     $this->template->header = Request::factory('header/standard')->post('title',$title)->execute();
-    $page = ORM::factory('Page');
     $this->template->errors = array();
+    $page = ORM::factory('Page');
     if (HTTP_Request::POST == $this->request->method()) {
       $page->content = $this->request->post('content');
-      $page->name = $this->request->post('title');
+      $page->name = $this->request->post('name');
+      $page->is_draft = $this->request->post('is_draft');
       try {
         if ($page->check()) $page->create();
       }
@@ -91,16 +92,21 @@ class Controller_Page extends Controller_Layout {
     $id = $this->request->param('id');
     $page = ORM::factory('Page', $id);
     if (!$page->loaded()) $this->redirect('error/404');
-    $this->template->page = $page;
-    $this->template->page_content = $page->content;
+    $this->template->errors = array();
     if (HTTP_Request::POST == $this->request->method()) {
       $page->content = $this->request->post('content');
       $page->name = $this->request->post('name');
-      if ($page->check()) {
-        $page->update();
-        $this->redirect('page/view/' . $page->id);
+      $page->is_draft = $this->request->post('is_draft');
+      try {
+        if ($page->check()) $page->update();
       }
+      catch (ORM_Validation_Exception $e)
+      {
+        $this->template->errors = $e->errors();
+      }
+      if (empty($this->template->errors)) $this->redirect('page/view/' . $page->id);
     }
+    $this->template->page = $page;
   }
 
   /**
