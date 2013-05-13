@@ -24,6 +24,10 @@ class Model_Post extends ORM {
     'comments' => array(
       'model' => 'Comment',
       'foreign_key' => 'post_id'
+    ),
+    'tags' => array(
+      'model' => 'Tag',
+      'through' => 'posts_tags'
     )
   );
 

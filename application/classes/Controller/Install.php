@@ -2,12 +2,16 @@
 
 class Controller_Install extends Controller_Template {
   public $template = 'install/view';
+  public function before()
+  {
+    parent::before();
+    if ((Kohana::$environment == Kohana::PRODUCTION)) $this->request->redirect('');
+  }
   /**
    * If database is not set, initialize and configure it; else nothing to do
    **/
   public function action_view()
   {
-    if ((Kohana::$environment == Kohana::PRODUCTION)) $this->request->redirect('');
     $user = NULL;
     $username = Kohana::$config->load('database.default.connection.username');
     $password = Kohana::$config->load('database.default.connection.password');
@@ -15,7 +19,8 @@ class Controller_Install extends Controller_Template {
     $database = Kohana::$config->load('database.default.connection.database');
     $db = Database::instance('default');
 
-    try {
+    try
+    {
       $db->connect();
     }
     catch(Database_Exception $e)
@@ -23,7 +28,8 @@ class Controller_Install extends Controller_Template {
       DB::query(NULL,"CREATE DATABASE IF NOT EXISTS $database;")->execute();
     }
 
-    try {
+    try
+    {
       $user = ORM::factory('User');
     }
     catch(Database_Exception $e)
@@ -37,10 +43,12 @@ class Controller_Install extends Controller_Template {
     $count_users = ORM::factory('User')->count_all();
     if ($count_users > 0) $this->redirect('install/finished');
     $this->template->errors = array();
-    if (HTTP_Request::POST == $this->request->method()) {
+    if (HTTP_Request::POST == $this->request->method())
+    {
       $post = Arr::map('trim', $this->request->post());
       $user->values($post);
-      try {
+      try
+      {
         $user->create();
         $login_role = new Model_Role(array('name' =>'login'));
         $admin_role = new Model_Role(array('name' =>'admin'));
@@ -59,7 +67,9 @@ class Controller_Install extends Controller_Template {
     $this->template->header = Request::factory('header/standard')->post('title', 'Настройка административного аккаунта')->execute();
     $this->template->footer = Request::factory('footer/standard')->execute();
   }
-  public function action_finished() {
+
+  public function action_finished()
+  {
     $this->template = new View('install/finished');
     $this->template->header = Request::factory('header/standard')->post('title', 'Установка закончена')->execute();
     $this->template->footer = Request::factory('footer/standard')->execute();

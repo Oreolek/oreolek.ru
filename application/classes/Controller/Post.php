@@ -21,6 +21,19 @@ class Controller_Post extends Controller_Layout {
     $title = $post->name;
     if ($post->is_draft) $title .= ' (черновик)';
     $this->template->header = Request::factory('header/standard')->post('title',$title)->execute();
+    $tags = $post->tags->find_all();
+    $this->template->tags = '';
+    if (count($tags) > 0)
+    {
+      $this->template->tags = 'Теги: ';
+      $i = 0;
+      foreach ($tags as $tag)
+      {
+        if ($i > 0) $this->template->tags .= ', ';
+        $this->template->tags .= '<a href="'.URL::site('tag/view/'.$tag->id).'">'.$tag->name.'</a>';
+        $i++;
+      }
+    }
     $this->template->comments = Request::factory('comment/view/' . $id)->execute();
     $this->template->create_comment = Request::factory('comment/create/' . $id)->execute();
     $this->template->content = Markdown::instance()->transform($post->content);
@@ -48,7 +61,29 @@ class Controller_Post extends Controller_Layout {
       {
         $this->template->errors = $e->errors();
       }
-      if (empty($this->template->errors)) $this->redirect('post/view/' . $post->id);
+      if (empty($this->template->errors))
+      {
+        $tags = explode(',', $tags);
+        //adding new tags
+        foreach ($tags as $tag)
+        {
+          $model = ORM::factory('Tag')->where('name', '=', 'lower('.trim($tag).')')->find();
+          if (!$model->loaded())
+          {
+            $model = ORM::factory('Tag');
+            $model->name = trim($tag);
+            $model->create();
+          }
+          $post->add('tags', $model->id);
+        }
+        //deleting unused tags
+        $tag_models = $post->tags->find_all();
+        foreach ($tag_models as $tag)
+        {
+          if (!array_search($tags, $tag->name)) $post->remove('tags', $tag->id);
+        }
+        $this->redirect('post/view/' . $post->id);
+      }
     }
     $this->template->post = $post;
   }
@@ -139,10 +174,12 @@ class Controller_Post extends Controller_Layout {
     $this->template->header = Request::factory('header/standard')->post('title',$title)->execute();
     $this->template->errors = array();
     $post = ORM::factory('Post');
+    $tags = '';
     if (HTTP_Request::POST == $this->request->method()) {
       $post->content = $this->request->post('content');
       $post->name = $this->request->post('name');
       $post->is_draft = $this->request->post('is_draft');
+      $tags = $this->request->post('tags');
       try {
         if ($post->check()) $post->create();
       }
@@ -150,9 +187,25 @@ class Controller_Post extends Controller_Layout {
       {
         $this->template->errors = $e->errors();
       }
-      if (empty($this->template->errors)) $this->redirect('post/view/' . $post->id);
+      if (empty($this->template->errors))
+      {
+        $tags = explode(',', $tags);
+        foreach ($tags as $tag)
+        {
+          $model = ORM::factory('Tag')->where('name', '=', 'lower('.trim($tag).')')->find();
+          if (!$model->loaded())
+          {
+            $model = ORM::factory('Tag');
+            $model->name = trim($tag);
+            $model->create();
+          }
+          $post->add('tags', $model->id);
+        }
+        $this->redirect('post/view/' . $post->id);
+      }
     }
     $this->template->post = $post;
+    $this->template->tags = $tags;
     $this->template->footer = Request::factory('footer/standard')->execute(); 
   }
 
