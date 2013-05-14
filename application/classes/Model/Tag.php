@@ -12,11 +12,16 @@ class Model_Tag extends ORM {
 		);
 	}
 
-  protected $_belongs_to = array(
-    'post' => array(
+  protected $_has_many = array(
+    'posts' => array(
       'model' => 'Post',
       'through' => 'posts_tags'
     )
+  );
+
+  public $_labels = array(
+    'name' => 'Название',
+    'description' => 'Описание'
   );
 
 }
