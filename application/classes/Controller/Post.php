@@ -50,13 +50,13 @@ class Controller_Post extends Controller_Layout {
     $post = ORM::factory('Post', $id);
     if (!$post->loaded()) $this->redirect('error/404');
     $this->template->errors = array();
-    $tags = $post->tags->find_all();
+    $tag_models = $post->tags->find_all();
     $this->template->tags = '';
-    if (count($tags) > 0)
+    if (count($tag_models) > 0)
     {
       $this->template->tags = 'Теги: ';
       $i = 0;
-      foreach ($tags as $tag)
+      foreach ($tag_models as $tag)
       {
         if ($i > 0) $this->template->tags .= ', ';
         $this->template->tags .= $tag->name;
@@ -67,6 +67,7 @@ class Controller_Post extends Controller_Layout {
       $post->content = $this->request->post('content');
       $post->name = $this->request->post('name');
       $post->is_draft = $this->request->post('is_draft');
+      $tags = $this->request->post('tags');
       try {
         if ($post->check()) $post->update();
       }
@@ -90,10 +91,9 @@ class Controller_Post extends Controller_Layout {
           $post->add('tags', $model->id);
         }
         //deleting unused tags
-        $tag_models = $post->tags->find_all();
         foreach ($tag_models as $tag)
         {
-          if (!array_search($tags, $tag->name)) $post->remove('tags', $tag->id);
+          if (!array_search($tag->name, $tags)) $post->remove('tags', $tag->id);
         }
         $this->redirect('post/view/' . $post->id);
       }
