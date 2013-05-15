@@ -62,6 +62,15 @@ ALTER TABLE `posts_tags`
   ADD CONSTRAINT `posts_tags_fk_posts` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `posts_tags_fk_tags` FOREIGN KEY (`tag_id`) REFERENCES `tags` (`id`) ON DELETE CASCADE;
 
+DROP TABLE IF EXISTS `photos`;
+
+CREATE TABLE `photos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` text NOT NULL,
+  `filename` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 /* User management */
 
 DROP TABLE IF EXISTS `roles_users`;

@@ -3,4 +3,7 @@
 return array(
  'title' => 'Личный сайт Александра Яковлева',
  'author' => 'Александр Яковлев',
+ 'uploads_dir' => '/uploads',
+ 'thumbnail_width' => 200,
+ 'thumbnail_height' => 150,
 );

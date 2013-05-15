@@ -22,3 +22,6 @@
 [submodule "modules/debug-toolbar"]
 	path = modules/debug-toolbar
 	url = git://github.com/biakaveron/debug-toolbar.git
+[submodule "modules/image"]
+	path = modules/image
+	url = git://github.com/kohana/image.git

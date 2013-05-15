@@ -112,10 +112,10 @@ Kohana::modules(array(
 		'markdown'  => MODPATH.'markdown',          // Markdown module
     'less'      => MODPATH.'less',              // LEaner CSS
     'debug-toolbar' => MODPATH.'debug-toolbar', // Debug toolbar
-	// 'cache'      => MODPATH.'cache',             // Caching with multiple backends
-	// 'codebench'  => MODPATH.'codebench',         // Benchmarking tool
-	// 'image'      => MODPATH.'image',             // Image manipulation
-	// 'unittest'   => MODPATH.'unittest',          // Unit testing
+	  'image'      => MODPATH.'image',             // Image manipulation
+	//  'cache'      => MODPATH.'cache',             // Caching with multiple backends
+	//  'codebench'  => MODPATH.'codebench',         // Benchmarking tool
+	//  'unittest'   => MODPATH.'unittest',          // Unit testing
 	));
 
 /**
