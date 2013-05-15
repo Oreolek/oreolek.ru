@@ -6,7 +6,6 @@
 class Controller_Photo extends Controller_Layout {
   public $template = 'photo/view';
   protected $secure_actions = array(
-    'upload' => array('login','admin'),
     'edit' => array('login','admin'),
   );
   /**
@@ -26,10 +25,11 @@ class Controller_Photo extends Controller_Layout {
   /**
    * Upload a new photo
    **/
-  public function action_upload()
+  public function action_edit()
   {
     $this->template = new View('photo/edit');
-    $photo = ORM::factory('Photo');
+    $id = $this->request->param('id');
+    $photo = ORM::factory('Photo', $id);
     $title = 'Загрузка фотографии';
     $this->template->header = Request::factory('header/standard')->post('title',$title)->execute();
     $this->template->footer = Request::factory('footer/standard')->execute();
@@ -71,7 +71,12 @@ class Controller_Photo extends Controller_Layout {
 
   public function action_create()
   {
-    $this->redirect('photo/upload');
+    $this->redirect('photo/edit');
+  }
+  
+  public function action_upload()
+  {
+    $this->redirect('photo/edit');
   }
 
   /**
