@@ -50,6 +50,19 @@ class Controller_Post extends Controller_Layout {
     $post = ORM::factory('Post', $id);
     if (!$post->loaded()) $this->redirect('error/404');
     $this->template->errors = array();
+    $tags = $post->tags->find_all();
+    $this->template->tags = '';
+    if (count($tags) > 0)
+    {
+      $this->template->tags = 'Теги: ';
+      $i = 0;
+      foreach ($tags as $tag)
+      {
+        if ($i > 0) $this->template->tags .= ', ';
+        $this->template->tags .= $tag->name;
+        $i++;
+      }
+    }
     if (HTTP_Request::POST == $this->request->method()) {
       $post->content = $this->request->post('content');
       $post->name = $this->request->post('name');
