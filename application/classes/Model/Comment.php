@@ -47,4 +47,18 @@ class Model_Comment extends ORM
     'content' => 'Комментарий',
     'is_approved' => 'Проверено'
   );
+
+  /**
+   * Checks comment content for spam.
+   * every comment gets 5 trust points (configurable)
+   * useragent empty = -2 points
+   * comment not russian = -2 points
+   * has link = -1 point
+   * has many links = -2 points
+   * short = -1 point
+   * etc.
+   **/
+  public antispam_check($useragent = '')
+  {
+  }
 }
