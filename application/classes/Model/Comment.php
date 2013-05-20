@@ -1,6 +1,10 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 class Model_Comment extends ORM 
 {
+  const STATUS_PENDING = 0;
+  const STATUS_APPROVED = 1;
+  const STATUS_SUSPICIOUS = 2;
+  const STATUS_SPAM = 3;
   /**
    * @return array validation rules
    **/
@@ -40,6 +44,7 @@ class Model_Comment extends ORM
   protected $_labels = array(
     'author_name' => 'Имя комментатора',
     'author_email' => 'Ваш e-mail',
-    'content' => 'Комментарий'
+    'content' => 'Комментарий',
+    'is_approved' => 'Проверено'
   );
 }

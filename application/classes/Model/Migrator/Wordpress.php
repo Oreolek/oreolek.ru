@@ -48,7 +48,7 @@ class Model_Migrator_Wordpress extends Model_Migrator {
     foreach ($wp_comments as $comment)
     {
       Database::instance('default')
-          ->insert('comments', array('post_id', 'author_name', 'author_email', 'content', 'posted_at'))
+          ->insert('comments', array('post_id', 'author_name', 'author_email', 'content', 'posted_at', 'is_approved'))
           ->values(array
           (
             $comment['comment_post_ID'],
@@ -56,6 +56,7 @@ class Model_Migrator_Wordpress extends Model_Migrator {
             $comment['comment_author_email'],
             $comment['comment_content'],
             $comment['comment_date'],
+            Model_Comment::STATUS_APPROVED
           ))
           ->execute();
     }

@@ -10,7 +10,11 @@ class Controller_Comment extends Controller_Template {
     $this->template = new View('comment/view');
     $post_id = $this->request->param('id');
     if (is_null($post_id)) throw Kohana_HTTP_Exception::factory(500, 'No post ID specified');
-    $this->template->comments = ORM::factory('Comment')->where('post_id', '=', $post_id)->order_by('posted_at', 'DESC')->find_all();
+    $this->template->comments = ORM::factory('Comment')
+      ->where('post_id', '=', $post_id)
+      ->where('is_approved', '=', Model_Comment::STATUS_APPROVED)
+      ->order_by('posted_at', 'DESC')
+      ->find_all();
   }
 
   /**
@@ -30,6 +34,15 @@ class Controller_Comment extends Controller_Template {
       $comment->author_email = $this->request->post('author_email');
       $email = $this->request->post('email');
       if (empty($email) AND $comment->check()) {
+        if (Kohana::$config->load('common.comment_approval'))
+        {
+          $comment->is_approved = Model_Comment::STATUS_PENDING;
+        }
+        else
+        {
+          $comment->is_approved = Model_Comment::STATUS_APPROVED;
+        }
+        //spam check
         $comment->create();
         $this->redirect('post/view/' . $post_id);
       }

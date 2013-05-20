@@ -10,6 +10,7 @@ CREATE TABLE `posts` (
   `content` longtext NOT NULL,
   `is_draft` int(1) NOT NULL DEFAULT 0,
   `posted_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `is_approved` int(1) UNSIGNED NOT NULL DEFAULT 0
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
