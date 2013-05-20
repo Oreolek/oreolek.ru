@@ -74,4 +74,33 @@ class Controller_Install extends Controller_Template {
     $this->template->header = Request::factory('header/standard')->post('title', 'Установка закончена')->execute();
     $this->template->footer = Request::factory('footer/standard')->execute();
   }
+
+  /**
+   * Migrate from Wordpress
+   * (maybe I'll add more options later)
+   **/
+  public function action_migrate_wp()
+  {
+    $this->template = new View('install/migrate_wp');
+    $this->template->header = Request::factory('header/standard')->post('title', 'Миграция из Wordpress')->execute();
+    $this->template->footer = Request::factory('footer/standard')->execute();
+    $this->template->errors = array();
+    $migrator = new Model_Migrator_Wordpress();
+    if (HTTP_Request::POST == $this->request->method())
+    {
+      $migrator->set('hostname', $this->request->post('hostname'));
+      $migrator->set('database', $this->request->post('database'));
+      $migrator->set('username', $this->request->post('username'));
+      $migrator->set('password', $this->request->post('password'));
+      $migrator->set('prefix', $this->request->post('prefix'));
+      if ($migrator->connect())
+      {
+        if ($migrator->migrate_pages() AND $migrator->migrate_posts() AND $migrator->migrate_comments())
+        {
+          $this->redirect('install/finished');
+        }
+      }
+    }
+    $this->template->model = $migrator;
+  }
 }
