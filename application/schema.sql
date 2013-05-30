@@ -5,7 +5,7 @@ DROP TABLE IF EXISTS `comments`;
 DROP TABLE IF EXISTS `posts`;
 
 CREATE TABLE `posts` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` text NOT NULL,
   `content` longtext NOT NULL,
   `is_draft` int(1) NOT NULL DEFAULT 0,
@@ -15,12 +15,12 @@ CREATE TABLE `posts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `comments` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `author_name` VARCHAR(32) NOT NULL,
   `author_email` VARCHAR(127) NOT NULL,
   `content` mediumtext NOT NULL,
   `posted_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `post_id` int(11) NOT NULL,
+  `post_id` int(11) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
   KEY `post_id` (`post_id`),
   CONSTRAINT `fk_posts_comments` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -33,7 +33,7 @@ CREATE TABLE `comments` (
 DROP TABLE IF EXISTS `pages`;
 
 CREATE TABLE `pages` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` text NOT NULL,
   `content` longtext NOT NULL,
   `is_draft` int(1) NOT NULL DEFAULT 0,
@@ -46,16 +46,17 @@ DROP TABLE IF EXISTS `posts_tags`;
 DROP TABLE IF EXISTS `tags`;
 
 CREATE TABLE `tags` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` text NOT NULL,
   `description` longtext NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `posts_tags` (
-  `post_id` int(10) UNSIGNED NOT NULL,
-  `tag_id` int(10) UNSIGNED NOT NULL,
+  `post_id` int(11) UNSIGNED NOT NULL,
+  `tag_id` int(11) UNSIGNED NOT NULL,
   PRIMARY KEY  (`post_id`,`tag_id`),
+  KEY `fk_post_id` (`post_id`),
   KEY `fk_tag_id` (`tag_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -68,7 +69,7 @@ ALTER TABLE `posts_tags`
 DROP TABLE IF EXISTS `photos`;
 
 CREATE TABLE `photos` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` text NOT NULL,
   `filename` text NOT NULL,
   PRIMARY KEY (`id`)
@@ -77,7 +78,7 @@ CREATE TABLE `photos` (
 DROP TABLE IF EXISTS `notes`;
 
 CREATE TABLE `notes` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` text NOT NULL,
   `content` longtext NOT NULL,
   `posted_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
