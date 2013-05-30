@@ -19,3 +19,6 @@
 [submodule "modules/image"]
 	path = modules/image
 	url = git://github.com/kohana/image.git
+[submodule "ko3-markdown"]
+	path = modules/markdown
+	url = git://github.com/Oreolek/kohana-markdown.git
