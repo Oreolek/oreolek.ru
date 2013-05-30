@@ -32,6 +32,7 @@
           <?php } else { ?>
             <li><a href="<?php echo URL::site('/post/drafts') ?>">Черновики дневника</a></li>
             <li><a href="<?php echo URL::site('/page/drafts') ?>">Черновики страниц</a></li>
+            <li><a href="<?php echo URL::site('/note/index') ?>">Заметки</a></li>
           <?php } ?>
         </ul>
       </div>
