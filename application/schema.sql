@@ -60,7 +60,9 @@ CREATE TABLE `posts_tags` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 ALTER TABLE `posts_tags`
-  ADD CONSTRAINT `posts_tags_fk_posts` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `posts_tags_fk_posts` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE;
+
+ALTER TABLE `posts_tags`
   ADD CONSTRAINT `posts_tags_fk_tags` FOREIGN KEY (`tag_id`) REFERENCES `tags` (`id`) ON DELETE CASCADE;
 
 DROP TABLE IF EXISTS `photos`;
