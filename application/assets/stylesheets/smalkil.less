@@ -2,11 +2,18 @@
 @import 'colors';
 @import 'layout';
 
-.horizontal {
+.vertical {
   li {
-    display: inline;
     list-style-type: none;
     padding-right: @basesize;
+    margin-bottom: @basesize * 0.5;
+  }
+}
+
+.horizontal {
+  .vertical();
+  li {
+    display: inline;
   }
 }
 

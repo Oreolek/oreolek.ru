@@ -6,9 +6,9 @@ body {
 }
 
 .navigation{
+  .col(1);
   ul {
-    .horizontal();
-    .centered();
+    .vertical();
     .text_center;
   }
 }
@@ -17,13 +17,12 @@ body {
   .grid();
 }
 
-.header,
-.navigation, 
-.main_content {
+.header {
   .col(@columns);
 }
 
 .main_content {
+  .col(@columns - 1);
   text-align: justify;
 }
 
