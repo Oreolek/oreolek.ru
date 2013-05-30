@@ -106,6 +106,7 @@ class Controller_Post extends Controller_Layout {
     $this->template = new View('index');
     $this->template->header = Request::factory('header/standard')->post('title','Содержание')->execute();
     $this->template->is_admin = Auth::instance()->logged_in('admin');
+    $this->template->show_date = TRUE;
     $this->template->items = ORM::factory('Post')
       ->where('is_draft', '=', '0')
       ->order_by('posted_at', 'DESC')
@@ -122,6 +123,7 @@ class Controller_Post extends Controller_Layout {
     $this->template->is_admin = Auth::instance()->logged_in('admin');
     $title = 'Cвежие записи';
     $this->template->header = Request::factory('header/standard')->post('title',$title)->execute();
+    $this->template->show_date = TRUE;
     $this->template->items = ORM::factory('Post')
       ->where('is_draft', '=', '0')
       ->order_by('posted_at', 'DESC')

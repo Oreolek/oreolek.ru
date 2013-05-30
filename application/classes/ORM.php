@@ -9,4 +9,12 @@ class ORM extends Kohana_ORM {
   {
     return Arr::get($this->_labels, $field);
   }
+
+  /**
+   * Returns human-readable creation date
+   **/
+  public function creation_date()
+  {
+    return $this->posted_at;
+  }
 }

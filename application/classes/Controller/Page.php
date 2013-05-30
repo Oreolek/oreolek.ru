@@ -31,9 +31,10 @@ class Controller_Page extends Controller_Layout {
     $title = 'Содержание';
     $this->template->header = Request::factory('header/standard')->post('title',$title)->execute();
     $this->template->is_admin = Auth::instance()->logged_in('admin');
+    $this->template->show_date = FALSE;
     $this->template->items = ORM::factory('Page')
       ->where('is_draft', '=', '0')
-      ->order_by('posted_at', 'DESC')
+      ->order_by('name', 'DESC')
       ->find_all(); 
     $this->template->footer = Request::factory('footer/standard')->execute(); 
   }

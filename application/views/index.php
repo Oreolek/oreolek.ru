@@ -8,11 +8,24 @@ if ($is_admin)
 ?>
 <div class="table_index">
 <?php
+$columns = 3;
+if (!isset($show_date) OR $show_date != TRUE)
+{
+  $columns++;
+}
+if (!$is_admin)
+{
+  $columns = $columns + 2;
+}
+
 foreach ($items as $item)
 {
   echo '<div class="table_row">';
-  echo '<div class="date">'. $item->posted_at .'</div>';
-  echo '<a class = "link_view" href = "'.Route::url('default', array('controller' => Request::current()->controller(), 'action' => 'view','id' => $item->id)).'">' . $item->name . '</a>';
+  if (isset($show_date) AND $show_date === TRUE)
+  {
+    echo '<div class="date">'. $item->creation_date() .'</div>';
+  }
+  echo '<a class = "link_view column'.$columns.'" href = "'.Route::url('default', array('controller' => Request::current()->controller(), 'action' => 'view','id' => $item->id)).'">' . $item->name . '</a>';
   if ($is_admin)
   {
     echo '<a class = "link_edit" href = "'.Route::url('default', array('controller' => Request::current()->controller(), 'action' => 'edit','id' => $item->id)).'">Редактировать</a>';
