@@ -6,6 +6,10 @@ Oreolek.
 
 ## Installation
 
+* `git clone` - I assume you are familiar with this command
+* `git submodule init`
+* `git submodule update`
+* Also you may need to init & update submodules for some modules
 * Copy `application/config/database.php.example` to `application/config/database.php` and edit it.
 * Copy `application/config/auth.php.example` to `application/config/auth.php` and edit it.
 * Import SQL schema from schema.sql (autoinstall currently not working)
