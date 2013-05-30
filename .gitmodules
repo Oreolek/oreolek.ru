@@ -15,7 +15,7 @@
 	url = git://github.com/aptgraph/kohana-markdown.git
 [submodule "modules/less"]
 	path = modules/less
-	url = git://github.com/mongeslani/kohana-less.git
+	url = git@github.com:Oreolek/kohana-less.git
 [submodule "modules/kostache"]
 	path = modules/kostache
 	url = git@github.com:zombor/KOstache.git
