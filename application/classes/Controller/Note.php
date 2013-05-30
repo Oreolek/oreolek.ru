@@ -18,9 +18,10 @@ class Controller_Note extends Controller_Layout {
    **/
   public function action_index()
   {
-    $this->template = new View('note/index');
+    $this->template = new View('index');
     $this->template->header = Request::factory('header/standard')->post('title','Заметки')->execute();
-    $this->template->notes = ORM::factory('Note')
+    $this->template->is_admin = TRUE;
+    $this->template->items = ORM::factory('Note')
       ->order_by('posted_at', 'DESC')
       ->find_all(); 
     $this->template->footer = Request::factory('footer/standard')->execute(); 

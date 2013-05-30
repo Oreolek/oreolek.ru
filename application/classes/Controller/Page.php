@@ -27,10 +27,11 @@ class Controller_Page extends Controller_Layout {
    **/
   public function action_index()
   {
-    $this->template = new View('page/index');
+    $this->template = new View('index');
     $title = 'Содержание';
     $this->template->header = Request::factory('header/standard')->post('title',$title)->execute();
-    $this->template->pages = ORM::factory('Page')
+    $this->template->is_admin = Auth::instance()->logged_in('admin');
+    $this->template->items = ORM::factory('Page')
       ->where('is_draft', '=', '0')
       ->order_by('posted_at', 'DESC')
       ->find_all(); 
@@ -114,10 +115,10 @@ class Controller_Page extends Controller_Layout {
    **/
   public function action_drafts()
   {
-    $this->template = new View('page/index');
+    $this->template = new View('index');
     $title = 'Содержание (черновики)';
     $this->template->header = Request::factory('header/standard')->post('title',$title)->execute();
-    $this->template->pages = ORM::factory('Page')
+    $this->template->items = ORM::factory('Page')
       ->where('is_draft', '=', '1')
       ->order_by('posted_at', 'DESC')
       ->find_all(); 

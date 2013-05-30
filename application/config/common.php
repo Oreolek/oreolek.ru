@@ -1,7 +1,7 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
 return array(
- 'title' => 'Личный сайт Александра Яковлева',
+ 'title' => 'Из Тишины',
  'author' => 'Александр Яковлев',
  'uploads_dir' => '/uploads',
  'thumbnail_width' => 200,
