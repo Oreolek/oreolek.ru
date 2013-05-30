@@ -10,15 +10,9 @@
 [submodule "modules/orm"]
 	path = modules/orm
 	url = git://github.com/kohana/orm
-[submodule "modules/markdown"]
-	path = modules/markdown
-	url = git://github.com/aptgraph/kohana-markdown.git
 [submodule "modules/less"]
 	path = modules/less
 	url = git@github.com:Oreolek/kohana-less.git
-[submodule "modules/kostache"]
-	path = modules/kostache
-	url = git@github.com:zombor/KOstache.git
 [submodule "modules/debug-toolbar"]
 	path = modules/debug-toolbar
 	url = git://github.com/biakaveron/debug-toolbar.git
