@@ -58,7 +58,7 @@ class Model_Comment extends ORM
    * short = -1 point
    * etc.
    **/
-  public antispam_check($useragent = '')
+  public function antispam_check($useragent = '')
   {
   }
 }
