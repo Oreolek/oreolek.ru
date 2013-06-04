@@ -1,7 +1,7 @@
 <?php 
 echo $header;
 echo Form::open();
-echo '<p class="warning">Внимание! Вся информация будет перезаписана.</p>';
+echo '<p class="warning">Внимание! Все записи, страницы и комментарии будет перезаписаны данными из Wordpress.</p>';
 if ($errors)
 {
   echo '<p class="message">При проверке формы были найдены ошибки:</p>';
