@@ -21,6 +21,7 @@ CREATE TABLE `comments` (
   `content` mediumtext NOT NULL,
   `posted_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `post_id` int(11) UNSIGNED NOT NULL,
+  `is_approved` int(1) UNSIGNED NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   KEY `post_id` (`post_id`),
   CONSTRAINT `fk_posts_comments` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
