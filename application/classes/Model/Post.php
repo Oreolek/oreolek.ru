@@ -16,7 +16,10 @@ class Model_Post extends ORM {
       ),
       'draft' => array(
         array('numeric')
-      )
+      ),
+      'posted_at' => array(
+        array('date')
+      ),
 		);
 	}
 
@@ -38,6 +41,7 @@ class Model_Post extends ORM {
   protected $_labels = array(
     'name' => 'Заголовок',
     'content' => 'Текст записи',
-    'is_draft' => 'Черновик'
+    'is_draft' => 'Черновик',
+    'posted_at' => 'Дата',
   );
 }

@@ -17,4 +17,20 @@ class ORM extends Kohana_ORM {
   {
     return $this->posted_at;
   }
+
+  /**
+   * Create validation object from model rules.
+   * @param array $_POST data
+   * @return Validation
+   **/
+  public function validate_create($post_data) 
+	{
+		$validation = Validation::factory($post_data);
+    $rules = $this->rules();
+    foreach ($rules as $field => $rules)
+    {
+      $validation->rules($field, $rules);
+    }
+		return $validation;
+	}
 }

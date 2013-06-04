@@ -49,6 +49,7 @@ class Controller_Post extends Controller_Layout {
     $id = $this->request->param('id');
     $post = ORM::factory('Post', $id);
     if (!$post->loaded()) $this->redirect('error/404');
+
     $this->template->errors = array();
     $tag_models = $post->tags->find_all();
     $this->template->tags = '';
@@ -67,33 +68,47 @@ class Controller_Post extends Controller_Layout {
       $post->content = $this->request->post('content');
       $post->name = $this->request->post('name');
       $post->is_draft = $this->request->post('is_draft');
+      $post->posted_at = $this->request->post('posted_at');
       $tags = $this->request->post('tags');
-      try {
-        if ($post->check()) $post->update();
+      $validation = $post->validate_create($this->request->post());
+      try
+      {
+        if ($validation->check())
+        {
+          $post->update();
+        }
+        else
+        {
+          $this->template->errors = $validation->errors('default');
+        }
       }
       catch (ORM_Validation_Exception $e)
       {
-        $this->template->errors = $e->errors();
+        $this->template->errors = $e->errors('default');
       }
       if (empty($this->template->errors))
       {
-        $tags = explode(',', $tags);
-        //adding new tags
-        foreach ($tags as $tag)
+        if (!empty($tags))
         {
-          $model = ORM::factory('Tag')->where('name', '=', 'lower('.trim($tag).')')->find();
-          if (!$model->loaded())
+          $tags = explode(',', $tags);
+          //adding new tags
+          foreach ($tags as $tag)
           {
-            $model = ORM::factory('Tag');
-            $model->name = trim($tag);
-            $model->create();
+            $model = ORM::factory('Tag')->where('name', '=', 'lower('.trim($tag).')')->find();
+            if (!$model->loaded())
+            {
+              $model = ORM::factory('Tag');
+              $model->name = trim($tag);
+              $model->create();
+            }
+            $post->add('tags', $model->id);
           }
-          $post->add('tags', $model->id);
-        }
-        //deleting unused tags
-        foreach ($tag_models as $tag)
-        {
-          if (!array_search($tag->name, $tags)) $post->remove('tags', $tag->id);
+          
+          //deleting unused tags
+          foreach ($tag_models as $tag)
+          {
+            if (!array_search($tag->name, $tags)) $post->remove('tags', $tag->id);
+          }
         }
         $this->redirect('post/view/' . $post->id);
       }
@@ -144,18 +159,18 @@ class Controller_Post extends Controller_Layout {
       ->limit(10)
       ->find_all(); 
     $info = array(
-      'title' => Kohana::$config->load('common.title'),
-      'author' => Kohana::$config->load('common.author'),
-      'pubDate' => $posts[0]->posted_at,
-    );
+        'title' => Kohana::$config->load('common.title'),
+        'author' => Kohana::$config->load('common.author'),
+        'pubDate' => $posts[0]->posted_at,
+        );
     $items = array();
     foreach ($posts as $post)
     {
       array_push($items, array(
-        'title' => $post->name,
-        'description' => Markdown::instance()->transform($post->content),
-        'link' => 'post/view/' . $post->id,
-      ));
+            'title' => $post->name,
+            'description' => Markdown::instance()->transform($post->content),
+            'link' => 'post/view/' . $post->id,
+            ));
     }
     $this->response->body( Feed::create($info, $items) );
   }
@@ -184,7 +199,7 @@ class Controller_Post extends Controller_Layout {
    **/
   public function action_create()
   {
-    $this->template = new View('post/create');
+    $this->template = new View('post/edit');
     $title = 'Новая запись';
     $this->template->header = Request::factory('header/standard')->post('title',$title)->execute();
     $this->template->errors = array();
@@ -194,6 +209,7 @@ class Controller_Post extends Controller_Layout {
       $post->content = $this->request->post('content');
       $post->name = $this->request->post('name');
       $post->is_draft = $this->request->post('is_draft');
+      $post->posted_at = $this->request->post('posted_at');
       $tags = $this->request->post('tags');
       try {
         if ($post->check()) $post->create();
@@ -208,35 +224,35 @@ class Controller_Post extends Controller_Layout {
         foreach ($tags as $tag)
         {
           $model = ORM::factory('Tag')->where('name', '=', 'lower('.trim($tag).')')->find();
-          if (!$model->loaded())
-          {
-            $model = ORM::factory('Tag');
-            $model->name = trim($tag);
-            $model->create();
-          }
-          $post->add('tags', $model->id);
-        }
-        $this->redirect('post/view/' . $post->id);
-      }
-    }
-    $this->template->post = $post;
-    $this->template->tags = $tags;
-    $this->template->footer = Request::factory('footer/standard')->execute(); 
-  }
+              if (!$model->loaded())
+              {
+              $model = ORM::factory('Tag');
+              $model->name = trim($tag);
+              $model->create();
+              }
+              $post->add('tags', $model->id);
+              }
+              $this->redirect('post/view/' . $post->id);
+              }
+              }
+              $this->template->post = $post;
+              $this->template->tags = $tags;
+              $this->template->footer = Request::factory('footer/standard')->execute(); 
+              }
 
-  /**
-   * Draft index
-   **/
-  public function action_drafts()
-  {
-    $this->template = new View('index');
-    $title = 'Содержание дневника (черновики)';
-    $this->template->header = Request::factory('header/standard')->post('title',$title)->execute();
-    $this->template->is_admin = true; //this action is restricted to admin
-    $this->template->items = ORM::factory('Post')
-      ->where('is_draft', '=', '1')
-      ->order_by('posted_at', 'DESC')
-      ->find_all(); 
-    $this->template->footer = Request::factory('footer/standard')->execute(); 
-  }
+              /**
+               * Draft index
+               **/
+              public function action_drafts()
+              {
+                $this->template = new View('index');
+                $title = 'Содержание дневника (черновики)';
+                $this->template->header = Request::factory('header/standard')->post('title',$title)->execute();
+                $this->template->is_admin = true; //this action is restricted to admin
+                $this->template->items = ORM::factory('Post')
+                  ->where('is_draft', '=', '1')
+                  ->order_by('posted_at', 'DESC')
+                  ->find_all(); 
+                $this->template->footer = Request::factory('footer/standard')->execute(); 
+              }
 }

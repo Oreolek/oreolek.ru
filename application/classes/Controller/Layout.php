@@ -14,11 +14,11 @@ class Controller_Layout extends Controller_Template {
     {
       if (Auth::instance()->logged_in())
       {
-        Request::instance()->redirect('error/403');
+        $this->redirect('error/403');
       }
       else
       {
-        Request::instance()->redirect('user/signin');
+        $this->redirect('user/signin');
       }
     }
     if ($this->auto_render)
