@@ -60,6 +60,10 @@ class Model_Migrator_Wordpress extends Model_Migrator {
       
     foreach ($wp_comments as $comment)
     {
+      if ($comment['comment_post_ID'] === '0')
+      {
+        continue;
+      }
       DB::insert($table, array('post_id', 'author_name', 'author_email', 'content', 'posted_at', 'is_approved'))
         ->values(array(
           $comment['comment_post_ID'],
