@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <title>{{title}}</title>
+    <meta charset="utf-8">
+    <link href='{{favicon}}' rel='shortcut icon' type='image/x-icon'/>
+    {{{stylesheet}}}
+    {{{scripts}}}
+   </head>
+  <body>
+    <div class = "container">
+      <div class = "header text_center">
+        <h1>{{site_title}}</h1>
+      </div>
+      <div class = "navigation">
+        <ul>
+         {{#navigation}}
+         <li><a href="{{url}}">{{title}}</a></li> 
+         {{/navigation}}
+        </ul>
+      </div>
+      <div class = "main_content">
+        <h2>{{title}}</h2>
+        {{>content}}
+      </div>
+      <div class="footer">Автор материалов и движка &mdash; Oreolek. Сайт сделан на фреймворке Kohana.</div>
+    </div>
+  </body>
+</html>

@@ -3,10 +3,10 @@
 /**
  * Контроллер вида оглавлений
  **/
-class View_Index {
+class View_Index extends View_Layout {
   public $show_date = TRUE;
   public $items = NULL;
- 
+
   public function get_items()
   {
     $result = array();
@@ -37,15 +37,6 @@ class View_Index {
       array_push($result, $output);
     }
     return $result;
-  }
-  public function header()
-  {
-    return Request::factory('header/standard')->post('title','Содержание')->execute();
-  }
-
-  public function footer()
-  {
-    return Request::factory('footer/standard')->execute();
   }
   
   protected function view_link_colwidth()

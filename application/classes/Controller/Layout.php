@@ -2,6 +2,9 @@
 
 class Controller_Layout extends Controller {
   protected $secure_actions = FALSE;
+  public $auto_render = TRUE;
+  public $template = '';
+
   public function before()
   {
     parent::before();
@@ -20,6 +23,14 @@ class Controller_Layout extends Controller {
       {
         $this->redirect('user/signin');
       }
+    }
+  }
+  public function after()
+  {
+    if ($this->auto_render)
+    {
+      $renderer = Kostache_Layout::factory('layout');
+      $this->response->body($renderer->render($this->template));
     }
   }
 }

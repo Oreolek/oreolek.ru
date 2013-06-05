@@ -1,7 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
 class Controller_Post extends Controller_Layout {
-  public $template = 'post/view';
   protected $secure_actions = array(
     'drafts' => array('login','admin'),
     'create' => array('login','admin'),
@@ -118,14 +117,12 @@ class Controller_Post extends Controller_Layout {
 
   public function action_index()
   {
-    $view = new View_Index;
-    $view->show_date = TRUE;
-    $view->items = ORM::factory('Post')
+    $this->template = new View_Index;
+    $this->template->show_date = TRUE;
+    $this->template->items = ORM::factory('Post')
       ->where('is_draft', '=', '0')
       ->order_by('posted_at', 'DESC')
       ->find_all();
-    $renderer = Kostache::factory();
-    $this->response->body($renderer->render($view));
   }
 
   /**
