@@ -118,15 +118,14 @@ class Controller_Post extends Controller_Layout {
 
   public function action_index()
   {
-    $this->template = new View('index');
-    $this->template->header = Request::factory('header/standard')->post('title','Содержание')->execute();
-    $this->template->is_admin = Auth::instance()->logged_in('admin');
-    $this->template->show_date = TRUE;
-    $this->template->items = ORM::factory('Post')
+    $view = new View_Index;
+    $view->show_date = TRUE;
+    $view->items = ORM::factory('Post')
       ->where('is_draft', '=', '0')
       ->order_by('posted_at', 'DESC')
-      ->find_all(); 
-    $this->template->footer = Request::factory('footer/standard')->execute(); 
+      ->find_all();
+    $renderer = Kostache::factory();
+    $this->response->body($renderer->render($view));
   }
 
   /**

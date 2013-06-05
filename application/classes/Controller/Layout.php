@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-class Controller_Layout extends Controller_Template {
+class Controller_Layout extends Controller {
   protected $secure_actions = FALSE;
   public function before()
   {
@@ -20,10 +20,6 @@ class Controller_Layout extends Controller_Template {
       {
         $this->redirect('user/signin');
       }
-    }
-    if ($this->auto_render)
-    {
-      $this->template->footer = Request::factory('footer/standard')->execute();
     }
   }
 }
