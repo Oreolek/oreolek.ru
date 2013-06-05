@@ -4,17 +4,24 @@
  * Контроллер шаблона вёрстки
  **/
 class View_Layout {
+  public $_view = NULL;
   public $title = '';
   public $scripts = array();
   public $base_scripts = array(
     'hyphenator.min.js'
   );
+  public $errors;
+  
+  public function has_errors()
+  {
+    return !empty($this->errors);
+  }
 
   public function site_title()
   {
     if (Auth::instance()->logged_in())
     {
-      return 'Добро пожаловать, '.Auth::instance()->user->username;
+      return 'Добро пожаловать, '.Auth::instance()->get_user()->username;
     }
     else
     {
@@ -55,7 +62,7 @@ class View_Layout {
       'Список страниц' => 'page/index',
       'О сайте' => 'page/view/1'
     );
-    if (Auth::instance()->logged_in())
+    if (!Auth::instance()->logged_in())
     {
       $navigation = array_merge($navigation, array('Вход' => 'user/signin'));
     }

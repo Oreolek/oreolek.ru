@@ -1,0 +1,11 @@
+<form method="POST">
+{{#has_errors}}
+  <p class="message">При проверке формы были найдены ошибки:</p>
+  <ul class="errors">
+    {{#errors}}
+    <li>{{.}}</li>
+    {{/errors}}
+  </ul>
+{{/has_errors}}
+{{{get_controls}}}
+</form>

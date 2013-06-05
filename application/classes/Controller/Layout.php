@@ -30,7 +30,7 @@ class Controller_Layout extends Controller {
     if ($this->auto_render)
     {
       $renderer = Kostache_Layout::factory('layout');
-      $this->response->body($renderer->render($this->template));
+      $this->response->body($renderer->render($this->template, $this->template->_view));
     }
   }
 }

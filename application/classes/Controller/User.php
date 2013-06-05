@@ -5,7 +5,6 @@
  * Only sign in and edit. The only administration user is created in the install process.
  **/
 class Controller_User extends Controller_Layout {
-  public $template = 'signin';
   protected $secure_actions = array(
 		'edit' => array('login'),
   );
@@ -13,8 +12,13 @@ class Controller_User extends Controller_Layout {
   public function action_signin()
   {
     if (Auth::instance()->logged_in()) $this->redirect('post/index');
-    $this->template->header = Request::factory('header/standard')->post('title', 'Вход на сайт')->execute();
+    $this->template = new View_Edit;
+    $this->template->title = 'Вход в систему';
     $this->template->errors = array();
+    $this->template->controls = array(
+      'username' => 'input',
+      'password' => 'password'
+    );
     if (HTTP_Request::POST == $this->request->method()) {
       $validation = Validation::factory($this->request->post())
         ->rules('username', array(

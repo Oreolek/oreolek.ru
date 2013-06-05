@@ -1,7 +1,26 @@
 <?php defined('SYSPATH') or die('No direct script access.'); 
  
 class Form extends Kohana_Form {
-  public static function orm_input($model, $name, array $attributes = NULL)
+  public static function orm_input($model, $name, $type, array $attributes = NULL)
+  {
+    switch($type)
+    {
+      case 'check':
+      case 'chck':
+      case 'checkbox':
+        return self::orm_checkbox($model, $name, $attributes);
+      case 'password':
+        return self::orm_password($model, $name, $attributes);
+      case 'text':
+      case 'textarea':
+        return self::orm_textarea($model, $name, $attributes);
+      case 'password':
+        return self::orm_password($model, $name, $attributes);
+      default:
+        return self::orm_textinput($model, $name, $attributes);
+    }
+  }
+  public static function orm_textinput($model, $name, array $attributes = NULL)
   {
     $html = '<div class="container">';
     $html .= self::label($name, $model->get_label($name));

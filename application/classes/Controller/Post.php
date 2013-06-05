@@ -12,57 +12,35 @@ class Controller_Post extends Controller_Layout {
    **/
   public function action_view()
   {
-    $this->template = new View('post/view');
+    $this->template = new View_Post_View;
     $id = $this->request->param('id');
     $post = ORM::factory('Post', $id);
     if (!$post->loaded()) $this->redirect('error/404');
     if ($post->is_draft == true AND !Auth::instance()->logged_in('admin')) $this->redirect('error/403');
-    $title = $post->name;
-    if ($post->is_draft) $title .= ' (черновик)';
-    $this->template->header = Request::factory('header/standard')->post('title',$title)->execute();
-    $tags = $post->tags->find_all();
-    $this->template->tags = '';
-    if (count($tags) > 0)
-    {
-      $this->template->tags = 'Теги: ';
-      $i = 0;
-      foreach ($tags as $tag)
-      {
-        if ($i > 0) $this->template->tags .= ', ';
-        $this->template->tags .= '<a href="'.URL::site('tag/view/'.$tag->id).'">'.$tag->name.'</a>';
-        $i++;
-      }
-    }
-    $this->template->comments = Request::factory('comment/view/' . $id)->execute();
-    $this->template->create_comment = Request::factory('comment/create/' . $id)->execute();
+    $this->template->title = $post->name;
+    if ($post->is_draft) $this->template->title .= ' (черновик)';
+    $this->template->id = $post->id;
+    $this->template->tags = $post->tags->find_all();
     $this->template->content = Markdown::instance()->transform($post->content);
-    $this->template->footer = Request::factory('footer/standard')->execute(); 
   }
 
   public function action_edit()
   {
-    $this->template = new View('post/edit');
-    $title = 'Редактирование записи';
-    $this->template->header = Request::factory('header/standard')->post('title',$title)->execute();
-    $this->template->footer = Request::factory('footer/standard')->execute(); 
+    $this->template = new View_Post_Edit;
+    $this->template->title = 'Редактирование записи';
     $id = $this->request->param('id');
     $post = ORM::factory('Post', $id);
     if (!$post->loaded()) $this->redirect('error/404');
 
     $this->template->errors = array();
-    $tag_models = $post->tags->find_all();
-    $this->template->tags = '';
-    if (count($tag_models) > 0)
-    {
-      $this->template->tags = 'Теги: ';
-      $i = 0;
-      foreach ($tag_models as $tag)
-      {
-        if ($i > 0) $this->template->tags .= ', ';
-        $this->template->tags .= $tag->name;
-        $i++;
-      }
-    }
+    $this->template->tags = $post->tags->find_all();
+    $this->template->controls = array(
+      'name' => 'input',
+      'content' => 'text',
+      'is_draft' => 'checkbox',
+      'posted_at' => 'input',
+    );
+    
     if (HTTP_Request::POST == $this->request->method()) {
       $post->content = $this->request->post('content');
       $post->name = $this->request->post('name');
@@ -112,13 +90,12 @@ class Controller_Post extends Controller_Layout {
         $this->redirect('post/view/' . $post->id);
       }
     }
-    $this->template->post = $post;
+    $this->template->model = $post;
   }
 
   public function action_index()
   {
     $this->template = new View_Index;
-    $this->template->show_date = TRUE;
     $this->template->items = ORM::factory('Post')
       ->where('is_draft', '=', '0')
       ->order_by('posted_at', 'DESC')
@@ -130,17 +107,13 @@ class Controller_Post extends Controller_Layout {
    **/
   public function action_fresh()
   {
-    $this->template = new View('index');
-    $this->template->is_admin = Auth::instance()->logged_in('admin');
-    $title = 'Cвежие записи';
-    $this->template->header = Request::factory('header/standard')->post('title',$title)->execute();
-    $this->template->show_date = TRUE;
+    $this->template = new View_Index;
+    $this->template->title = 'Cвежие записи';
     $this->template->items = ORM::factory('Post')
       ->where('is_draft', '=', '0')
       ->order_by('posted_at', 'DESC')
       ->limit(10)
       ->find_all(); 
-    $this->template->footer = Request::factory('footer/standard')->execute(); 
   }
 
   /**
