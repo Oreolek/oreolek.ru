@@ -26,23 +26,20 @@ class Controller_Note extends Controller_Layout {
       ->find_all(); 
   }
 
-
   /**
    * View a note.
    **/
   public function action_view()
   {
-    $this->template = new View('note/view');
+    $this->template = new View_Note_View;
     $id = $this->request->param('id');
     $note = ORM::factory('Note', $id);
     if (!$note->loaded())
     {
       $this->redirect('error/404');
     }
-    $title = $note->name;
-    $this->template->header = Request::factory('header/standard')->post('title',$title)->execute();
+    $this->template->title = $note->name;
     $this->template->content = Markdown::instance()->transform($note->content);
-    $this->template->footer = Request::factory('footer/standard')->execute(); 
   }
 
   public function action_edit()
@@ -82,18 +79,16 @@ class Controller_Note extends Controller_Layout {
 
   public function action_delete()
   {
-    $this->template = new View('post/delete');
+    $this->template = new View_Delete;
     $id = $this->request->param('id');
     $note = ORM::factory('Note', $id);
     if (!$note->loaded())
     {
       $this->redirect('error/404');
     }
-    $title = 'Удаление записки';
-    $this->template->header = Request::factory('header/standard')->post('title',$title)->execute();
-    $this->template->title = $note->name;
+    $this->template->title = 'Удаление записки';
+    $this->template->content_title = $note->name;
     $this->template->content = Markdown::instance()->transform($note->content);
-    $this->template->footer = Request::factory('footer/standard')->execute(); 
 
     $confirmation = $this->request->post('confirmation');
     if ($confirmation === 'yes') {

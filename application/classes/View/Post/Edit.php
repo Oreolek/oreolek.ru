@@ -1,7 +1,7 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
 /**
- * Контроллер вида оглавлений
+ * Edit post view controller
  **/
 class View_Post_Edit extends View_Edit {
   public $_view = 'edit';

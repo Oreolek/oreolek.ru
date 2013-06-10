@@ -1,11 +1,21 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
 /**
- * Контроллер вида оглавлений
+ * Post view controller.
  **/
 class View_Post_View extends View_Layout {
+  /**
+   * Post tag array.
+   **/
   public $tags;
+  /**
+   * Post ID
+   **/
   public $id;
+  /**
+   * Post comments
+   **/
+  public $comments;
 
   public function get_tags()
   {
@@ -23,13 +33,38 @@ class View_Post_View extends View_Layout {
     return $output;
   }
 
-  public function create_comment()
+  public function get_comments()
   {
-    return Request::factory('comment/create/' . $this->id)->execute();
+    $result = array();
+    foreach ($this->comments as $comment)
+    {
+      $comment_out = array(
+        'content' => $comment->content,
+        'author_email' => $comment->author_email,
+        'author_name' => $comment->author_name
+      );
+      $result = array_push($result, $comment_out);
+    }
+    return $result;
   }
 
-  public function comments()
+  /**
+   * URL for posting comments
+   **/
+  public function comment_action()
   {
-    return Request::factory('comment/view/' . $this->id)->execute();
+    return URL::site('comment/create/'.$this->id);
+  }
+  /**
+   * Generates ORM inputs for empty comment
+   **/
+  public function get_comment_inputs()
+  {
+    $comment = ORM::factory('Comment');
+    $inputs = array();
+    $inputs['author_email'] = Form::orm_textinput($comment, 'author_email');
+    $inputs['author_name'] = Form::orm_textinput($comment, 'author_name');
+    $inputs['content'] = Form::orm_textarea($comment, 'content');
+    return $inputs;
   }
 }

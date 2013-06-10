@@ -24,7 +24,6 @@ class Controller_Page extends Controller_Layout {
     {
       $this->redirect('error/403');
     }
-    $this->template->title = $page->name;
     if ($page->is_draft) $this->template->title .= ' (черновик)';
     $this->template->content = Markdown::instance()->transform($page->content);
   }
@@ -43,15 +42,16 @@ class Controller_Page extends Controller_Layout {
   }
   public function action_delete()
   {
-    $this->template = new View('page/delete');
+    $this->template = new View_Delete;
     $id = $this->request->param('id');
     $page = ORM::factory('Page', $id);
-    if (!$page->loaded()) $this->redirect('error/404');
-    $title = 'Удаление страницы';
-    $this->template->header = Request::factory('header/standard')->post('title',$title)->execute();
-    $this->template->page_title = $page->name;
-    $this->template->page_content = Markdown::instance()->transform($page->content);
-    $this->template->footer = Request::factory('footer/standard')->execute(); 
+    if (!$page->loaded())
+    {
+      $this->redirect('error/404');
+    }
+    $this->template->title = 'Удаление страницы';
+    $this->template->content_title = $page->name;
+    $this->template->content = Markdown::instance()->transform($page->content);
 
     $confirmation = $this->request->post('confirmation');
     if ($confirmation === 'yes') {

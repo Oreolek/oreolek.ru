@@ -22,6 +22,11 @@ class Controller_Post extends Controller_Layout {
     $this->template->id = $post->id;
     $this->template->tags = $post->tags->find_all();
     $this->template->content = Markdown::instance()->transform($post->content);
+    $this->template->comments = ORM::factory('Comment')
+      ->where('post_id', '=', $post->id)
+      ->where('is_approved', '=', Model_Comment::STATUS_APPROVED)
+      ->order_by('posted_at', 'DESC')
+      ->find_all();
   }
 
   public function action_edit()
@@ -146,15 +151,13 @@ class Controller_Post extends Controller_Layout {
 
   public function action_delete()
   {
-    $this->template = new View('post/delete');
+    $this->template = new View_Delete;
     $id = $this->request->param('id');
     $post = ORM::factory('Post', $id);
     if (!$post->loaded()) $this->redirect('error/404');
-    $title = 'Удаление записи дневника';
-    $this->template->header = Request::factory('header/standard')->post('title',$title)->execute();
-    $this->template->title = $post->name;
+    $this->template->title = 'Удаление записи дневника';
+    $this->template->content_title = $post->name;
     $this->template->content = Markdown::instance()->transform($post->content);
-    $this->template->footer = Request::factory('footer/standard')->execute(); 
 
     $confirmation = $this->request->post('confirmation');
     if ($confirmation === 'yes') {
@@ -168,12 +171,17 @@ class Controller_Post extends Controller_Layout {
    **/
   public function action_create()
   {
-    $this->template = new View('post/edit');
-    $title = 'Новая запись';
-    $this->template->header = Request::factory('header/standard')->post('title',$title)->execute();
+    $this->template = new View_Post_Edit;
+    $this->template->title = 'Новая запись';
     $this->template->errors = array();
     $post = ORM::factory('Post');
-    $tags = '';
+    $this->template->controls = array(
+      'name' => 'input',
+      'content' => 'text',
+      'is_draft' => 'checkbox',
+      'posted_at' => 'input',
+    );
+    $tags = array();
     if (HTTP_Request::POST == $this->request->method()) {
       $post->content = $this->request->post('content');
       $post->name = $this->request->post('name');
@@ -181,7 +189,10 @@ class Controller_Post extends Controller_Layout {
       $post->posted_at = $this->request->post('posted_at');
       $tags = $this->request->post('tags');
       try {
-        if ($post->check()) $post->create();
+        if ($post->check())
+        {
+          $post->create();
+        }
       }
       catch (ORM_Validation_Exception $e)
       {
@@ -189,37 +200,39 @@ class Controller_Post extends Controller_Layout {
       }
       if (empty($this->template->errors))
       {
-        $tags = explode(',', $tags);
-        foreach ($tags as $tag)
+        if (!empty($tags))
         {
-          $model = ORM::factory('Tag')->where('name', '=', 'lower('.trim($tag).')')->find();
-              if (!$model->loaded())
-              {
+          $tags = explode(',', $tags);
+          foreach ($tags as $tag)
+          {
+            $model = ORM::factory('Tag')->where('name', '=', 'lower('.trim($tag).')')->find();
+            if (!$model->loaded())
+            {
               $model = ORM::factory('Tag');
               $model->name = trim($tag);
               $model->create();
-              }
-              $post->add('tags', $model->id);
-              }
-              $this->redirect('post/view/' . $post->id);
-              }
-              }
-              $this->template->post = $post;
-              $this->template->tags = $tags;
-              $this->template->footer = Request::factory('footer/standard')->execute(); 
-              }
+            }
+            $post->add('tags', $model->id);
+          }
+        }
+        $this->redirect('post/view/' . $post->id);
+      }
+    }
+    $this->template->model = $post;
+    $this->template->tags = $tags;
+  }
 
-              /**
-               * Draft index
-               **/
-              public function action_drafts()
-              {
-                $this->template = new View_Index;
+  /**
+   * Draft index
+   **/
+  public function action_drafts()
+  {
+    $this->template = new View_Index;
     $this->template->title = 'Содержание дневника (черновики)';
     $this->template->items = ORM::factory('Post')
       ->where('is_draft', '=', '1')
       ->order_by('posted_at', 'DESC')
       ->limit(10)
       ->find_all(); 
-              }
+  }
 }

@@ -2,7 +2,21 @@
   {{{content}}}
   <div class="comment_section">
     {{get_tags}}
-    {{{comments}}}
-    {{{create_comment}}}
+    {{#get_comments}}
+      <div class="comment">
+        <a class="author" href="mailto:'{{author_email}}">'{{author_name}}</a>
+        <div class="content">'{{content}}</div>
+      </div>
+    {{/get_comments}}
+    <form method="POST" action="{{comment_action}}">
+      <input type="hidden" name="email">
+      <input type="hidden" name="post_id" value="{{id}}">
+      {{#get_comment_inputs}}
+        {{{author_name}}}
+        {{{author_email}}}
+        {{{content}}}
+      {{/get_comment_inputs}}
+      <input type="submit" value="Отправить">
+    </form>
   </div>
 </div>
