@@ -214,14 +214,12 @@ class Controller_Post extends Controller_Layout {
                **/
               public function action_drafts()
               {
-                $this->template = new View('index');
-                $title = 'Содержание дневника (черновики)';
-                $this->template->header = Request::factory('header/standard')->post('title',$title)->execute();
-                $this->template->is_admin = true; //this action is restricted to admin
-                $this->template->items = ORM::factory('Post')
-                  ->where('is_draft', '=', '1')
-                  ->order_by('posted_at', 'DESC')
-                  ->find_all(); 
-                $this->template->footer = Request::factory('footer/standard')->execute(); 
+                $this->template = new View_Index;
+    $this->template->title = 'Содержание дневника (черновики)';
+    $this->template->items = ORM::factory('Post')
+      ->where('is_draft', '=', '1')
+      ->order_by('posted_at', 'DESC')
+      ->limit(10)
+      ->find_all(); 
               }
 }

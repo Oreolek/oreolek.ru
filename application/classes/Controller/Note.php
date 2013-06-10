@@ -18,14 +18,12 @@ class Controller_Note extends Controller_Layout {
    **/
   public function action_index()
   {
-    $this->template = new View('index');
-    $this->template->header = Request::factory('header/standard')->post('title','Заметки')->execute();
-    $this->template->is_admin = TRUE;
+    $this->template = new View_Index;
+    $this->template->title = 'Заметки';
     $this->template->show_date = FALSE;
     $this->template->items = ORM::factory('Note')
       ->order_by('name', 'DESC')
       ->find_all(); 
-    $this->template->footer = Request::factory('footer/standard')->execute(); 
   }
 
 

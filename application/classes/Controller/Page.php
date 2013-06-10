@@ -13,13 +13,19 @@ class Controller_Page extends Controller_Layout {
    **/
   public function action_view()
   {
+    $this->template = new View_Page_View;
     $id = $this->request->param('id');
     $page = ORM::factory('Page', $id);
-    if (!$page->loaded()) $this->redirect('error/404');
-    if ($page->is_draft == true AND !Auth::instance()->logged_in('admin')) $this->redirect('error/403');
-    $title = $page->name;
-    if ($page->is_draft) $title .= ' (черновик)';
-    $this->template->header = Request::factory('header/standard')->post('title',$title)->execute();
+    if (!$page->loaded())
+    {
+      $this->redirect('error/404');
+    }
+    if ($page->is_draft == true AND !Auth::instance()->logged_in('admin'))
+    {
+      $this->redirect('error/403');
+    }
+    $this->template->title = $page->name;
+    if ($page->is_draft) $this->template->title .= ' (черновик)';
     $this->template->content = Markdown::instance()->transform($page->content);
   }
   /**
@@ -27,16 +33,13 @@ class Controller_Page extends Controller_Layout {
    **/
   public function action_index()
   {
-    $this->template = new View('index');
-    $title = 'Содержание';
-    $this->template->header = Request::factory('header/standard')->post('title',$title)->execute();
-    $this->template->is_admin = Auth::instance()->logged_in('admin');
+    $this->template = new View_Index;
+    $this->template->title = 'Содержание';
     $this->template->show_date = FALSE;
     $this->template->items = ORM::factory('Page')
       ->where('is_draft', '=', '0')
       ->order_by('name', 'DESC')
       ->find_all(); 
-    $this->template->footer = Request::factory('footer/standard')->execute(); 
   }
   public function action_delete()
   {
@@ -116,13 +119,12 @@ class Controller_Page extends Controller_Layout {
    **/
   public function action_drafts()
   {
-    $this->template = new View('index');
-    $title = 'Содержание (черновики)';
-    $this->template->header = Request::factory('header/standard')->post('title',$title)->execute();
+    $this->template = new View_Index;
+    $this->template->title = 'Содержание (черновики)';
+    $this->template->show_date = FALSE;
     $this->template->items = ORM::factory('Page')
       ->where('is_draft', '=', '1')
-      ->order_by('posted_at', 'DESC')
+      ->order_by('name', 'DESC')
       ->find_all(); 
-    $this->template->footer = Request::factory('footer/standard')->execute(); 
   }
 }
