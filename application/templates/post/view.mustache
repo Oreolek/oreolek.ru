@@ -1,11 +1,11 @@
 <div class="hyphenate">
   {{{content}}}
   <div class="comment_section">
-    {{get_tags}}
+    {{{get_tags}}}
     {{#get_comments}}
       <div class="comment">
         <a class="author" href="mailto:'{{author_email}}">'{{author_name}}</a>
-        <div class="content">'{{content}}</div>
+        <div class="content">'{{{content}}}</div>
       </div>
     {{/get_comments}}
     <form method="POST" action="{{comment_action}}">

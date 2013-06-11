@@ -44,10 +44,12 @@ class Controller_Note extends Controller_Layout {
 
   public function action_edit()
   {
-    $this->template = new View('note/edit');
-    $title = 'Редактирование заметки';
-    $this->template->header = Request::factory('header/standard')->post('title',$title)->execute();
-    $this->template->footer = Request::factory('footer/standard')->execute(); 
+    $this->template = new View_Edit;
+    $this->template->title = 'Редактирование заметки';
+    $this->template->controls = array(
+      'name' => 'input',
+      'content' => 'text',
+    );
     $note = ORM::factory('Note', $this->request->param('id'));
     if (!$note->loaded())
     {
@@ -74,7 +76,7 @@ class Controller_Note extends Controller_Layout {
         $this->redirect('note/view/' . $note->id);
       }
     }
-    $this->template->note = $note;
+    $this->template->model = $note;
   }
 
   public function action_delete()
@@ -102,9 +104,12 @@ class Controller_Note extends Controller_Layout {
    **/
   public function action_create()
   {
-    $this->template = new View('note/edit');
-    $title = 'Новая записка';
-    $this->template->header = Request::factory('header/standard')->post('title',$title)->execute();
+    $this->template = new View_Edit;
+    $this->template->title = 'Новая записка';
+    $this->template->controls = array(
+      'name' => 'input',
+      'content' => 'text',
+    );
     $this->template->errors = array();
     $note = ORM::factory('Note');
     if (HTTP_Request::POST == $this->request->method()) {
@@ -125,7 +130,6 @@ class Controller_Note extends Controller_Layout {
         $this->redirect('note/view/'.$note->id);
       }
     }
-    $this->template->note = $note;
-    $this->template->footer = Request::factory('footer/standard')->execute(); 
+    $this->template->model = $note;
   }
 }

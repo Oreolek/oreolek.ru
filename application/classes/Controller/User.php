@@ -8,10 +8,16 @@ class Controller_User extends Controller_Layout {
   protected $secure_actions = array(
 		'edit' => array('login'),
   );
-  public function action_view(){$this->redirect('');}
+  public function action_view()
+  {
+    $this->redirect('');
+  }
   public function action_signin()
   {
-    if (Auth::instance()->logged_in()) $this->redirect('post/index');
+    if (Auth::instance()->logged_in())
+    {
+      $this->redirect('post/index');
+    }
     $this->template = new View_Edit;
     $this->template->title = 'Вход в систему';
     $this->template->errors = array();
@@ -19,7 +25,9 @@ class Controller_User extends Controller_Layout {
       'username' => 'input',
       'password' => 'password'
     );
+    $user = ORM::factory('User');
     if (HTTP_Request::POST == $this->request->method()) {
+      $user->username = $this->request->post('username');
       $validation = Validation::factory($this->request->post())
         ->rules('username', array(
           array('not_empty'),
@@ -41,7 +49,7 @@ class Controller_User extends Controller_Layout {
         $this->template->errors = $validation->errors();
       }
     }
-    $this->template->user = ORM::factory('User');
+    $this->template->model = $user;
   }
 
   /**
@@ -49,10 +57,18 @@ class Controller_User extends Controller_Layout {
    **/
   public function action_edit()
   {
-    if (!Auth::instance()->logged_in()) $this->redirect('post/index');
-    $this->template->header = Request::factory('header/standard')->post('title', 'Редактирование логина и пароля')->execute();
-    $user = Auth::instance()->get_user();
+    if (!Auth::instance()->logged_in())
+    {
+      $this->redirect('post/index');
+    }
+    $this->template = new View_Edit;
+    $this->template->title = 'Редактирование логина и пароля';
     $this->template->errors = array();
+    $this->template->controls = array(
+      'username' => 'input',
+      'password' => 'password'
+    );
+    $user = Auth::instance()->get_user();
     if (HTTP_Request::POST == $this->request->method()) {
       $validation = Validation::factory($this->request->post())
         ->rules('username', array(
@@ -70,6 +86,6 @@ class Controller_User extends Controller_Layout {
         $this->template->errors = $validation->errors();
       }
     }
-    $this->template->user = $user;
+    $this->template->model = $user;
   }
 }

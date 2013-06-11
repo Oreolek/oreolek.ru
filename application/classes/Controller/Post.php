@@ -73,23 +73,31 @@ class Controller_Post extends Controller_Layout {
         if (!empty($tags))
         {
           $tags = explode(',', $tags);
+          $tags = array_map('trim', $tags);
           //adding new tags
           foreach ($tags as $tag)
           {
-            $model = ORM::factory('Tag')->where('name', '=', 'lower('.trim($tag).')')->find();
+            $model = ORM::factory('Tag')->where('name', '=', $tag)->find();
             if (!$model->loaded())
             {
               $model = ORM::factory('Tag');
-              $model->name = trim($tag);
+              $model->name = $tag;
               $model->create();
             }
-            $post->add('tags', $model->id);
+            if (!$post->has('tags', $model->id))
+            {
+              $post->add('tags', $model->id);
+            }
           }
           
+          $tag_models = $post->tags->find_all();
           //deleting unused tags
           foreach ($tag_models as $tag)
           {
-            if (!array_search($tag->name, $tags)) $post->remove('tags', $tag->id);
+            if (array_search($tag->name, $tags) === FALSE)
+            {
+              $post->remove('tags', $tag->id);
+            }
           }
         }
         $this->redirect('post/view/' . $post->id);

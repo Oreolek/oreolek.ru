@@ -40,7 +40,7 @@ class Form extends Kohana_Form {
   {
     $html = '<div class="container">';
     $html .= self::label($name, $model->get_label($name));
-    $html .= self::textarea($name,$model->get($name), $attributes);
+    $html .= self::textarea($name,$model->get($name), $attributes, FALSE);
     $html .= '</div>';
     return $html;
   }

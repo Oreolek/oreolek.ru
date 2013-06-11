@@ -9,7 +9,7 @@ class View_Edit extends View_Layout {
    * Array of ORM inputs as:
    * field => control type
    **/
-  public $controls;
+  public $controls = array();
   /**
    * Array of custom inputs as:
    * field => array(
@@ -18,7 +18,7 @@ class View_Edit extends View_Layout {
    *   'value' => current value
    * )
    **/
-  public $custom_controls;
+  public $custom_controls = array();
   public function get_controls()
   {
     $output = '';

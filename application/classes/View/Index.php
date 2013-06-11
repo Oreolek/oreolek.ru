@@ -1,11 +1,22 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
 /**
- * Контроллер вида оглавлений
+ * Index view controller.
  **/
 class View_Index extends View_Layout {
   public $show_date = TRUE;
+  /**
+   * Show a link to add new entry
+   **/
+  public $show_create = TRUE;
+  /**
+   * Items to show
+   **/
   public $items = NULL;
+  /**
+   * Index description
+   **/
+  public $content = '';
 
   public function get_items()
   {

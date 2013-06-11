@@ -5,7 +5,7 @@
  **/
 class View_Post_View extends View_Layout {
   /**
-   * Post tag array.
+   * Post tag models.
    **/
   public $tags;
   /**

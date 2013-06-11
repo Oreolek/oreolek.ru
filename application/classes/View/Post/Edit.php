@@ -26,7 +26,7 @@ class View_Post_Edit extends View_Edit {
       foreach ($this->tags as $tag)
       {
         if ($i > 0) $output .= ', ';
-        $output .= '<a href="'.URL::site('tag/view/'.$tag->id).'">'.$tag->name.'</a>';
+        $output .= $tag->name;
         $i++;
       }
     }

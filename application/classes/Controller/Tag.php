@@ -2,7 +2,7 @@
 
 /**
  * Tag controller.
- * Tags
+ * Tags are case-sesitive.
  **/
 class Controller_Tag extends Controller_Layout {
   public $template = 'tag/view';
@@ -15,12 +15,16 @@ class Controller_Tag extends Controller_Layout {
   {
     $id = $this->request->param('id');
     $tag = ORM::factory('Tag',$id);
-    if (!$tag->loaded()) $this->redirect('error/404');
-    $title = 'Тег: '.$tag->name;
-    $this->template->header = Request::factory('header/standard')->post('title',$title)->execute();
-    $this->template->posts = $tag->posts->find_all();
+    if (!$tag->loaded())
+    {
+      $this->redirect('error/404');
+    }
+    $this->template = new View_Index;
+    $this->template->title = 'Тег: '.$tag->name;
+    $this->template->show_date = TRUE;
+    $this->template->show_create = FALSE;
+    $this->template->items = $tag->posts->find_all();
     $this->template->content = Markdown::instance()->transform($tag->description);
-    $this->template->footer = Request::factory('footer/standard')->execute(); 
   }
 
   public function action_edit()
