@@ -4,10 +4,10 @@
  * Photo management
  **/
 class Controller_Photo extends Controller_Layout {
-  public $template = 'photo/view';
   protected $secure_actions = array(
     'edit' => array('login','admin'),
   );
+
   /**
    * View photo by ID
    **/
@@ -15,11 +15,13 @@ class Controller_Photo extends Controller_Layout {
   {
     $id = $this->request->param('id');
     $photo = ORM::factory('Photo', $id);
-    if (!$photo->loaded()) $this->redirect('error/404');
-    $title = $photo->name;
-    $this->template->header = Request::factory('header/standard')->post('title',$title)->execute();
-    $this->template->image_path = $photo->get_image_path();
-    $this->template->thumbnail_path = $photo->get_thumbnail_path();
+    if (!$photo->loaded())
+    {
+      $this->redirect('error/404');
+    }
+    $view = new View_Message;
+    $this->template->title = $photo->name;
+    $this->template->message = HTML::image($photo->get_image_path());
   }
 
   /**
@@ -27,13 +29,24 @@ class Controller_Photo extends Controller_Layout {
    **/
   public function action_edit()
   {
-    $this->template = new View('photo/edit');
+    $this->template = new View_Photo_Edit;
     $id = $this->request->param('id');
     $photo = ORM::factory('Photo', $id);
-    $title = 'Загрузка фотографии';
-    $this->template->header = Request::factory('header/standard')->post('title',$title)->execute();
-    $this->template->footer = Request::factory('footer/standard')->execute();
+    $this->template->title = 'Загрузка фотографии';
     $this->template->errors = array();
+    $this->template->controls = array(
+      'name' => 'input',
+    );
+    if ($photo->loaded())
+    {
+      $this->template->image_path = $photo->image_path;
+    }
+    $this->template->custom_controls = array(
+      'file' => array(
+        'type' => 'file',
+        'label' => 'Файл изображения'
+      )
+    );
     if (HTTP_Request::POST == $this->request->method()) {
       $validation_post = Validation::factory($this->request->post())
         ->rules('name', array(
@@ -53,7 +66,10 @@ class Controller_Photo extends Controller_Layout {
       	}
         $photo->name = $this->request->post('name');
         try {
-          if ($photo->check()) $photo->create();
+          if ($photo->check())
+          {
+            $photo->create();
+          }
         }
         catch (ORM_Validation_Exception $e)
         {
@@ -64,9 +80,12 @@ class Controller_Photo extends Controller_Layout {
       {
         $this->template->errors = Arr::merge( $validation_post->errors(), $validation_files->errors() );
       }
-      if (empty($this->template->errors)) $this->redirect('photo/view/' . $photo->id);
+      if (empty($this->template->errors))
+      {
+        $this->redirect('photo/view/' . $photo->id);
+      }
     }
-    $this->template->photo = $photo;
+    $this->template->model = $photo;
   }
 
   public function action_create()

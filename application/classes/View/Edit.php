@@ -28,9 +28,35 @@ class View_Edit extends View_Layout {
     }
     foreach ($this->custom_controls as $key => $value)
     {
-      $output .= '<div class="container">'.Form::label($key, $value['label']).Form::input($key,$value['value']).'</div>';
+      if (!isset($value['value']))
+      {
+        $value['value'] = '';
+      }
+      $output .= '<div class="container">'.Form::label($key, $value['label']);
+      $input = '';
+      switch($value['type'])
+      {
+        case 'file':
+          $input = Form::file($key);
+          break;
+        case 'check':
+        case 'chck':
+        case 'checkbox':
+          $input = Form::checkbox($key, $value['value']);
+          break;
+        case 'password':
+          $input = Form::password($key, $value['value']);
+          break;
+        case 'text':
+        case 'textarea':
+          $input = Form::textarea($key, $value['value']);
+          break;
+        default:
+          $input = Form::input($key,$value['value']);
+      }
+      $output .= $input.'</div>';
     }
     $output .= Form::submit('submit','Отправить');
     return $output;
-  } 
+  }
 }

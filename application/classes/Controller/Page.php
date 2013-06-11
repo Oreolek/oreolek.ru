@@ -37,7 +37,7 @@ class Controller_Page extends Controller_Layout {
     $this->template->show_date = FALSE;
     $this->template->items = ORM::factory('Page')
       ->where('is_draft', '=', '0')
-      ->order_by('name', 'DESC')
+      ->order_by('name', 'ASC')
       ->find_all(); 
   }
   public function action_delete()
@@ -64,54 +64,75 @@ class Controller_Page extends Controller_Layout {
    **/
   public function action_create()
   {
-    $this->template = new View('page/create');
-    $title = 'Новая страница';
-    $this->template->header = Request::factory('header/standard')->post('title',$title)->execute();
+    $this->template = new View_Edit;
+    $this->template->title = 'Новая страница';
     $this->template->errors = array();
     $page = ORM::factory('Page');
-    if (HTTP_Request::POST == $this->request->method()) {
+    $this->template->controls = array(
+      'name' => 'input',
+      'content' => 'text',
+      'is_draft' => 'checkbox',
+    );
+    if ($this->request->method() === HTTP_Request::POST) {
       $page->content = $this->request->post('content');
       $page->name = $this->request->post('name');
       $page->is_draft = $this->request->post('is_draft');
       try {
-        if ($page->check()) $page->create();
+        if ($page->check())
+        {
+          $page->create();
+        }
       }
       catch (ORM_Validation_Exception $e)
       {
-        $this->template->errors = $e->errors();
+        $this->template->errors = $e->errors('');
       }
-      if (empty($this->template->errors)) $this->redirect('page/view/' . $page->id);
+      if (empty($this->template->errors))
+      {
+        $this->redirect('page/view/' . $page->id);
+      }
     }
-    $this->template->page = $page;
-    $this->template->footer = Request::factory('footer/standard')->execute(); 
+    $this->template->model = $page;
   }
   /**
    * Edit a page (for admin)
    **/
   public function action_edit()
   {
-    $this->template = new View('page/edit');
-    $title = 'Редактирование страницы';
-    $this->template->header = Request::factory('header/standard')->post('title',$title)->execute();
-    $this->template->footer = Request::factory('footer/standard')->execute(); 
+    $this->template = new View_Edit;
+    $this->template->title = 'Редактирование страницы';
     $id = $this->request->param('id');
     $page = ORM::factory('Page', $id);
-    if (!$page->loaded()) $this->redirect('error/404');
+    if (!$page->loaded())
+    {
+      $this->redirect('error/404');
+    }
     $this->template->errors = array();
-    if (HTTP_Request::POST == $this->request->method()) {
+    $this->template->controls = array(
+      'name' => 'input',
+      'content' => 'text',
+      'is_draft' => 'checkbox',
+    );
+    if ($this->request->method() === HTTP_Request::POST) {
       $page->content = $this->request->post('content');
       $page->name = $this->request->post('name');
       $page->is_draft = $this->request->post('is_draft');
       try {
-        if ($page->check()) $page->update();
+        if ($page->check())
+        {
+          $page->update();
+        }
       }
       catch (ORM_Validation_Exception $e)
       {
-        $this->template->errors = $e->errors();
+        $this->template->errors = $e->errors('');
       }
-      if (empty($this->template->errors)) $this->redirect('page/view/' . $page->id);
+      if (empty($this->template->errors))
+      {
+        $this->redirect('page/view/' . $page->id);
+      }
     }
-    $this->template->page = $page;
+    $this->template->model = $page;
   }
 
   /**

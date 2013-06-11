@@ -14,8 +14,6 @@ class Form extends Kohana_Form {
       case 'text':
       case 'textarea':
         return self::orm_textarea($model, $name, $attributes);
-      case 'password':
-        return self::orm_password($model, $name, $attributes);
       default:
         return self::orm_textinput($model, $name, $attributes);
     }

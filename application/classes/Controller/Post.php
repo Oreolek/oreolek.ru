@@ -162,7 +162,10 @@ class Controller_Post extends Controller_Layout {
     $this->template = new View_Delete;
     $id = $this->request->param('id');
     $post = ORM::factory('Post', $id);
-    if (!$post->loaded()) $this->redirect('error/404');
+    if (!$post->loaded())
+    {
+      $this->redirect('error/404');
+    }
     $this->template->title = 'Удаление записи дневника';
     $this->template->content_title = $post->name;
     $this->template->content = Markdown::instance()->transform($post->content);

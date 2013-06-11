@@ -2,9 +2,9 @@
 {{#has_errors}}
   <p class="message">При проверке формы были найдены ошибки:</p>
   <ul class="errors">
-    {{#errors}}
+    {{#get_errors}}
     <li>{{.}}</li>
-    {{/errors}}
+    {{/get_errors}}
   </ul>
 {{/has_errors}}
 {{{get_controls}}}

@@ -59,8 +59,9 @@ class View_Layout {
     $navigation = array(
       'Свежие записи дневника' => 'post/fresh',
       'Содержание дневника' => 'post/index',
+      'Метки записей' => 'tag/index',
       'Список страниц' => 'page/index',
-      'О сайте' => 'page/view/1'
+      'О сайте' => 'page/view/1',
     );
     if (!Auth::instance()->logged_in())
     {
@@ -81,6 +82,16 @@ class View_Layout {
         'url' => URL::site('/'.$value),
         'title' => $key
       ));
+    }
+    return $result;
+  }
+
+  public function get_errors()
+  {
+    $result = array();
+    foreach ($this->errors as $key => $string)
+    {
+      array_push($result, $string);
     }
     return $result;
   }

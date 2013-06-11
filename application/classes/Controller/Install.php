@@ -1,7 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-class Controller_Install extends Controller_Template {
-  public $template = 'install/view';
+class Controller_Install extends Controller_Layout {
   public function before()
   {
     parent::before();
@@ -12,6 +11,12 @@ class Controller_Install extends Controller_Template {
    **/
   public function action_view()
   {
+    $this->template = new View_Edit;
+    $this->template->controls = array(
+      'username' => 'input',
+      'email' => 'input',
+      'password' => 'input',
+    );
     $user = NULL;
     $username = Kohana::$config->load('database.default.connection.username');
     $password = Kohana::$config->load('database.default.connection.password');
@@ -41,7 +46,10 @@ class Controller_Install extends Controller_Template {
     }
 
     $count_users = ORM::factory('User')->count_all();
-    if ($count_users > 0) $this->redirect('install/finished');
+    if ($count_users > 0)
+    {
+      $this->redirect('install/finished');
+    }
     $this->template->errors = array();
     if (HTTP_Request::POST == $this->request->method())
     {
@@ -63,16 +71,15 @@ class Controller_Install extends Controller_Template {
       }
     }
     $user->password = '';
-    $this->template->user = $user;
-    $this->template->header = Request::factory('header/standard')->post('title', 'Настройка административного аккаунта')->execute();
-    $this->template->footer = Request::factory('footer/standard')->execute();
+    $this->template->model = $user;
+    $this->template->title = 'Настройка административного аккаунта';
   }
 
   public function action_finished()
   {
-    $this->template = new View('install/finished');
-    $this->template->header = Request::factory('header/standard')->post('title', 'Установка закончена')->execute();
-    $this->template->footer = Request::factory('footer/standard')->execute();
+    $this->template = new View_Message;
+    $this->template->title = 'Установка закончена';
+    $this->template->message = 'Теперь вы можете пользоваться системой.';
   }
 
   /**
@@ -81,10 +88,32 @@ class Controller_Install extends Controller_Template {
    **/
   public function action_migrate_wp()
   {
-    $this->template = new View('install/migrate_wp');
-    $this->template->header = Request::factory('header/standard')->post('title', 'Миграция из Wordpress')->execute();
-    $this->template->footer = Request::factory('footer/standard')->execute();
+    $this->template = new View_Edit;
+    $this->template->title = 'Миграция из Wordpress';
     $this->template->errors = array();
+    $this->template->custom_controls = array(
+      'hostname' => array(
+        'label' => 'Адрес БД',
+        'type' => 'input',
+      ),
+      'database' => array(
+        'label' => 'Имя БД',
+        'type' => 'input',
+      ),
+      'username' => array(
+        'label' => 'Пользователь',
+        'type' => 'input',
+      ),
+      'password' => array(
+        'label' => 'Пароль',
+        'type' => 'input',
+      ),
+      'prefix' => array(
+        'label' => 'Префикс таблиц',
+        'type' => 'input',
+        'value' => 'wp_'
+      ),
+    );
     $migrator = new Model_Migrator_Wordpress();
     if (HTTP_Request::POST == $this->request->method())
     {
