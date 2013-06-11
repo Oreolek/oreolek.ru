@@ -18,8 +18,34 @@ class View_Index extends View_Layout {
    **/
   public $content = '';
 
+  /**
+   * Pagination controls
+   **/
+  public function get_paging()
+  {
+    $current_page = $this->get_current_page();
+    $item_count = count($this->items);
+    $page_size = Kohana::$config->load('common.page_size');
+    $page_count = floor($item_count / $page_size);
+    $i = 1;
+    $output = '';
+    while ($i <= $page_count)
+    {
+      $output .= '<a href="'.Route::url('pagination', array('controller' => Request::current()->controller(), 'action' => 'index', 'page' => $i)).'"';
+      if ($i == $current_page)
+      {
+        $output .= ' class="active"';
+      }
+      $output .= '>'.$i.'</a>';
+      $i++;
+    }
+    return $output;
+  }
+
   public function get_items()
   {
+    $current_page = $this->get_current_page();
+    $page_size = Kohana::$config->load('common.page_size');
     $result = array();
     $colwidth = $this->view_link_colwidth();
     $is_admin = Auth::instance()->logged_in('admin');
@@ -27,7 +53,17 @@ class View_Index extends View_Layout {
     {
       return NULL;
     };
-    foreach ($this->items as $item)
+    $item_count = count($this->items);
+    if ($item_count > $page_size)
+    {
+      $page_count = ceil($item_count / $page_size);
+      $items = array_slice($this->items->as_array(), $current_page * $page_size, $page_size);
+    }
+    else
+    {
+      $items = $this->items;
+    }
+    foreach ($items as $item)
     {
       $output = array(
         'date' => '',
@@ -48,6 +84,17 @@ class View_Index extends View_Layout {
       array_push($result, $output);
     }
     return $result;
+  }
+  
+  /**
+   * Pagination: calculate current page
+   **/
+  protected function get_current_page()
+  {
+    $current_page = Request::current()->param('page');
+    if (!$current_page)
+      return 1;
+    return $current_page;
   }
   
   protected function view_link_colwidth()

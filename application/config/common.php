@@ -6,5 +6,6 @@ return array(
  'uploads_dir' => '/uploads',
  'thumbnail_width' => 200,
  'thumbnail_height' => 150,
- 'comment_approval' => TRUE // every comment must be approved
+ 'comment_approval' => TRUE, // every comment must be approved
+ 'page_size' => 25, // pagination
 );

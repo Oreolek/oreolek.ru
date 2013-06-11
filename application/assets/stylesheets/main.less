@@ -95,6 +95,18 @@ form {
   float: left;
 }
 
+.paging {
+  clear: both;
+  .text_center;
+  a {
+    margin-left: @basesize;
+  }
+  a.active {
+    color: @foreground4;
+    font-size: @basesize * 1.25;
+  }
+}
+
 .tag_content,
 .tag_posts {
   .col(3);

@@ -128,9 +128,16 @@ Route::set('error', 'error/<action>(/<message>)', array('action' => '[0-9]++','m
   'controller' => 'Error',
 ));
 
+Route::set('pagination', '(<controller>(/index(/<page>)))')
+ ->defaults(array(
+  'controller' => 'Page',
+  'action'     => 'index',
+  'page'         => 1,
+));
+
 Route::set('default', '(<controller>(/<action>(/<id>)))')
  ->defaults(array(
   'controller' => 'Page',
   'action'     => 'view',
-  'id'         => 1
+  'id'         => 1,
  ));
