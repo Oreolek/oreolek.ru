@@ -29,6 +29,8 @@ class View_Index extends View_Layout {
     $item_count = count($this->items);
     $page_size = Kohana::$config->load('common.page_size');
     $page_count = ceil($item_count / $page_size);
+    if ($page_count === 1.0)
+      return '';
     $i = 1;
     $output = '';
     while ($i <= $page_count)
