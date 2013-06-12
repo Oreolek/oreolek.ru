@@ -32,6 +32,23 @@ class Controller_Tag extends Controller_Layout {
   }
 
   /**
+   * Read all posts in tag.
+   **/
+  public function action_read()
+  {
+    $id = $this->request->param('id');
+    $tag = ORM::factory('Tag',$id);
+    if (!$tag->loaded())
+    {
+      $this->redirect('error/404');
+    }
+    $this->template = new View_Read;
+    $this->template->title = 'Записи по тегу: '.$tag->name;
+    $this->template->items = $tag->posts->find_all();
+    $this->template->content = Markdown::instance()->transform($tag->description);
+  }
+
+  /**
    * Index all tags.
    **/
   public function action_index()

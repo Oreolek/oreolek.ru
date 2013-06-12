@@ -7,6 +7,6 @@ return array(
  'thumbnail_width' => 200,
  'thumbnail_height' => 150,
  'comment_approval' => TRUE, // every comment must be approved
- 'page_size' => 25, // pagination
+ 'page_size' => 20, // pagination
  'comment_trust' => 5, // comment trust points - see Model_Comment::antispam_check
 );

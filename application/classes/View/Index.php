@@ -35,7 +35,7 @@ class View_Index extends View_Layout {
     $output = '';
     while ($i <= $page_count)
     {
-      $output .= '<a href="'.Route::url('pagination', array('controller' => Request::current()->controller(), 'action' => 'index', 'page' => $i)).'"';
+      $output .= '<a href="'.Route::url('default', array('controller' => Request::current()->controller(), 'action' => Request::current()->action(), 'page' => $i)).'"';
       if ($i == $current_page)
       {
         $output .= ' class="active"';

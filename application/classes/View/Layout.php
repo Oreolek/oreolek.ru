@@ -65,6 +65,7 @@ class View_Layout {
     $result = array();
     $navigation = array(
       'Свежие записи дневника' => 'post/fresh',
+      'Дневник' => 'post/read',
       'Содержание дневника' => 'post/index',
       'Метки записей' => 'tag/index',
       'Список страниц' => 'page/index',

@@ -109,9 +109,25 @@ class Controller_Post extends Controller_Layout {
     $this->template->model = $post;
   }
 
+  /**
+   * Short index with only post headings
+   **/
   public function action_index()
   {
     $this->template = new View_Index;
+    $this->template->items = ORM::factory('Post')
+      ->where('is_draft', '=', '0')
+      ->order_by('posted_at', 'DESC')
+      ->find_all();
+  }
+  
+  /**
+   * Actually read all posts on one page
+   **/
+  public function action_read()
+  {
+    $this->template = new View_Read;
+    $this->template->title = 'Дневник';
     $this->template->items = ORM::factory('Post')
       ->where('is_draft', '=', '0')
       ->order_by('posted_at', 'DESC')
