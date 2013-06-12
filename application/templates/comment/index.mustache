@@ -1,0 +1,34 @@
+<div class="table_index">
+  <div class="table_row table_header">
+    <div>Дата</div>
+    <div>Автор</div>
+    <div>Текст</div>
+    <div>OK?</div>
+    <div>Действия</div>
+  </div>
+{{#get_items}}
+  <div class="table_row">
+    <div class="date"><a href="{{post_link}}#comment_{{comment_id}}">{{date}}</a></div>
+    <div>
+      {{#author_email}}
+        <a class="author" href="mailto:{{author_email}}">
+      {{/author_email}}
+      {{author_name}}
+      {{#author_email}}
+      </a>
+      {{/author_email}}
+    </div>
+    <div>{{{content}}}</div>
+    <div>{{{is_approved}}}</div>
+    <div>
+      <a href="#" class="green">Одобрить</a>
+      <a href="#" class="red">Запретить</a>
+      <a href="#">Редактировать</a>
+      <a href="#">Удалить</a>
+    </div>
+  </div>
+{{/get_items}}
+</div>
+<div class="paging">
+  {{{get_paging}}}
+</div>

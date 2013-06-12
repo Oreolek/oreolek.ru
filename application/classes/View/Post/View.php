@@ -41,9 +41,10 @@ class View_Post_View extends View_Layout {
       $comment_out = array(
         'content' => $comment->content,
         'author_email' => $comment->author_email,
-        'author_name' => $comment->author_name
+        'author_name' => $comment->author_name,
+        'id' => $comment->id
       );
-      $result = array_push($result, $comment_out);
+      array_push($result, $comment_out);
     }
     return $result;
   }

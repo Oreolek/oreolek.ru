@@ -18,6 +18,8 @@ class View_Index extends View_Layout {
    **/
   public $content = '';
 
+  protected $is_admin;
+
   /**
    * Pagination controls
    **/
@@ -26,7 +28,7 @@ class View_Index extends View_Layout {
     $current_page = $this->get_current_page();
     $item_count = count($this->items);
     $page_size = Kohana::$config->load('common.page_size');
-    $page_count = floor($item_count / $page_size);
+    $page_count = ceil($item_count / $page_size);
     $i = 1;
     $output = '';
     while ($i <= $page_count)
@@ -44,46 +46,65 @@ class View_Index extends View_Layout {
 
   public function get_items()
   {
-    $current_page = $this->get_current_page();
-    $page_size = Kohana::$config->load('common.page_size');
     $result = array();
-    $colwidth = $this->view_link_colwidth();
-    $is_admin = Auth::instance()->logged_in('admin');
     if (is_null($this->items))
     {
       return NULL;
     };
-    $item_count = count($this->items);
-    if ($item_count > $page_size)
-    {
-      $page_count = ceil($item_count / $page_size);
-      $items = array_slice($this->items->as_array(), $current_page * $page_size, $page_size);
-    }
-    else
-    {
-      $items = $this->items;
-    }
+    $items = $this->filter_items();
     foreach ($items as $item)
     {
-      $output = array(
+      array_push($result, $this->show_item($item));
+    }
+    return $result;
+  }
+
+  /**
+   * An internal function to prepare item data.
+   * btw, it can be redefined.
+   **/
+  protected function show_item($item)
+  {
+    if (is_null($this->is_admin))
+    {
+      $this->is_admin = Auth::instance()->logged_in('admin');
+    }
+    $output = array(
         'date' => '',
         'edit_link' => '',
         'view_link' => '',
         'delete_link' => '',
-      );
-      if ($this->show_date)
-      {
-        $output['date'] = $item->creation_date();
-      }
-      $output['view_link'] = '<a class = "link_view column'.$colwidth.'" href = "'.Route::url('default', array('controller' => Request::current()->controller(), 'action' => 'view','id' => $item->id)).'">'.$item->name.'</a>';
-      if ($is_admin)
-      {
-        $output['edit_link'] = '<a class = "link_edit" href = "'.Route::url('default', array('controller' => Request::current()->controller(), 'action' => 'edit','id' => $item->id)).'">Редактировать</a>';
-        $output['delete_link'] = '<a class = "link_delete" href = "'.Route::url('default', array('controller' => Request::current()->controller(), 'action' => 'delete','id' => $item->id)).'">Удалить</a>';
-      }
-      array_push($result, $output);
+    );
+    if ($this->show_date)
+    {
+      $output['date'] = $item->creation_date();
     }
-    return $result;
+    $output['view_link'] = '<a class = "link_view" href = "'.Route::url('default', array('controller' => Request::current()->controller(), 'action' => 'view','id' => $item->id)).'">'.$item->name.'</a>';
+    if ($this->is_admin)
+    {
+      $output['edit_link'] = '<a class = "link_edit" href = "'.Route::url('default', array('controller' => Request::current()->controller(), 'action' => 'edit','id' => $item->id)).'">Редактировать</a>';
+      $output['delete_link'] = '<a class = "link_delete" href = "'.Route::url('default', array('controller' => Request::current()->controller(), 'action' => 'delete','id' => $item->id)).'">Удалить</a>';
+    }
+    return $output;
+  }
+
+  /**
+   * Filters $this->items to only current page.
+   **/
+  protected function filter_items()
+  {
+    $current_page = $this->get_current_page();
+    $page_size = Kohana::$config->load('common.page_size');
+    $item_count = count($this->items);
+    if ($item_count > $page_size)
+    {
+      $page_count = ceil($item_count / $page_size);
+      return array_slice($this->items->as_array(), ($current_page - 1) * $page_size, $page_size);
+    }
+    else
+    {
+      return $this->items;
+    }
   }
   
   /**

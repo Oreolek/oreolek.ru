@@ -1,13 +1,16 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-class Controller_Comment extends Controller {
-  public $auto_render = FALSE;
+class Controller_Comment extends Controller_Layout {
+  protected $secure_actions = array(
+    'index' => array('login','admin'),
+  );
 
   /**
    * Create a comment.
    **/
   public function action_create()
   {
+    $this->auto_render = FALSE;
     $post_id = $this->request->param('id');
     $comment = ORM::factory('Comment');
     if (is_null($post_id))
@@ -25,16 +28,29 @@ class Controller_Comment extends Controller {
     if (empty($email) AND $comment->check()) {
       if (Kohana::$config->load('common.comment_approval'))
       {
-        $comment->is_approved = Model_Comment::STATUS_PENDING;
+        if (!$comment->antispam_check(Request::user_agent('browser')))
+        {
+          $comment->is_approved = Model_Comment::STATUS_PENDING;
+        }
+        else
+        {
+          $comment->is_approved = Model_Comment::STATUS_APPROVED;
+        }
       }
       else
       {
         $comment->is_approved = Model_Comment::STATUS_APPROVED;
       }
-      //spam check
       $comment->create();
       $this->redirect('post/view/' . $post_id);
     }
     unset($email);
+  }
+
+  public function action_index()
+  {
+    $this->template = new View_Comment_Index;
+    $this->template->title = 'Комментарии дневника';
+    $this->template->items = ORM::factory('Comment')->order_by('posted_at', 'DESC')->find_all();
   }
 }

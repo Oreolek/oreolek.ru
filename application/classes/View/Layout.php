@@ -70,6 +70,7 @@ class View_Layout {
     else
     {
       $navigation = array_merge($navigation, array(
+        'Комментарии' => 'comment/index',
         'Черновики дневника' => 'post/drafts',
         'Черновики страниц' => 'page/drafts',
         'Заметки' => 'note/index',

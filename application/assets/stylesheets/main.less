@@ -32,13 +32,13 @@ body {
 
 .table_index {
   clear: both;
-  .date,
-  .link_delete,
-  .link_edit {
-    .col(1);
-  }
   .table_row {
     clear: both;
+    display: table-row;
+    & > div {
+      display: table-cell;
+      padding: @basesize / 4;
+    }
   }
 }
 

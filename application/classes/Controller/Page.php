@@ -1,7 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
 class Controller_Page extends Controller_Layout {
-  public $template = 'page/view';
   protected $secure_actions = array(
     'drafts' => array('login','admin'),
     'create' => array('login','admin'),
