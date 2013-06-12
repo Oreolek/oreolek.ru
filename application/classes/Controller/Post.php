@@ -35,7 +35,10 @@ class Controller_Post extends Controller_Layout {
     $this->template->title = 'Редактирование записи';
     $id = $this->request->param('id');
     $post = ORM::factory('Post', $id);
-    if (!$post->loaded()) $this->redirect('error/404');
+    if (!$post->loaded())
+    {
+      $this->redirect('error/404');
+    }
 
     $this->template->errors = array();
     $this->template->tags = $post->tags->find_all();
@@ -46,7 +49,7 @@ class Controller_Post extends Controller_Layout {
       'posted_at' => 'input',
     );
     
-    if (HTTP_Request::POST == $this->request->method()) {
+    if ($this->request->method() === HTTP_Request::POST) {
       $post->content = $this->request->post('content');
       $post->name = $this->request->post('name');
       $post->is_draft = $this->request->post('is_draft');

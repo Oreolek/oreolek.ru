@@ -15,6 +15,8 @@ class View_Comment_Index extends View_Index {
         'author_name' => '',
         'content' => '',
         'is_approved' => '',
+        'edit_link' => '',
+        'delete_link' => '',
     );
     $output['date'] = $item->posted_at;
     $output['author_email'] = $item->author_email;
@@ -23,6 +25,8 @@ class View_Comment_Index extends View_Index {
     $output['post_link'] = Route::url('default', array('controller' => 'Post', 'action' => 'view', 'id' => $item->post));
     $output['comment_id'] = $item->id;
     $output['is_approved'] = Form::checkbox('is_approved', $item->id, (boolean) $item->is_approved, array('disabled' => 'disabled'));
+    $output['edit_link'] = Route::url('default', array('controller' => 'Comment', 'action' => 'edit', 'id' => $item->id));
+    $output['delete_link'] = Route::url('default', array('controller' => 'Comment', 'action' => 'delete', 'id' => $item->id));
     return $output;
   }
 

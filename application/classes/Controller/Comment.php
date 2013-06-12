@@ -53,4 +53,67 @@ class Controller_Comment extends Controller_Layout {
     $this->template->title = 'Комментарии дневника';
     $this->template->items = ORM::factory('Comment')->order_by('posted_at', 'DESC')->find_all();
   }
+
+  public function action_edit()
+  {
+    $id = $this->request->param('id');
+    $model = ORM::factory('Comment', $id);
+    if (!$model->loaded())
+    {
+      $this->redirect('error/404');
+    }
+    $this->template = new View_Edit;
+    $this->template->errors = array();
+    $this->template->title = 'Редактирование комментария';
+    $this->template->controls = array(
+      'author_name' => 'input',
+      'author_email' => 'input',
+      'content' => 'text',
+    );
+    if ($this->request->method() === HTTP_Request::POST) {
+      $model->values($this->request->post());
+      $validation = $model->validate_create($this->request->post());
+      try
+      {
+        if ($model->check())
+        {
+          $model->update();
+        }
+        else
+        {
+          $this->template->errors = $validation->errors('default');
+        }
+      }
+      catch (ORM_Validation_Exception $e)
+      {
+        $this->template->errors = $e->errors('default');
+      }
+      if (empty($this->template->errors))
+      {
+        $this->redirect('post/view/' . $model->post);
+      }
+    }
+    $this->template->model = $model;
+  }
+
+  public function action_delete()
+  {
+    $id = $this->request->param('id');
+    $model = ORM::factory('Comment', $id);
+    if (!$model->loaded())
+    {
+      $this->redirect('error/404');
+    }
+    $this->template = new View_Delete;
+    $this->template->title = 'Удаление комментария';
+    $this->template->content_title = 'Комментарий от '.$comment->author_name;
+    $this->template->content = Markdown::instance()->transform($model->content);
+
+    $confirmation = $this->request->post('confirmation');
+    if ($confirmation === 'yes') {
+      $model->delete();
+      $this->redirect('comment/index');
+    }
+
+  }
 }
