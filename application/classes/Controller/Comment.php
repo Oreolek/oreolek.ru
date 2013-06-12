@@ -51,6 +51,7 @@ class Controller_Comment extends Controller_Layout {
   {
     $this->template = new View_Comment_Index;
     $this->template->title = 'Комментарии дневника';
+    $this->template->scripts = array('http://yandex.st/jquery/2.0.2/jquery.min.js','comment_buttons.js');
     $this->template->items = ORM::factory('Comment')->order_by('posted_at', 'DESC')->find_all();
   }
 
@@ -69,9 +70,20 @@ class Controller_Comment extends Controller_Layout {
       'author_name' => 'input',
       'author_email' => 'input',
       'content' => 'text',
+      'is_approved' => 'checkbox'
     );
     if ($this->request->method() === HTTP_Request::POST) {
       $model->values($this->request->post());
+      // AJAX JSON checks
+      $is_approved = $this->request->post('is_approved');
+      if ($is_approved === 'true')
+      {
+        $model->is_approved = TRUE;
+      }
+      if ($is_approved === 'false')
+      {
+        $model->is_approved = FALSE;
+      }
       $validation = $model->validate_create($this->request->post());
       try
       {
@@ -88,7 +100,7 @@ class Controller_Comment extends Controller_Layout {
       {
         $this->template->errors = $e->errors('default');
       }
-      if (empty($this->template->errors))
+      if (empty($this->template->errors) AND !$this->request->is_ajax())
       {
         $this->redirect('post/view/' . $model->post);
       }

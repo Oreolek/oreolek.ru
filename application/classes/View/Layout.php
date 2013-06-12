@@ -43,7 +43,14 @@ class View_Layout {
     $scripts = array_merge ($this->scripts, $this->base_scripts);
     $temp = "";
     foreach($scripts as $script):
-     $temp .= '<script type="text/javascript" charset="utf-8" src="'.URL::site('application/assets/javascript/'.$script).'"></script>'."\n";
+      if (strstr($script, '://') === FALSE) //no protocol given, script is local
+      {
+        $temp .= '<script type="text/javascript" charset="utf-8" src="'.URL::site('application/assets/javascript/'.$script).'"></script>'."\n";
+      }
+      else
+      {
+        $temp .= '<script type="text/javascript" charset="utf-8" src="'.$script.'"></script>'."\n";
+      }
     endforeach;
     return $temp;
   }
