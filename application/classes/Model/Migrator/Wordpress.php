@@ -50,7 +50,15 @@ class Model_Migrator_Wordpress extends Model_Migrator {
   public function migrate_comments() {
     $sql = sprintf('SELECT `comment_post_ID`, `comment_author`, `comment_author_email`, `comment_content`, `comment_date`
       FROM %scomments AS wp_comments
-			WHERE comment_type != "trackback" AND comment_approved = "1"', $this->get('prefix'));
+			WHERE
+        comment_type != "trackback"
+        AND comment_approved = "1"
+        AND comment_post_ID != 0
+        AND comment_post_ID NOT IN (
+          SELECT `ID`
+          FROM %sposts
+          WHERE post_type = "page"
+        )', $this->get('prefix'), $this->get('prefix'));
     
     $wp_comments = $this->source_database->query(Database::SELECT,$sql)->as_array();
     $comment_instance = new Model_Comment;

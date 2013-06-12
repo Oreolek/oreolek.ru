@@ -25,7 +25,7 @@ class Controller_Post extends Controller_Layout {
     $this->template->comments = ORM::factory('Comment')
       ->where('post_id', '=', $post->id)
       ->where('is_approved', '=', Model_Comment::STATUS_APPROVED)
-      ->order_by('posted_at', 'DESC')
+      ->order_by('posted_at', 'ASC')
       ->find_all();
   }
 

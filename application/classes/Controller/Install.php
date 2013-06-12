@@ -124,7 +124,11 @@ class Controller_Install extends Controller_Layout {
       $migrator->set('prefix', $this->request->post('prefix'));
       if ($migrator->connect())
       {
-        if ($migrator->migrate_pages() AND $migrator->migrate_posts() AND $migrator->migrate_comments())
+        if ( // you can comment out what you don't need migrating
+          $migrator->migrate_pages() AND
+          $migrator->migrate_posts() AND
+          $migrator->migrate_comments()
+        )
         {
           $this->redirect('install/finished');
         }
