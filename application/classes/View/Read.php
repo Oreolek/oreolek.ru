@@ -25,6 +25,7 @@ class View_Read extends View_Index {
         'content' => '',
         'comment_count' => '',
         'edit_link' => '',
+        'view_link' => '',
         'comments_link' => ''
     );
     if ($this->show_date)
@@ -35,8 +36,9 @@ class View_Read extends View_Index {
     {
       $output['edit_link'] = Route::url('default', array('controller' => Request::current()->controller(), 'action' => 'edit','id' => $item->id));
     }
+    $output['view_link'] = Route::url('default', array('controller' => Request::current()->controller(), 'action' => 'view','id' => $item->id));
     $output['heading'] = $item->name;
-    $output['comment_count'] = count($item->comments);
+    $output['comment_count'] = $item->count_comments();
     $output['comments_link'] = Route::url('default', array('controller' => Request::current()->controller(), 'action' => 'view','id' => $item->id)).'#comments';
     $output['content'] = Markdown::instance()->transform($item->content);
     return $output;

@@ -129,6 +129,7 @@ class Controller_Post extends Controller_Layout {
     $this->template = new View_Read;
     $this->template->title = 'Дневник';
     $this->template->items = ORM::factory('Post')
+      ->with('comments')
       ->where('is_draft', '=', '0')
       ->order_by('posted_at', 'DESC')
       ->find_all();
