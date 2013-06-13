@@ -46,7 +46,7 @@ class Controller_User extends Controller_Layout {
       }
       else
       {
-        $this->template->errors = $validation->errors();
+        $this->template->errors = $validation->errors('default');
       }
     }
     $this->template->model = $user;
