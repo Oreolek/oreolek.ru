@@ -47,14 +47,8 @@ class Model_Photo extends ORM {
       throw new HTTP_Exception_404('File not found');
       return $image_path;
     }
-    $parts = explode('.', $image_path);
-		$count = count($parts) - 2;
-		if ($count < 0) $count = 0;
-		$suffix = 'thumb';
-		if ($width) $suffix .= $width;
-		if ($height) $suffix .= '_' . $height;
-		$parts[$count] .= '_' . $suffix;
-		$thumbnail_path = implode('.', $parts);
+    
+		$thumbnail_path = $this->generate_thumbnail_path($image_path, $width, $height);
 
 		if (!is_file(DOCROOT.$thumbnail_path)) {
 			$image = Image::factory(DOCROOT.$image_path);
@@ -63,6 +57,20 @@ class Model_Photo extends ORM {
 			$image->save(DOCROOT.$thumbnail_path);
 		}
 		return $thumbnail_path;
+  }
+
+  public static function generate_thumbnail_path($image_path, $width = 0, $height = 0)
+  {
+    if ($width == 0) $width = Kohana::$config->load('common.thumbnail_width');
+		if ($height == 0) $height = Kohana::$config->load('common.thumbnail_height');
+    $parts = explode('.', $image_path);
+		$count = count($parts) - 2;
+		if ($count < 0) $count = 0;
+		$suffix = 'thumb';
+		if ($width) $suffix .= $width;
+		if ($height) $suffix .= '_' . $height;
+		$parts[$count] .= '_' . $suffix;
+    return implode('.', $parts);
   }
 
   protected function get_thumbnail_file_path($width = NULL, $height = NULL)
