@@ -218,7 +218,7 @@ class Controller_Post extends Controller_Layout {
       $post->content = $this->request->post('content');
       $post->name = $this->request->post('name');
       $post->is_draft = $this->request->post('is_draft');
-      if (!empty($this->request->post('posted_at'))
+      if ($this->request->post('posted_at') != '')
       {
         $post->posted_at = $this->request->post('posted_at');
       }
