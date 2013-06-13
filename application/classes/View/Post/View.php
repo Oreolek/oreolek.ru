@@ -16,6 +16,7 @@ class View_Post_View extends View_Layout {
    * Post comments
    **/
   public $comments;
+  public $date;
 
   public function get_tags()
   {

@@ -23,7 +23,7 @@ class Controller_Tag extends Controller_Layout {
     {
       $this->redirect('error/404');
     }
-    $this->template = new View_Index;
+    $this->template = new View_Tag_View;
     $this->template->title = 'Тег: '.$tag->name;
     $this->template->show_date = TRUE;
     $this->template->show_create = FALSE;

@@ -10,6 +10,10 @@ class View_Index extends View_Layout {
    **/
   public $show_create = TRUE;
   /**
+   * Show edit and delete links for admin
+   **/
+  public $show_edit = TRUE;
+  /**
    * Items to show
    **/
   public $items = NULL;
@@ -73,6 +77,7 @@ class View_Index extends View_Layout {
     }
     $output = array(
         'date' => '',
+        'name' => '',
         'edit_link' => '',
         'view_link' => '',
         'delete_link' => '',
@@ -81,13 +86,41 @@ class View_Index extends View_Layout {
     {
       $output['date'] = $item->creation_date();
     }
-    $output['view_link'] = '<a class = "link_view" href = "'.Route::url('default', array('controller' => Request::current()->controller(), 'action' => 'view','id' => $item->id)).'">'.$item->name.'</a>';
-    if ($this->is_admin)
+    $output['name'] = $item->name;
+    $output['view_link'] = $this->link_view($item->id);
+    if ($this->is_admin and $this->show_edit)
     {
-      $output['edit_link'] = '<a class = "link_edit" href = "'.Route::url('default', array('controller' => Request::current()->controller(), 'action' => 'edit','id' => $item->id)).'">Редактировать</a>';
-      $output['delete_link'] = '<a class = "link_delete" href = "'.Route::url('default', array('controller' => Request::current()->controller(), 'action' => 'delete','id' => $item->id)).'">Удалить</a>';
+      $output['edit_link'] = $this->link_edit($item->id);
+      $output['delete_link'] = $this->link_delete($item->id);
     }
     return $output;
+  }
+
+  /**
+   * Generate a link to view item by its ID
+   * @param integer ID
+   **/
+  protected function link_view($id)
+  {
+    return Route::url('default', array('controller' => Request::current()->controller(), 'action' => 'view','id' => $id));
+  }
+  
+  /**
+   * Generate a link to edit item by its ID
+   * @param integer ID
+   **/
+  protected function link_edit($id)
+  {
+    return Route::url('default', array('controller' => Request::current()->controller(), 'action' => 'edit','id' => $id));
+  }
+  
+  /**
+   * Generate a link to delete item by its ID
+   * @param integer ID
+   **/
+  protected function link_delete($id)
+  {
+    return Route::url('default', array('controller' => Request::current()->controller(), 'action' => 'delete','id' => $id));
   }
 
   /**

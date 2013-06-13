@@ -22,6 +22,7 @@ class Controller_Post extends Controller_Layout {
     $this->template->id = $post->id;
     $this->template->tags = $post->tags->find_all();
     $this->template->content = Markdown::instance()->transform($post->content);
+    $this->template->date = $post->creation_date();
     $this->template->comments = ORM::factory('Comment')
       ->where('post_id', '=', $post->id)
       ->where('is_approved', '=', Model_Comment::STATUS_APPROVED)
@@ -217,7 +218,10 @@ class Controller_Post extends Controller_Layout {
       $post->content = $this->request->post('content');
       $post->name = $this->request->post('name');
       $post->is_draft = $this->request->post('is_draft');
-      $post->posted_at = $this->request->post('posted_at');
+      if (!empty($this->request->post('posted_at'))
+      {
+        $post->posted_at = $this->request->post('posted_at');
+      }
       $tags = $this->request->post('tags');
       try {
         if ($post->check())
