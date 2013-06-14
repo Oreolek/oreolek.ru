@@ -1,0 +1,8 @@
+<?php defined('SYSPATH') OR die('No direct access allowed.');
+/**
+ * Tracking, statistics, counters
+ **/
+
+return array(
+ 'yandex_metrika_id' => '', //insert your Metrika ID here or leave blank
+);
