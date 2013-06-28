@@ -3,6 +3,7 @@
 return array(
  'title' => 'Из Тишины',
  'author' => 'Александр Яковлев',
+ 'author_email' => 'keloero@oreolek.ru',
  'uploads_dir' => '/uploads',
  'thumbnail_width' => 200,
  'thumbnail_height' => 150,
