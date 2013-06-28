@@ -71,6 +71,10 @@ class View_Index extends View_Layout {
    **/
   protected function show_item($item)
   {
+    if (!$item instanceof ORM)
+    {
+      return FALSE;
+    }
     if (is_null($this->is_admin))
     {
       $this->is_admin = Auth::instance()->logged_in('admin');
@@ -84,7 +88,7 @@ class View_Index extends View_Layout {
     );
     if ($this->show_date)
     {
-      $output['date'] = $item->creation_date();
+      $output['date'] = $item->posted_at;
     }
     $output['name'] = $item->name;
     $output['view_link'] = $this->link_view($item->id);
