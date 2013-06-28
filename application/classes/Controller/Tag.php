@@ -27,7 +27,7 @@ class Controller_Tag extends Controller_Layout {
     $this->template->title = 'Тег: '.$tag->name;
     $this->template->show_date = TRUE;
     $this->template->show_create = FALSE;
-    $this->template->items = $tag->posts->find_all();
+    $this->template->items = $tag->posts->where('is_draft', '=', '0')->find_all();
     $this->template->content = Markdown::instance()->transform($tag->description);
   }
 
@@ -44,7 +44,7 @@ class Controller_Tag extends Controller_Layout {
     }
     $this->template = new View_Read;
     $this->template->title = 'Записи по тегу: '.$tag->name;
-    $this->template->items = $tag->posts->find_all();
+    $this->template->items = $tag->posts->where('is_draft', '=', '0')->find_all();
     $this->template->content = Markdown::instance()->transform($tag->description);
   }
 
@@ -145,4 +145,39 @@ class Controller_Tag extends Controller_Layout {
       $this->redirect('tag/index');
     }
   }
+
+  /**
+   * Atom feed for fresh posts in tag
+   **/
+  public function action_feed()
+  {
+    $this->auto_render = false;
+    $id = $this->request->param('id');
+    $tag = ORM::factory('Tag',$id);
+    if (!$tag->loaded())
+    {
+      $this->redirect('error/404');
+    }
+    $posts = $tag->posts
+      ->where('is_draft', '=', '0')
+      ->order_by('posted_at', 'DESC')
+      ->limit(10)
+      ->find_all(); 
+    $info = array(
+        'title' => Kohana::$config->load('common.title'),
+        'author' => Kohana::$config->load('common.author'),
+        'pubDate' => $posts[0]->posted_at,
+        );
+    $items = array();
+    foreach ($posts as $post)
+    {
+      array_push($items, array(
+            'title' => $post->name,
+            'description' => Markdown::instance()->transform($post->content),
+            'link' => 'post/view/' . $post->id,
+            ));
+    }
+    $this->response->body( Feed::create($info, $items) );
+  }
+
 }
