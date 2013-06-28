@@ -1,0 +1,16 @@
+<form method="POST">
+{{#has_errors}}
+  <p class="message">При проверке формы были найдены ошибки:</p>
+  <ul class="errors">
+    {{#get_errors}}
+    <li>{{.}}</li>
+    {{/get_errors}}
+  </ul>
+{{/has_errors}}
+{{{get_controls}}}
+{{#is_development}}
+  <p>
+    <a href="{{{password_link}}}">Задать новый пароль</a>
+  </p>
+{{/is_development}}
+</form>
