@@ -89,7 +89,7 @@ class View_Index extends View_Layout {
     );
     if ($this->show_date)
     {
-      $output['date'] = $item->creation_date();
+      $output['date'] = $item->posted_at;
     }
     $output['name'] = $item->name;
     $output['view_link'] = $this->link_view($item->id);
