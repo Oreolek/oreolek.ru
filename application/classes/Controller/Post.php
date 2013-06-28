@@ -172,12 +172,12 @@ class Controller_Post extends Controller_Layout {
       array_push($items, array(
             'title' => $post->name,
             'description' => Markdown::instance()->transform($post->content),
-            'author' => Kohana::$config->load('common.author'),
+            'dc:creator' => Kohana::$config->load('common.author'),
             'link' => Route::url('default', array('controller' => 'Post', 'action' => 'view', 'id' => $post->id)),
             'guid' => Route::url('default', array('controller' => 'Post', 'action' => 'view', 'id' => $post->id)),
       ));
     }
-    $this->request->headers('Content-type', 'application/rss+xml');
+    $this->response->headers('Content-type', 'application/rss+xml');
     $this->response->body( Feed::create($info, $items) );
   }
 
