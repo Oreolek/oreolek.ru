@@ -163,18 +163,21 @@ class Controller_Post extends Controller_Layout {
       ->find_all(); 
     $info = array(
         'title' => Kohana::$config->load('common.title'),
-        'author' => Kohana::$config->load('common.author'),
-        'pubDate' => $posts[0]->posted_at,
-        );
+        'pubDate' => strtotime($posts[0]->posted_at),
+        'description' => ''
+    );
     $items = array();
     foreach ($posts as $post)
     {
       array_push($items, array(
             'title' => $post->name,
             'description' => Markdown::instance()->transform($post->content),
-            'link' => 'post/view/' . $post->id,
-            ));
+            'author' => Kohana::$config->load('common.author'),
+            'link' => Route::url('default', array('controller' => 'Post', 'action' => 'view', 'id' => $post->id)),
+            'guid' => Route::url('default', array('controller' => 'Post', 'action' => 'view', 'id' => $post->id)),
+      ));
     }
+    $this->request->headers('Content-type', 'application/rss+xml');
     $this->response->body( Feed::create($info, $items) );
   }
 
