@@ -53,9 +53,9 @@ class View_Index extends View_Layout {
   public function get_items()
   {
     $result = array();
-    if (is_null($this->items))
+    if (is_null($this->items) OR $this->items === FALSE)
     {
-      return NULL;
+      return 'Не найдено объектов для отображения.';
     };
     $items = $this->filter_items();
     foreach ($items as $item)
