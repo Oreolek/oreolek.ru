@@ -151,7 +151,7 @@ class Controller_Post extends Controller_Layout {
   }
 
   /**
-   * Atom feed for fresh posts
+   * RSS feed for fresh posts
    **/
   public function action_feed()
   {

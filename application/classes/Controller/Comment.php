@@ -128,4 +128,37 @@ class Controller_Comment extends Controller_Layout {
     }
 
   }
+
+  /**
+   * RSS feed for fresh comments
+   **/
+  public function action_feed()
+  {
+    $this->auto_render = false;
+    $comments = ORM::factory('Comment')
+      ->where('is_approved', '=', '1')
+      ->order_by('posted_at', 'DESC')
+      ->limit(10)
+      ->find_all(); 
+    $info = array(
+        'title' => Kohana::$config->load('common.title').' (комментарии)',
+        'pubDate' => strtotime($comments[0]->posted_at),
+        'description' => ''
+    );
+    $items = array();
+    foreach ($comments as $comment)
+    {
+      array_push($items, array(
+            'title' => $comment->author_name,
+            'description' => Markdown::instance()->transform($comment->content),
+            'author' => $comment->author_email,
+            'link' => Route::url('default', array('controller' => 'Post', 'action' => 'view', 'id' => $comment->post_id)).'#comment_'.$comment->id,
+            'guid' => Route::url('default', array('controller' => 'Post', 'action' => 'view', 'id' => $comment->post_id)).'#comment_'.$comment->id,
+      ));
+    }
+    $this->response->headers('Content-type', 'application/rss+xml');
+    $this->response->body( Feed::create($info, $items) );
+
+  }
+
 }

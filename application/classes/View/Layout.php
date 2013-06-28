@@ -120,4 +120,14 @@ class View_Layout {
     }
     return $output;
   }
+
+  public function post_feed_link()
+  {
+    return Route::url('default', array('controller' => 'Post', 'action' => 'feed'));
+  }
+  
+  public function comment_feed_link()
+  {
+    return Route::url('default', array('controller' => 'Comment', 'action' => 'feed'));
+  }
 }
