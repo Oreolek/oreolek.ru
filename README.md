@@ -4,6 +4,11 @@ License is [AGPL 3.0.](http://www.tldrlegal.com/l/AGPL3)
 
 Oreolek.
 
+## Requirements
+* Kohana 3.3
+* MySQL or MariaDB
+* Sphinx
+
 ## Installation
 
 * `git clone` - I assume you are familiar with this command

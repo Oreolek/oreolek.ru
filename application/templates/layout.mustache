@@ -12,9 +12,12 @@
         <h1>{{site_title}}</h1>
       </div>
       <div class = "navigation">
+        <form action="{{search_url}}" method="POST">
+          <input type="text" placeholder="Поиск записей" name="term">
+        </form>
         <ul>
          {{#navigation}}
-         <li><a href="{{url}}">{{title}}</a></li> 
+          <li><a href="{{url}}">{{title}}</a></li> 
          {{/navigation}}
         </ul>
       </div>

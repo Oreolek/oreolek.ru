@@ -270,4 +270,22 @@ class Controller_Post extends Controller_Layout {
       ->limit(10)
       ->find_all(); 
   }
+
+  public function action_search()
+  {
+    $term = $this->request->post('term');
+    if ($term == '')
+    {
+      $this->redirect('');
+    }
+    $sphinxql = new SphinxQL();
+  	$query = $sphinxql->new_query();
+    $query->add_index('index1')
+      ->add_field('name')
+      ->add_field('content')
+      ->search($term);
+    $this->template = new View_Index;
+    $this->template->title = 'Результаты поиска';
+    $this->template->items = $query->execute(); 
+  }
 }

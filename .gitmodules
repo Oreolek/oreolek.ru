@@ -25,3 +25,6 @@
 [submodule "modules/kostache"]
 	path = modules/kostache
 	url = git://github.com/zombor/KOstache.git
+[submodule "modules/sphinxql"]
+	path = modules/sphinxql
+	url = git://github.com/x10d/kohana-sphinxql.git
