@@ -285,8 +285,12 @@ class Controller_Post extends Controller_Layout {
       ->add_field('content')
       ->search($term);
     $result = $query->execute();
+    if ($result)
+    {
+      $result = $result['data'];
+    }
     $this->template = new View_Index;
     $this->template->title = 'Результаты поиска';
-    $this->template->items = $result->data; 
+    $this->template->items = $result;
   }
 }
