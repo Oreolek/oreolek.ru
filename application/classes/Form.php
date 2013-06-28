@@ -51,7 +51,7 @@ class Form extends Kohana_Form {
   {
     $html = '<div class="container">';
     $html .= self::label($name, $model->get_label($name));
-    $html .= self::checkbox($name, 1, (int) $model->get($name), $attributes);
+    $html .= self::checkbox($name, 1, (boolean) $model->get($name), $attributes);
     $html .= '</div>';
     return $html;
   }
