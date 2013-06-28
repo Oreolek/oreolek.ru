@@ -71,6 +71,11 @@ class View_Index extends View_Layout {
    **/
   protected function show_item($item)
   {
+    if (!$item instanceof ORM)
+    {
+      return FALSE;
+    }
+
     if (is_null($this->is_admin))
     {
       $this->is_admin = Auth::instance()->logged_in('admin');
