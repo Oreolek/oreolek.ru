@@ -4,8 +4,9 @@
     <title>{{title}}</title>
     <meta charset="utf-8">
     <link href='{{favicon}}' rel='shortcut icon' type='image/x-icon'/>
-    <link href="{{{post_feed_link}}}" rel="alternate" type="application/rss+xml" title="Свежие записи дневника">
-    <link href="{{{comment_feed_link}}}" rel="alternate" type="application/rss+xml" title="Свежие комментарии">
+    {{#feeds}}
+    <link href="{{{url}}}" rel="alternate" type="application/rss+xml" title="{{title}}">
+    {{/feeds}}
     {{{stylesheet}}}
    </head>
   <body>

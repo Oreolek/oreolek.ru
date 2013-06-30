@@ -121,13 +121,22 @@ class View_Layout {
     return $output;
   }
 
-  public function post_feed_link()
+  /**
+   * RSS feed array
+   **/
+  public function feeds()
   {
-    return Route::url('default', array('controller' => 'Post', 'action' => 'feed'));
-  }
-  
-  public function comment_feed_link()
-  {
-    return Route::url('default', array('controller' => 'Comment', 'action' => 'feed'));
+    $post_feed = Route::url('default', array('controller' => 'Post', 'action' => 'feed'));
+    $comment_feed = Route::url('default', array('controller' => 'Comment', 'action' => 'feed'));
+    return array(
+      array(
+        'title' => 'Свежие записи дневника',
+        'url' => $post_feed,
+      ),
+      array(
+        'title' => 'Свежие комментарии',
+        'url' => $comment_feed
+      )
+    );
   }
 }
