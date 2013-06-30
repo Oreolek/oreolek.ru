@@ -130,7 +130,6 @@ Route::set('error', 'error/<action>(/<message>)', array('action' => '[0-9]++','m
 
 Route::set('default', '(<controller>(/<action>(/<id>)(/page/<page>)))')
  ->defaults(array(
-  'controller' => 'Page',
-  'action'     => 'view',
-  'id'         => 1,
+  'controller' => 'Post',
+  'action'     => 'read',
  ));

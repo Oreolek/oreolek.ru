@@ -1,7 +1,7 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
 /**
- * Контроллер шаблона вёрстки
+ * Layout view controller
  **/
 class View_Layout {
   public $_view = NULL;

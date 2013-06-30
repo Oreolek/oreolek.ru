@@ -172,7 +172,7 @@ class Controller_Post extends Controller_Layout {
       array_push($items, array(
             'title' => $post->name,
             'description' => Markdown::instance()->transform($post->content),
-            'author' => Kohana::$config->load('common.author_email'),
+            'author' => Kohana::$config->load('common.author_email').' ('.Kohana::$config->load('common.author').')',
             'link' => Route::url('default', array('controller' => 'Post', 'action' => 'view', 'id' => $post->id)),
             'guid' => Route::url('default', array('controller' => 'Post', 'action' => 'view', 'id' => $post->id)),
       ));
