@@ -53,7 +53,7 @@ class Model_Photo extends ORM {
       return $image_path;
     }
 
-    $thumbnail_path = $this->generate_thumbnail_path($image_path, $width, $height);
+    $thumbnail_path = self::generate_thumbnail_path($image_path, $width, $height);
 
 		if (!is_file(DOCROOT.$thumbnail_path)) {
 			$image = Image::factory(DOCROOT.$image_path);
