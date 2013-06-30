@@ -64,7 +64,20 @@ class Markdown extends Kohana_Markdown {
 
 		$alt_text = $this->encode_attribute($alt_text);
 		$url = $this->encode_attribute($url);
-		$result = "<a href=\"$url\"><img src=\"".Model_Photo::generate_thumbnail_path($url)."\" alt=\"$alt_text\"";
+    $src = NULL;
+    $result = "<a href=\"$url\"><img alt=\"$alt_text\"";
+    try {
+      $src = Model_Photo::generate_thumbnail($url);
+    }
+    catch(HTTP_Exception_404 $e)
+    {
+      // file not found, but Markdown shouldn't bother about that
+      $src = NULL;
+    }
+    if (isset($src))
+    {
+      $result .= ' src="'.$src.'"';
+    }
 
 		/* $title already quoted */
 		if (isset($title)) {
