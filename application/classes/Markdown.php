@@ -46,7 +46,7 @@ class Markdown extends Kohana_Markdown {
 				  (.*?)		# title = $7
 				  \6		# matching quote
 				  [ \n]*
-				)?			# title is optional
+				)?			# class is optional
 			  \)
 			)
 			}xs',
@@ -60,7 +60,7 @@ class Markdown extends Kohana_Markdown {
     $whole_match	= $matches[1];
 		$alt_text		= $matches[2];
 		$url			= $matches[3] == '' ? $matches[4] : $matches[3];
-		$title			=& $matches[7];
+		$class			=& $matches[7];
 
 		$alt_text = $this->encode_attribute($alt_text);
 		$url = $this->encode_attribute($url);
@@ -78,12 +78,11 @@ class Markdown extends Kohana_Markdown {
     {
       $result .= ' src="'.$src.'"';
     }
+    if (isset($class))
+    {
+      $result .= ' class="'.$class.'"';
+    }
 
-		/* $title already quoted */
-		if (isset($title)) {
-			$title = $this->encode_attribute($title);
-			$result .=  " title=\"$title\"";
-		}
 		$result .= $this->suffix.'</a>';
 
 		return $this->hash_part($result);
