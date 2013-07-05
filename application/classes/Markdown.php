@@ -65,7 +65,7 @@ class Markdown extends Kohana_Markdown {
 		$alt_text = $this->encode_attribute($alt_text);
 		$url = $this->encode_attribute($url);
     $src = NULL;
-    $result = "<a href=\"$url\"><img alt=\"$alt_text\"";
+    $result = "<a href=\"$url\"><img alt=\"$alt_text\" title=\"$alt_text\"";
     try {
       $src = Model_Photo::generate_thumbnail($url);
     }
