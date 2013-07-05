@@ -8,7 +8,8 @@ class View_Layout {
   public $title = '';
   public $scripts = array();
   public $base_scripts = array(
-    'hyphenator.min.js'
+    'hyphenator.min.js',
+    'webfont.js'
   );
   public $errors;
   
