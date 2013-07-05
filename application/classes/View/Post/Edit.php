@@ -15,6 +15,7 @@ class View_Post_Edit extends View_Edit {
     }
     $output .= '<div class="container">'.Form::label('tags', 'Теги').Form::input('tags',$this->get_tags()).'</div>';
     $output .= Form::submit('submit','Отправить');
+    $output .= Form::submit('preview','Предпросмотр');
     return $output;
   } 
   protected function get_tags()
