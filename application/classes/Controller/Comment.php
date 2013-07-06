@@ -51,7 +51,6 @@ class Controller_Comment extends Controller_Layout {
   {
     $this->template = new View_Comment_Index;
     $this->template->title = 'Комментарии дневника';
-    $this->template->scripts = array('http://yandex.st/jquery/2.0.2/jquery.min.js','comment_buttons.js');
     $this->template->items = ORM::factory('Comment')->order_by('posted_at', 'DESC')->find_all();
   }
 
