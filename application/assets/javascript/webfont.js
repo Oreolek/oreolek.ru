@@ -1,5 +1,5 @@
   WebFontConfig = {
-    google: { families: [ 'EB+Garamond::latin,cyrillic' ] }
+    google: { families: [ 'Playfair+Display:400,400italic,700:latin,cyrillic' ] }
   };
   (function() {
     var wf = document.createElement('script');

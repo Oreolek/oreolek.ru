@@ -2,6 +2,7 @@
 
 class Controller_Layout extends Controller {
   protected $secure_actions = FALSE;
+  protected $is_private = FALSE;
   public $auto_render = TRUE;
   public $template = '';
 
@@ -11,17 +12,24 @@ class Controller_Layout extends Controller {
     $action_name = $this->request->action();
     if (
       is_array($this->secure_actions) &&
-      array_key_exists($action_name, $this->secure_actions) && 
-      Auth::instance()->logged_in($this->secure_actions[$action_name]) === FALSE
+      array_key_exists($action_name, $this->secure_actions)
     )
     {
-      if (Auth::instance()->logged_in())
+      if ( Auth::instance()->logged_in($this->secure_actions[$action_name]) === FALSE)
       {
-        $this->redirect('error/403');
+        if (Auth::instance()->logged_in())
+        {
+          $this->redirect('error/403');
+        }
+        else
+        {
+          $this->redirect('user/signin');
+        }
       }
       else
       {
-        $this->redirect('user/signin');
+        //user is clear to go but his pages are cache-sensitive
+        $this->is_private = TRUE;
       }
     }
   }
@@ -31,6 +39,11 @@ class Controller_Layout extends Controller {
     {
       $renderer = Kostache_Layout::factory('layout');
       $this->response->body($renderer->render($this->template, $this->template->_view));
+    }
+    if ($this->is_private)
+    {
+      $this->response->headers( 'cache-control', 'private' );
+      $this->check_cache();
     }
   }
 }
