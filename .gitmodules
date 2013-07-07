@@ -25,3 +25,6 @@
 [submodule "modules/kostache"]
 	path = modules/kostache
 	url = git://github.com/zombor/KOstache.git
+[submodule "modules/unittest"]
+	path = modules/unittest
+	url = git@github.com:kohana/unittest.git

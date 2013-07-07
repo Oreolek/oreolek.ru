@@ -40,7 +40,7 @@ class View_Post_View extends View_Layout {
     foreach ($this->comments as $comment)
     {
       $comment_out = array(
-        'content' => $comment->content,
+        'content' => Markdown::instance()->transform($comment->content),
         'author_email' => $comment->author_email,
         'author_name' => $comment->author_name,
         'id' => $comment->id

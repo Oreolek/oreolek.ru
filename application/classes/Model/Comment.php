@@ -49,6 +49,17 @@ class Model_Comment extends ORM
   );
 
   /**
+   * Antispam check for useragent string.
+   * Suspects user if useragent is empty.
+  **/
+  public static function useragent_check($useragent = '')
+  {
+    if (empty($userbrowser))
+      return FALSE;
+    return TRUE;
+  }
+
+  /**
    * Checks comment content for spam.
    * every comment gets 5 trust points (configurable)
    * useragent empty = -2 points
@@ -57,28 +68,26 @@ class Model_Comment extends ORM
    * etc.
    * @return boolean is the comment legit
    **/
-  public function antispam_check($userbrowser = '')
+  public static function antispam_check($content = '')
   {
     $points = Kohana::$config->load('common.comment_trust');
-    // check for suspicious/empty browser
-    if (empty($userbrowser))
-    {
-      $points -= 2;
-    }
     // check if comment contains HTML tags
-    if (preg_match('<[\w!-]+\s.*>', $this->content) != FALSE)
+    if (preg_match('/<[\w!-]+\s.*>/', $content) != FALSE)
     {
       $points -= 4;
     }
+    // check if it contains URLs
+    $urls = preg_match_all('/(([A-Za-z]{3,9}:(?:\/\/)?)|(?:www\.|[\-;:&=\+\$,\w]+@))[A-Za-z0-9а-яА-Я\.\-]+/', $content);
+    $points -= 3 * $urls;
     // is it in russian?
-    if (preg_match('[а-яА-Я]', $this->content) === FALSE)
+    if (preg_match('/[а-яА-Я]/', $content) === 0)
+    {
+      $points -= 3;
+    }
+    // is it short? (less than five words)
+    if (substr_count($content, ' ') < 5)
     {
       $points -= 2;
-    }
-    // is it short?
-    if (mb_strlen($this->content) < 25)
-    {
-      $points -= 1;
     }
     if ($points <= 0)
       return FALSE;

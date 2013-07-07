@@ -114,9 +114,9 @@ Kohana::modules(array(
    'debug-toolbar' => MODPATH.'debug-toolbar',     // Debug toolbar
 	 'image'         => MODPATH.'image',             // Image manipulation
 	 'kostache'      => MODPATH.'kostache',          // Logic-less Mustache views
+	 'unittest'      => MODPATH.'unittest',          // Unit testing
 	//  'cache'      => MODPATH.'cache',             // Caching with multiple backends
 	//  'codebench'  => MODPATH.'codebench',         // Benchmarking tool
-	//  'unittest'   => MODPATH.'unittest',          // Unit testing
 	));
 
 /**

@@ -25,10 +25,15 @@ class Controller_Comment extends Controller_Layout {
     $comment->author_name = $this->request->post('author_name');
     $comment->author_email = $this->request->post('author_email');
     $email = $this->request->post('email');
-    if (empty($email) AND $comment->check()) {
+    $title = $this->request->post('title');
+    $name = $this->request->post('name');
+    if (empty($email) AND empty($title) AND empty($name) AND $comment->check()) {
       if (Kohana::$config->load('common.comment_approval'))
       {
-        if (!$comment->antispam_check(Request::user_agent('browser')))
+        if (
+          Model_Comment::antispam_check($comment->content) AND
+          Model_Comment::useragent_check(Request::user_agent('browser'))
+        )
         {
           $comment->is_approved = Model_Comment::STATUS_PENDING;
         }

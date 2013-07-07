@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit colors="true" bootstrap="../../modules/unittest/bootstrap.php">
+  <testsuites>
+    <testsuite name="Application Tests">
+      <file>../../modules/unittest/tests.php</file>
+    </testsuite>
+  </testsuites>
+  <groups>
+    <exclude>
+      <group>kohana</group>
+    </exclude>
+  </groups>
+</phpunit>

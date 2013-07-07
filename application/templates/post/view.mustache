@@ -17,6 +17,8 @@
     {{/get_comments}}
     <form method="POST" action="{{comment_action}}">
       <input type="hidden" name="email">
+      <input type="hidden" name="title">
+      <input type="hidden" name="name">
       <input type="hidden" name="post_id" value="{{id}}">
       {{#get_comment_inputs}}
         {{{author_name}}}
