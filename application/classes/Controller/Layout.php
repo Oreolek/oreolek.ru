@@ -33,7 +33,6 @@ class Controller_Layout extends Controller {
         // force https
         if (Kohana::$config->load('common')->get('force_https'))
         {          
-          Kohana::$config->load('core')->set('site_protocol', 'https');
           if (! isset($_SERVER["HTTPS"]))
           {
             $this->redirect(URL::site($this->request->url(), 'https'));
