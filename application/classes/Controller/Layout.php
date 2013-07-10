@@ -33,9 +33,9 @@ class Controller_Layout extends Controller {
         // force https
         if (Kohana::$config->load('common')->get('force_https'))
         {          
-          if (! isset($_SERVER["HTTPS"]))
+          if (!$this->request->secure())
           {
-            $this->redirect(URL::site($this->request->url(), 'https'));
+            $this->request->secure(TRUE);
           } 
         }
       }
