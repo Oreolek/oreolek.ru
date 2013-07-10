@@ -180,6 +180,10 @@ class Controller_Post extends Controller_Layout {
       $post->name = $this->request->post('name');
       $post->is_draft = $this->request->post('is_draft');
       $post->posted_at = $this->request->post('posted_at');
+      if (empty($post->posted_at))
+      {
+        $post->posted_at = date('c');
+      }
       $tags = $this->request->post('tags');
       $validation = $post->validate_create($this->request->post());
       $mode = 'edit';
