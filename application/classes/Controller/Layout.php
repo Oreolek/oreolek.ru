@@ -30,6 +30,15 @@ class Controller_Layout extends Controller {
       {
         //user is clear to go but his pages are cache-sensitive
         $this->is_private = TRUE;
+        // force https
+        if (Kohana::$config->load('common')->get('force_https'))
+        {          
+          Kohana::$config->load('core')->set('site_protocol', 'https');
+          if (! isset($_SERVER["HTTPS"]))
+          {
+            $this->redirect(URL::site($this->request->url(), 'https'));
+          } 
+        }
       }
     }
   }
