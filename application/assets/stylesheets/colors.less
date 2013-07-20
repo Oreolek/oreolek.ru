@@ -22,7 +22,11 @@
 
 body {
   color: @foreground1;
-  background-color: @background1;
+  background: url('../../images/mooning.png') @background1;
+}
+
+.navigation {
+  background: @background2;
 }
 
 a {
@@ -35,12 +39,22 @@ a {
   }
 }
 
+.comment {
+  &:nth-child(odd) {
+    .content {
+      background: @background2;
+    }
+  }
+}
+
 .paging {
   a.active {
     color: @foreground4;
   }
 }
 
+input[type='text'],
+input[type='password'],
 textarea {
   background: @background2;
 }

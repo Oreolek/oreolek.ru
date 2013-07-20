@@ -72,6 +72,7 @@ class View_Layout {
       'Метки записей' => 'tag/index',
       'Список страниц' => 'page/index',
       'О сайте' => 'page/view/1',
+      'Подписаться на RSS' => '/post/feed',
     );
     if (!Auth::instance()->logged_in())
     {

@@ -64,6 +64,7 @@ form {
   input[type='password'],
   textarea {
     .col(@columns - 1);
+    margin-bottom: @basesize;
     border: 0px;
     height: auto;
   }
@@ -146,6 +147,12 @@ img {
     .vertical();
     .text_center;
   }
+}
+
+.link_top {
+  position: fixed;
+  bottom: (@basesize * 2);
+  left: (@basesize * 2);
 }
 
 .container{
