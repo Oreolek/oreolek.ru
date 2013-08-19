@@ -5,7 +5,7 @@
  **/
 class View_Comment_Index extends View_Index {
   public $scripts = array(
-    'http://yandex.st/jquery/2.0.3/jquery.min.js',
+    'https://yandex.st/jquery/2.0.3/jquery.min.js',
     'comment_buttons.js'
   );
 
