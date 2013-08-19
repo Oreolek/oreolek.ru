@@ -134,7 +134,7 @@ img {
 }
 
 .f_right {
-  float: right;
+  float: right !important;
 }
 
 .f_left {
@@ -189,6 +189,25 @@ img {
 .sidequote_right {
   .sidequote;
   float: right;
+}
+
+.sideblock() {
+  .col(2);
+  margin-top: -@basesize / 2;
+  margin-bottom: -@basesize / 2;
+}
+
+.sideblock_left {
+  .sideblock;
+  padding-left: 0;
+  padding-right: @gutter;
+}
+
+.sideblock_right {
+  .sideblock;
+  .f_right;
+  padding-left: @gutter;
+  padding-right: 0;
 }
 
 .tag_content,
