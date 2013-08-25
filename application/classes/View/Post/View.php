@@ -18,6 +18,12 @@ class View_Post_View extends View_Layout {
   public $comments;
   public $date;
 
+  public $scripts = array(
+    'jquery',
+    'jquery.autosize-min.js',
+    'lightbox-2.6.min.js'
+  );
+
   public function get_tags()
   {
     $output = 'Теги: ';

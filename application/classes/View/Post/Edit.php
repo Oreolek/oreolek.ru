@@ -5,6 +5,11 @@
  **/
 class View_Post_Edit extends View_Edit {
   public $_view = 'edit';
+  public $scripts = array(
+    'jquery',
+    'jquery.autosize-min.js',
+    'lightbox-2.6.min.js'
+  );
   public $tags;
   public function get_controls()
   {

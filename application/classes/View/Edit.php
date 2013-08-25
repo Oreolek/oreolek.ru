@@ -6,7 +6,7 @@
 class View_Edit extends View_Layout {
   public $model;
   public $scripts = array(
-    'https://yandex.st/jquery/2.0.3/jquery.min.js',
+    'jquery',
     'jquery.autosize-min.js'
   );
   /**

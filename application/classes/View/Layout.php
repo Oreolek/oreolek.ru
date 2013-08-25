@@ -41,19 +41,25 @@ class View_Layout {
 
   public function scripts()
   {
-    $scripts = array_merge ($this->scripts, $this->base_scripts);
+    $scripts = array_merge ($this->base_scripts, $this->scripts);
     $temp = "";
     foreach($scripts as $script):
       if (strstr($script, '://') === FALSE) //no protocol given, script is local
       {
-        $temp .= '<script type="text/javascript" charset="utf-8" src="'.URL::site('application/assets/javascript/'.$script).'"></script>'."\n";
+        if ($script === 'jquery') // CDN shortcut
+        {
+          $temp .= HTML::script('https://yandex.st/jquery/2.0.3/jquery.min.js')."\n";
+        }
+        else
+        {
+          $temp .= HTML::script('application/assets/javascript/'.$script)."\n";
+        }
       }
       else
       {
-        $temp .= '<script type="text/javascript" charset="utf-8" src="'.$script.'"></script>'."\n";
+        $temp .= HTML::script($script)."\n";
       }
     endforeach;
-    $temp .= $this->stat_scripts();
     return $temp;
   }
 
