@@ -263,9 +263,13 @@ img {
 }
 
 .long-song-lyrics{
-  width: 50%;
+  @media (max-width: 768px) {
+    .col(3);
+  }
+  @media (min-width: 769px) {
+    .col(2);
+  }
   text-align: center;
-  float: left;
   margin-top: 1em;
   margin-bottom: 0.5em;
 }
