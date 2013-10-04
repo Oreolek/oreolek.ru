@@ -16,7 +16,8 @@ class Controller_Post extends Controller_Layout {
     $id = $this->request->param('id');
     $post = ORM::factory('Post', $id);
     if (!$post->loaded()) $this->redirect('error/404');
-    if ($post->is_draft == true AND !Auth::instance()->logged_in('admin')) $this->redirect('error/403');
+    $this->template->is_admin = Auth::instance()->logged_in('admin');
+    if ($post->is_draft == true AND !$this->template->is_admin) $this->redirect('error/403');
     $this->template->title = $post->name;
     if ($post->is_draft) $this->template->title .= ' (черновик)';
     $this->template->id = $post->id;

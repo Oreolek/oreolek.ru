@@ -17,6 +17,7 @@ class View_Post_View extends View_Layout {
    **/
   public $comments;
   public $date;
+  public $is_admin = FALSE;
 
   public $scripts = array(
     'jquery',
@@ -74,5 +75,9 @@ class View_Post_View extends View_Layout {
     $inputs['author_name'] = Form::orm_textinput($comment, 'author_name');
     $inputs['content'] = Form::orm_textarea($comment, 'content');
     return $inputs;
+  }
+  public function link_edit()
+  {
+    return HTML::anchor(Route::url('default',array('controller' => 'Post', 'action' => 'edit', 'id' => $this->id)), 'Редактировать');
   }
 }
