@@ -215,13 +215,17 @@ img {
   .col(3);
 }
 
+.post {
+  .clearfix();
+}
+
 .main_content {
   .col(@columns - 1);
   text-align: justify;
 }
 
 .comment_section {
-  clear: both;
+  .clearfix();
 }
 
 .text_center {
@@ -229,7 +233,7 @@ img {
 }
 
 .paging { // pagination
-  clear: both;
+  .clearfix();
   .text_center;
   a {
     margin-left: @basesize;
@@ -240,9 +244,9 @@ img {
 }
 
 .table_index { // table in every index view
-  clear: both;
+  .clearfix();
   .table_row {
-    clear: both;
+    .clearfix();
     display: table-row;
     & > div {
       display: table-cell;
