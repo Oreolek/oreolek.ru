@@ -60,6 +60,7 @@ class View_Layout {
         $temp .= HTML::script($script)."\n";
       }
     endforeach;
+    $temp .= $this->stat_scripts();
     return $temp;
   }
 
