@@ -56,4 +56,9 @@ class Form extends Kohana_Form {
     return $html;
   }
 
+  public static function ajax_submit($name, $value)
+  {
+    return '<input type="button" name="'.$name.'" value="'.$value.'" onclick="ajax_submit(\''.$name.'\')"></input>';
+  }
+
 }
