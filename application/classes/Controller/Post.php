@@ -182,7 +182,7 @@ class Controller_Post extends Controller_Layout {
       if ($this->request->is_ajax())
       {
         $this->auto_render = FALSE;
-        if ($this->request->post('save'))
+        if ($this->request->post('mode') === 'save')
         {
           $post->save();
         }

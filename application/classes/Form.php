@@ -58,7 +58,7 @@ class Form extends Kohana_Form {
 
   public static function ajax_submit($name, $value)
   {
-    return self::button($name, $value, array('onclick' => 'jQuery.post(jQuery("form").attr("action"), jQuery("form").serialize(),function(){jQuery("#preview").html(data.preview)})'));
+    return '<input type="button" name="'.$name.'" value="'.$value.'" onclick="ajax_submit(\''.$name.'\')"></input>';
   }
 
 }
