@@ -8,7 +8,8 @@ class View_Post_Edit extends View_Edit {
   public $scripts = array(
     'jquery',
     'jquery.autosize-min.js',
-    'lightbox-2.6.min.js'
+    'lightbox-2.6.min.js',
+    'autosave.js'
   );
   public $tags;
   public function get_controls()
@@ -20,7 +21,8 @@ class View_Post_Edit extends View_Edit {
     }
     $output .= '<div class="container">'.Form::label('tags', 'Теги').Form::input('tags',$this->get_tags()).'</div>';
     $output .= Form::submit('submit','Отправить');
-    $output .= Form::submit('preview','Предпросмотр');
+    $output .= Form::ajax_submit('preview','Предпросмотр');
+    $output .= Form::ajax_submit('save','Сохранить');
     return $output;
   } 
   protected function get_tags()

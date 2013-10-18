@@ -1,10 +1,3 @@
-{{#preview}}
-<hr>
-<div class="hyphenate">
-  {{{preview}}}
-</div>
-<hr>
-{{/preview}}
 <form method="POST">
 {{#has_errors}}
   <p class="message">При проверке формы были найдены ошибки:</p>
@@ -16,3 +9,14 @@
 {{/has_errors}}
 {{{get_controls}}}
 </form>
+<h2>Предпросмотр</h2>
+{{#preview}}
+<hr>
+<div class="hyphenate" id="preview">
+  {{{preview}}}
+</div>
+<hr>
+{{/preview}}
+{{^preview}}
+<div class="hyphenate" id="preview"></div>
+{{/preview}}

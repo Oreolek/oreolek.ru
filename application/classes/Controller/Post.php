@@ -179,8 +179,23 @@ class Controller_Post extends Controller_Layout {
     if ($this->request->method() === HTTP_Request::POST) {
       $post->content = $this->request->post('content');
       $post->name = $this->request->post('name');
-      $post->is_draft = $this->request->post('is_draft');
+      if ($this->request->is_ajax())
+      {
+        $this->auto_render = FALSE;
+        if ($this->request->post('save'))
+        {
+          $post->save();
+        }
+        $post->posted_at = date('c');
+        $retval = array(
+          'preview' => Markdown::instance()->transform($post->content),
+          'date' => date('Y-m-d H:i:s'),
+        );
+        $this->response->body(json_encode($retval));
+        return;
+      }
       $post->posted_at = $this->request->post('posted_at');
+      $post->is_draft = $this->request->post('is_draft');
       if (empty($post->posted_at))
       {
         $post->posted_at = date('c');
@@ -198,14 +213,7 @@ class Controller_Post extends Controller_Layout {
         {
           if ($mode === 'edit')
           {
-            if ($post->loaded())
-            {
-              $post->update();
-            }
-            else
-            {
-              $post->create();
-            }
+            $post->save();
           }
         }
         else
