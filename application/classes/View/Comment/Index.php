@@ -4,6 +4,11 @@
  * Comment panel view controller.
  **/
 class View_Comment_Index extends View_Index {
+  public $scripts = array(
+    'https://yandex.st/jquery/2.0.3/jquery.min.js',
+    'comment_buttons.js'
+  );
+
   /**
    * An internal function to prepare item data.
    **/

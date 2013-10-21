@@ -115,9 +115,9 @@ Kohana::modules(array(
 	 'image'         => MODPATH.'image',             // Image manipulation
 	 'kostache'      => MODPATH.'kostache',          // Logic-less Mustache views
 	 'sphinxql'      => MODPATH.'sphinxql',          // Full-text search via Sphinx
+	 'unittest'      => MODPATH.'unittest',          // Unit testing
 	//  'cache'      => MODPATH.'cache',             // Caching with multiple backends
 	//  'codebench'  => MODPATH.'codebench',         // Benchmarking tool
-	//  'unittest'   => MODPATH.'unittest',          // Unit testing
 	));
 
 /**
@@ -131,7 +131,6 @@ Route::set('error', 'error/<action>(/<message>)', array('action' => '[0-9]++','m
 
 Route::set('default', '(<controller>(/<action>(/<id>)(/page/<page>)))')
  ->defaults(array(
-  'controller' => 'Page',
-  'action'     => 'view',
-  'id'         => 1,
+  'controller' => 'Post',
+  'action'     => 'read',
  ));

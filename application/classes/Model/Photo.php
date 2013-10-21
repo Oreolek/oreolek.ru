@@ -39,16 +39,21 @@ class Model_Photo extends ORM {
 	 */
   public function get_thumbnail_path($width = NULL, $height = NULL)
   {
+		$image_path = $this->get_image_path();
+    return $this->generate_thumbnail($image_path, $width, $height);
+  }
+
+  public static function generate_thumbnail($image_path, $width = 0, $height = 0)
+  {
     if ($width == 0) $width = Kohana::$config->load('common.thumbnail_width');
 		if ($height == 0) $height = Kohana::$config->load('common.thumbnail_height');
-		$image_path = $this->get_image_path();
-		if (!is_file(DOCROOT.$image_path))
+    if (!is_file(DOCROOT.$image_path))
     {
       throw new HTTP_Exception_404('File not found');
       return $image_path;
     }
-    
-		$thumbnail_path = $this->generate_thumbnail_path($image_path, $width, $height);
+
+    $thumbnail_path = self::generate_thumbnail_path($image_path, $width, $height);
 
 		if (!is_file(DOCROOT.$thumbnail_path)) {
 			$image = Image::factory(DOCROOT.$image_path);

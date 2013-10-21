@@ -46,7 +46,7 @@ class Markdown extends Kohana_Markdown {
 				  (.*?)		# title = $7
 				  \6		# matching quote
 				  [ \n]*
-				)?			# title is optional
+				)?			# class is optional
 			  \)
 			)
 			}xs',
@@ -60,17 +60,30 @@ class Markdown extends Kohana_Markdown {
     $whole_match	= $matches[1];
 		$alt_text		= $matches[2];
 		$url			= $matches[3] == '' ? $matches[4] : $matches[3];
-		$title			=& $matches[7];
+		$class			=& $matches[7];
 
 		$alt_text = $this->encode_attribute($alt_text);
 		$url = $this->encode_attribute($url);
-		$result = "<a href=\"$url\"><img src=\"".Model_Photo::generate_thumbnail_path($url)."\" alt=\"$alt_text\"";
+    $src = NULL;
+    $uid = uniqid();
+    $result = '<a href="'.$url.'" data-lightbox="'.$uid.'" title="'.$alt_text.'"><img alt="'.$alt_text.'" title="'.$alt_text.'"';
+    try {
+      $src = Model_Photo::generate_thumbnail($url);
+    }
+    catch(HTTP_Exception_404 $e)
+    {
+      // file not found, but Markdown shouldn't bother about that
+      $src = NULL;
+    }
+    if (isset($src))
+    {
+      $result .= ' src="'.$src.'"';
+    }
+    if (isset($class))
+    {
+      $result .= ' class="'.$class.'"';
+    }
 
-		/* $title already quoted */
-		if (isset($title)) {
-			$title = $this->encode_attribute($title);
-			$result .=  " title=\"$title\"";
-		}
 		$result .= $this->suffix.'</a>';
 
 		return $this->hash_part($result);

@@ -5,6 +5,10 @@
  **/
 class View_Edit extends View_Layout {
   public $model;
+  public $scripts = array(
+    'jquery',
+    'jquery.autosize-min.js',
+  );
   /**
    * Array of ORM inputs as:
    * field => control type

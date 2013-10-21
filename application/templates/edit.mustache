@@ -9,3 +9,14 @@
 {{/has_errors}}
 {{{get_controls}}}
 </form>
+<h2>Предпросмотр</h2>
+{{#preview}}
+<hr>
+<div class="hyphenate" id="preview">
+  {{{preview}}}
+</div>
+<hr>
+{{/preview}}
+{{^preview}}
+<div class="hyphenate" id="preview"></div>
+{{/preview}}

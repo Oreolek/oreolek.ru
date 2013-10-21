@@ -25,10 +25,15 @@ class Controller_Comment extends Controller_Layout {
     $comment->author_name = $this->request->post('author_name');
     $comment->author_email = $this->request->post('author_email');
     $email = $this->request->post('email');
-    if (empty($email) AND $comment->check()) {
+    $title = $this->request->post('title');
+    $name = $this->request->post('name');
+    if (empty($email) AND empty($title) AND empty($name) AND $comment->check()) {
       if (Kohana::$config->load('common.comment_approval'))
       {
-        if (!$comment->antispam_check(Request::user_agent('browser')))
+        if (
+          Model_Comment::antispam_check($comment->content) AND
+          Model_Comment::useragent_check(Request::user_agent('browser'))
+        )
         {
           $comment->is_approved = Model_Comment::STATUS_PENDING;
         }
@@ -51,7 +56,6 @@ class Controller_Comment extends Controller_Layout {
   {
     $this->template = new View_Comment_Index;
     $this->template->title = 'Комментарии дневника';
-    $this->template->scripts = array('http://yandex.st/jquery/2.0.2/jquery.min.js','comment_buttons.js');
     $this->template->items = ORM::factory('Comment')->order_by('posted_at', 'DESC')->find_all();
   }
 
@@ -128,4 +132,37 @@ class Controller_Comment extends Controller_Layout {
     }
 
   }
+
+  /**
+   * RSS feed for fresh comments
+   **/
+  public function action_feed()
+  {
+    $this->auto_render = false;
+    $comments = ORM::factory('Comment')
+      ->where('is_approved', '=', '1')
+      ->order_by('posted_at', 'DESC')
+      ->limit(10)
+      ->find_all(); 
+    $info = array(
+        'title' => Kohana::$config->load('common.title').' (комментарии)',
+        'pubDate' => strtotime($comments[0]->posted_at),
+        'description' => ''
+    );
+    $items = array();
+    foreach ($comments as $comment)
+    {
+      array_push($items, array(
+            'title' => $comment->author_name,
+            'description' => Markdown::instance()->transform($comment->content),
+            'author' => $comment->author_email,
+            'link' => Route::url('default', array('controller' => 'Post', 'action' => 'view', 'id' => $comment->post_id)).'#comment_'.$comment->id,
+            'guid' => Route::url('default', array('controller' => 'Post', 'action' => 'view', 'id' => $comment->post_id)).'#comment_'.$comment->id,
+      ));
+    }
+    $this->response->headers('Content-type', 'application/rss+xml');
+    $this->response->body( Feed::create($info, $items) );
+
+  }
+
 }

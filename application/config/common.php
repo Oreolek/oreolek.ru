@@ -3,6 +3,7 @@
 return array(
  'title' => 'Из Тишины',
  'author' => 'Александр Яковлев',
+ 'author_email' => 'keloero@oreolek.ru',
  'uploads_dir' => '/uploads',
  'thumbnail_width' => 200,
  'thumbnail_height' => 150,
@@ -10,4 +11,5 @@ return array(
  'page_size' => 20, // pagination
  'comment_trust' => 5, // comment trust points - see Model_Comment::antispam_check
  'brief_limit' => 80, // word limit on brief descriptions
+ 'force_https' => TRUE // force HTTPS on sensitive actions
 );

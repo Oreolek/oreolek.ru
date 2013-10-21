@@ -4,6 +4,9 @@
     <title>{{title}}</title>
     <meta charset="utf-8">
     <link href='{{favicon}}' rel='shortcut icon' type='image/x-icon'/>
+    {{#feeds}}
+    <link href="{{{url}}}" rel="alternate" type="application/rss+xml" title="{{title}}">
+    {{/feeds}}
     {{{stylesheet}}}
    </head>
   <body>
@@ -21,6 +24,7 @@
          {{/navigation}}
         </ul>
       </div>
+      <a href="#" class="link_top">К началу страницы</a>
       <div class = "main_content">
         <h2>{{title}}</h2>
 {{>content}}

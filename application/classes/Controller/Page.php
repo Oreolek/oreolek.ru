@@ -23,7 +23,11 @@ class Controller_Page extends Controller_Layout {
     {
       $this->redirect('error/403');
     }
-    if ($page->is_draft) $this->template->title .= ' (черновик)';
+    $this->template->title = $page->name;
+    if ($page->is_draft)
+    {
+      $this->template->title .= ' (черновик)';
+    }
     $this->template->content = Markdown::instance()->transform($page->content);
   }
   /**
@@ -67,31 +71,7 @@ class Controller_Page extends Controller_Layout {
     $this->template->title = 'Новая страница';
     $this->template->errors = array();
     $page = ORM::factory('Page');
-    $this->template->controls = array(
-      'name' => 'input',
-      'content' => 'text',
-      'is_draft' => 'checkbox',
-    );
-    if ($this->request->method() === HTTP_Request::POST) {
-      $page->content = $this->request->post('content');
-      $page->name = $this->request->post('name');
-      $page->is_draft = $this->request->post('is_draft');
-      try {
-        if ($page->check())
-        {
-          $page->create();
-        }
-      }
-      catch (ORM_Validation_Exception $e)
-      {
-        $this->template->errors = $e->errors('');
-      }
-      if (empty($this->template->errors))
-      {
-        $this->redirect('page/view/' . $page->id);
-      }
-    }
-    $this->template->model = $page;
+    $this->edit_page($page); 
   }
   /**
    * Edit a page (for admin)
@@ -106,6 +86,15 @@ class Controller_Page extends Controller_Layout {
     {
       $this->redirect('error/404');
     }
+    $this->edit_page($page);
+  }
+
+  /**
+   * Edit or create page.
+   * Page model should be initialized with empty page (create) or existing one (update).
+   **/
+  protected function edit_page($page)
+  {
     $this->template->errors = array();
     $this->template->controls = array(
       'name' => 'input',
@@ -119,7 +108,14 @@ class Controller_Page extends Controller_Layout {
       try {
         if ($page->check())
         {
-          $page->update();
+          if ($page->loaded())
+          {
+            $page->update();
+          }
+          else
+          {
+            $page->create();
+          }
         }
       }
       catch (ORM_Validation_Exception $e)

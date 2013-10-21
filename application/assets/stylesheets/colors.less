@@ -22,7 +22,11 @@
 
 body {
   color: @foreground1;
-  background-color: @background1;
+  background: url('../../assets/images/mooning.png') @background1;
+}
+
+.navigation {
+  background: @background2;
 }
 
 a {
@@ -33,4 +37,42 @@ a {
   &:visited {
     color: @foreground3;
   }
+}
+
+.comment {
+  &:nth-child(odd) {
+    .content {
+      background: @background2;
+    }
+  }
+}
+
+.paging {
+  a.active {
+    color: @foreground4;
+  }
+}
+
+input[type='text'],
+input[type='password'],
+textarea {
+  background: @background2;
+}
+
+.sidequote() {
+  color: @foreground4;
+}
+
+.footer {
+  color: @foreground2;
+}
+
+acronym, abbr {
+  border-bottom: 1px dashed @foreground4;
+  color: @foreground4;
+}
+
+blockquote {
+  border-left: 1px dashed @background4;
+  background: @background3;
 }

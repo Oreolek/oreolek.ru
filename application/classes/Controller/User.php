@@ -18,6 +18,14 @@ class Controller_User extends Controller_Layout {
     {
       $this->redirect('post/index');
     }
+    // force https; this is the only action to require this special rule
+    if (Kohana::$config->load('common')->get('force_https'))
+    {          
+      if (!$this->request->secure())
+      {
+        $this->request->secure(TRUE);
+      } 
+    }
     $this->template = new View_User_Signin;
     $this->template->title = 'Вход в систему';
     $this->template->errors = array();

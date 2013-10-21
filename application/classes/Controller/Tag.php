@@ -29,6 +29,8 @@ class Controller_Tag extends Controller_Layout {
     $this->template->show_create = FALSE;
     $this->template->items = $tag->posts->where('is_draft', '=', '0')->find_all();
     $this->template->content = Markdown::instance()->transform($tag->description);
+    $this->template->feed_link = Route::url('default', array('controller' => 'Tag', 'action' => 'feed', 'id' => $id));
+    $this->template->tag_name = $tag->name;
   }
 
   /**
@@ -46,6 +48,8 @@ class Controller_Tag extends Controller_Layout {
     $this->template->title = 'Записи по тегу: '.$tag->name;
     $this->template->items = $tag->posts->where('is_draft', '=', '0')->find_all();
     $this->template->content = Markdown::instance()->transform($tag->description);
+    $this->template->feed_link = Route::url('default', array('controller' => 'Tag', 'action' => 'feed', 'id' => $id));
+    $this->template->tag_name = $tag->name;
   }
 
   /**
