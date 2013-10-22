@@ -59,7 +59,7 @@ class Model_Photo extends ORM {
 			$image = Image::factory(DOCROOT.$image_path);
 			$image->resize($width, $height, Image::WIDTH); 
 			$image->crop($width, $height);
-			$image->save(DOCROOT.$thumbnail_path);
+			$image->save(DOCROOT.$thumbnail_path, 80); //save thumbnail with quality of 80
 		}
 		return $thumbnail_path;
   }
