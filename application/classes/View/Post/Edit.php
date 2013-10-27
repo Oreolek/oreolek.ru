@@ -22,7 +22,10 @@ class View_Post_Edit extends View_Edit {
     $output .= '<div class="container">'.Form::label('tags', 'Теги').Form::input('tags',$this->get_tags()).'</div>';
     $output .= Form::submit('submit','Сохранить и закончить редактирование');
     $output .= Form::ajax_submit('preview','Предпросмотр');
-    $output .= Form::ajax_submit('save','Сохранить');
+    if ($this->model->loaded())
+    {
+      $output .= Form::ajax_submit('save','Сохранить');
+    }
     return $output;
   } 
   protected function get_tags()
