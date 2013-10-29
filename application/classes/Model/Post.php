@@ -46,15 +46,6 @@ class Model_Post extends ORM {
   );
 
   /**
-   * Count all publicly displayed comments
-   * @todo optimize
-   **/
-  public function count_comments()
-  {
-    return $this->comments->count_all('is_approved', '=', Model_Comment::STATUS_APPROVED);
-  }
-
-  /**
    * Search term in all posts using Sphinx.
    * Note that Sphinx enforces hidden LIMIT 1,20
    **/
