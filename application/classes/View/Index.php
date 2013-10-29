@@ -53,9 +53,9 @@ class View_Index extends View_Layout {
   public function get_items()
   {
     $result = array();
-    if (is_null($this->items))
+    if (is_null($this->items) OR $this->items === FALSE OR count($this->items) === 0)
     {
-      return NULL;
+      return 'Не найдено объектов для отображения.';
     };
     $items = $this->filter_items();
     foreach ($items as $item)
@@ -75,6 +75,7 @@ class View_Index extends View_Layout {
     {
       return FALSE;
     }
+
     if (is_null($this->is_admin))
     {
       $this->is_admin = Auth::instance()->logged_in('admin');

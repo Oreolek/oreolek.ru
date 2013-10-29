@@ -130,6 +130,11 @@ class View_Layout {
     return $output;
   }
 
+  public function search_url()
+  {
+    return Route::url('default', array('controller' => 'Post', 'action' => 'search'));
+  }
+
   /**
    * RSS feed array
    **/

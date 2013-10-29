@@ -266,4 +266,18 @@ class Controller_Post extends Controller_Layout {
     }
     $this->template->model = $post;
   }
+
+  public function action_search()
+  {
+    $term = $this->request->post('term');
+    if ($term == '')
+    {
+      $this->redirect('');
+    }
+    $result = Model_Post::search($term);
+    $this->template = new View_Read;
+    $this->template->title = 'Результаты поиска';
+    Debugtoolbar::add_custom('custom', $result);
+    $this->template->items = ORM::factory('Post')->load_by_id($result);
+  }
 }

@@ -114,6 +114,7 @@ Kohana::modules(array(
    'debug-toolbar' => MODPATH.'debug-toolbar',     // Debug toolbar
 	 'image'         => MODPATH.'image',             // Image manipulation
 	 'kostache'      => MODPATH.'kostache',          // Logic-less Mustache views
+	 'sphinxql'      => MODPATH.'sphinxql',          // Full-text search via Sphinx
 	 'unittest'      => MODPATH.'unittest',          // Unit testing
 	//  'cache'      => MODPATH.'cache',             // Caching with multiple backends
 	//  'codebench'  => MODPATH.'codebench',         // Benchmarking tool

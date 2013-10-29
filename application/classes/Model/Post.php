@@ -53,4 +53,16 @@ class Model_Post extends ORM {
   {
     return $this->comments->count_all('is_approved', '=', Model_Comment::STATUS_APPROVED);
   }
+
+  /**
+   * Search term in all posts using Sphinx.
+   * Note that Sphinx enforces hidden LIMIT 1,20
+   **/
+  public static function search($term)
+  {
+    $table = Kohana::$config->load('database')->get('sphinx')['connection']['database'];
+    $db = Database::instance('sphinx');
+    $result = $db->query(Database::SELECT, 'SELECT id FROM `'.$table.'` WHERE MATCH('.$db->quote($term).') LIMIT 100');
+    return $result->as_array(NULL, 'id');
+  }
 }

@@ -34,7 +34,7 @@ class ORM extends Kohana_ORM {
 		return $validation;
 	}
 
-  	/**
+  /**
 	 * Binds another one-to-one object to this model.  One-to-one objects
 	 * can be nested using 'object1:object2' syntax
 	 *
@@ -122,4 +122,16 @@ class ORM extends Kohana_ORM {
 			return FALSE;
 		}
 	}
+  
+  /**
+   * Loads model(s) from array of IDs or single ID.
+   **/
+  public function load_by_id($id)
+  {
+    if (empty($id))
+      return FALSE;
+    if (is_array($id))
+      return $this->where('id', 'IN', $id)->find_all();
+    return $this->where('id', '=', $id)->find();
+  }
 }
