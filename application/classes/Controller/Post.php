@@ -277,6 +277,6 @@ class Controller_Post extends Controller_Layout {
     $result = Model_Post::search($term);
     $this->template = new View_Read;
     $this->template->title = 'Результаты поиска';
-    $this->template->items = ORM::factory('Post')->load_by_id($result);
+    $this->template->items = ORM::factory('Post')->with_count('comments', 'comment_count')->load_by_id($result);
   }
 }

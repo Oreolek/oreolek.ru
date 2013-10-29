@@ -131,7 +131,7 @@ class ORM extends Kohana_ORM {
     if (empty($id))
       return FALSE;
     if (is_array($id))
-      return $this->where('id', 'IN', $id)->find_all();
+      return $this->where($this->_object_name .'.'. $this->_primary_key, 'IN', $id)->find_all();
     return $this->where('id', '=', $id)->find();
   }
 }

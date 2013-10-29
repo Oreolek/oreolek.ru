@@ -40,7 +40,10 @@ class View_Read extends View_Index {
     $output['heading'] = $item->name;
     $output['comment_count'] = $item->comment_count;
     $output['comments_link'] = Route::url('default', array('controller' => Request::current()->controller(), 'action' => 'view','id' => $item->id)).'#comments';
+    // now limit words in content
     $output['content'] = Text::limit_words(Markdown::instance()->transform($item->content), Kohana::$config->load('common.brief_limit'));
+    // but we have to close all unclosed tags
+    $output['content'] = HTML::tidy($output['content']);
     return $output;
   }
 }
