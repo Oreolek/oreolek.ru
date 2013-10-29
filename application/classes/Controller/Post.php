@@ -277,7 +277,6 @@ class Controller_Post extends Controller_Layout {
     $result = Model_Post::search($term);
     $this->template = new View_Read;
     $this->template->title = 'Результаты поиска';
-    Debugtoolbar::add_custom('custom', $result);
     $this->template->items = ORM::factory('Post')->load_by_id($result);
   }
 }

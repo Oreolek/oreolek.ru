@@ -38,7 +38,6 @@ class View_Read extends View_Index {
     }
     $output['view_link'] = Route::url('default', array('controller' => Request::current()->controller(), 'action' => 'view','id' => $item->id));
     $output['heading'] = $item->name;
-    Debugtoolbar::add_custom($item->name, $item->comments);
     $output['comment_count'] = $item->comment_count;
     $output['comments_link'] = Route::url('default', array('controller' => Request::current()->controller(), 'action' => 'view','id' => $item->id)).'#comments';
     $output['content'] = Text::limit_words(Markdown::instance()->transform($item->content), Kohana::$config->load('common.brief_limit'));
