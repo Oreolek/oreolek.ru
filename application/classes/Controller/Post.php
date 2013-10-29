@@ -274,19 +274,10 @@ class Controller_Post extends Controller_Layout {
     {
       $this->redirect('');
     }
-    $sphinxql = new SphinxQL();
-  	$query = $sphinxql->new_query();
-    $query->add_index('index1')
-      ->add_field('name')
-      ->add_field('content')
-      ->search($term);
-    $result = $query->execute();
-    if ($result)
-    {
-      $result = $result['data'];
-    }
-    $this->template = new View_Index;
+    $result = Model_Post::search($term);
+    $this->template = new View_Read;
     $this->template->title = 'Результаты поиска';
-    $this->template->items = $result;
+    Debugtoolbar::add_custom('custom', $result);
+    $this->template->items = ORM::factory('Post')->load_by_id($result);
   }
 }

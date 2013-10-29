@@ -2,30 +2,44 @@
 
 return array
 (
- 'default' => array
- (
-  'type'       => 'MySQLi',
-  'connection' => array(
-   /**
-    * The following options are available for MySQL:
-    *
-    * string   hostname     server hostname, or socket
-    * string   database     database name
-    * string   username     database username
-    * string   password     database password
-    * boolean  persistent   use persistent connections?
-    *
-    * Ports and sockets may be appended to the hostname.
-    */
-   'hostname'   => 'localhost',
-   'database'   => 'database',
-   'username'   => 'username',
-   'password'   => 'password',
-   'persistent' => FALSE,
+  'default' => array
+  (
+    'type'       => 'MySQLi',
+    'connection' => array(
+      /**
+       * The following options are available for MySQL:
+       *
+       * string   hostname     server hostname, or socket
+       * string   database     database name
+       * string   username     database username
+       * string   password     database password
+       * boolean  persistent   use persistent connections?
+       *
+       * Ports and sockets may be appended to the hostname.
+       */
+      'hostname'   => 'localhost',
+      'database'   => 'oreolek',
+      'username'   => '',
+      'password'   => '',
+      'persistent' => FALSE,
+    ),
+    'table_prefix' => '', //currently not implemented
+    'charset'      => 'utf8',
+    'caching'      => TRUE,
+    'profiling'    => FALSE,
   ),
-  'table_prefix' => '', //currently not implemented
-  'charset'      => 'utf8',
-  'caching'      => TRUE,
-  'profiling'    => FALSE,
- ),
+  'sphinx' => array(
+    'type'       => 'MySQLi',
+    'connection' => array(
+      'hostname'   => 'localhost:9306',
+      'database'   => 'oreolek', // index name from sphinx config
+      'username'   => '',
+      'password'   => '',
+      'persistent' => FALSE,
+    ),
+    'charset'      => 'utf8',
+    'caching'      => TRUE,
+    'profiling'    => FALSE,
+  ),
 );
+

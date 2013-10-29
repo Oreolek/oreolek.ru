@@ -33,4 +33,16 @@ class ORM extends Kohana_ORM {
     }
 		return $validation;
 	}
+
+  /**
+   * Loads model(s) from array of IDs or single ID.
+   **/
+  public function load_by_id($id)
+  {
+    if (empty($id))
+      return FALSE;
+    if (is_array($id))
+      return $this->where('id', 'IN', $id)->find_all();
+    return $this->where('id', '=', $id)->find();
+  }
 }
