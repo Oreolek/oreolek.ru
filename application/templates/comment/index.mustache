@@ -10,13 +10,7 @@
   <div class="table_row">
     <div class="date"><a href="{{post_link}}#comment_{{comment_id}}">{{date}}</a></div>
     <div>
-      {{#author_email}}
-        <a class="author" href="mailto:{{author_email}}">
-      {{/author_email}}
-      {{author_name}}
-      {{#author_email}}
-      </a>
-      {{/author_email}}
+      {{#author_email}}<a class="author" href="mailto:{{author_email}}">{{/author_email}} {{author_name}} {{#author_email}}</a>{{/author_email}}
     </div>
     <div>{{{content}}}</div>
     <div>{{{is_approved}}}</div>

@@ -14,21 +14,26 @@ class View_Comment_Index extends View_Index {
    **/
   protected function show_item($item)
   {
+    die;
     $output = array(
-        'date' => '',
-        'author_email' => '',
+        'date' => $item->posted_at,
+        'author_email' => $item->author_email,
+        'content' => Markdown::instance()->transform($item->content),
         'author_name' => '',
-        'content' => '',
         'is_approved' => '',
-        'edit_link' => '',
-        'delete_link' => '',
+        'comment_id' => $item->id,
+        'post_link' => Route::url('default', array('controller' => 'Post', 'action' => 'view', 'id' => $item->post)),
+        'edit_link' => Route::url('default', array('controller' => 'Comment', 'action' => 'edit', 'id' => $item->id)),
+        'delete_link' => Route::url('default', array('controller' => 'Comment', 'action' => 'delete','id' => $item->id)),
     );
-    $output['date'] = $item->posted_at;
-    $output['author_email'] = $item->author_email;
-    $output['author_name'] = $item->author_name;
-    $output['content'] = Markdown::instance()->transform($item->content);
-    $output['post_link'] = Route::url('default', array('controller' => 'Post', 'action' => 'view', 'id' => $item->post));
-    $output['comment_id'] = $item->id;
+    if (empty($item->author_name))
+    {
+      $output['author_name'] = Kohana::$config->load('common')->get('anonymous_name');
+    }
+    else
+    {
+      $output['author_name'] = $item->author_name;
+    }
     $output['is_approved'] = Form::checkbox(
       'is_approved',
       $item->id,
@@ -37,8 +42,6 @@ class View_Comment_Index extends View_Index {
         'data-edit-url' => Route::url('default', array('controller' => 'Comment','action' => 'edit','id' => $item->id)),
       )
     );
-    $output['edit_link'] = Route::url('default', array('controller' => 'Comment', 'action' => 'edit', 'id' => $item->id));
-    $output['delete_link'] = Route::url('default', array('controller' => 'Comment', 'action' => 'delete', 'id' => $item->id));
     return $output;
   }
 

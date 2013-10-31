@@ -52,6 +52,10 @@ class View_Post_View extends View_Layout {
         'author_name' => $comment->author_name,
         'id' => $comment->id
       );
+      if (empty($comment->author_name))
+      {
+        $comment_out['author_name'] = Kohana::$config->load('common')->get('anonymous_name');
+      }
       array_push($result, $comment_out);
     }
     return $result;
