@@ -1,7 +1,7 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
 /**
- * Comment panel view controller.
+ * Comment panel view controller. Only for administrator.
  **/
 class View_Comment_Index extends View_Index {
   public $scripts = array(
@@ -36,7 +36,7 @@ class View_Comment_Index extends View_Index {
     $output['is_approved'] = Form::checkbox(
       'is_approved',
       $item->id,
-      (boolean) $item->is_approved,
+      $item->is_approved == Model_Comment::STATUS_APPROVED,
       array(
         'data-edit-url' => Route::url('default', array('controller' => 'Comment','action' => 'edit','id' => $item->id)),
       )

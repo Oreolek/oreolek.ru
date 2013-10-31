@@ -28,14 +28,14 @@ class Controller_Comment extends Controller_Layout {
     $title = $this->request->post('title');
     $name = $this->request->post('name');
     if (empty($email) AND empty($title) AND empty($name) AND $comment->check()) {
-      if (Kohana::$config->load('common.comment_approval'))
+      if (Kohana::$config->load('common')->get('comment_approval'))
       {
         if (
-          Model_Comment::antispam_check($comment->content) AND
-          Model_Comment::useragent_check(Request::user_agent('browser'))
+          Model_Comment::antispam_check($comment->content) == FALSE OR
+          Model_Comment::useragent_check(Request::user_agent('browser') == FALSE)
         )
         {
-          $comment->is_approved = Model_Comment::STATUS_PENDING;
+          $comment->is_approved = Model_Comment::STATUS_SPAM;
         }
         else
         {
@@ -44,7 +44,7 @@ class Controller_Comment extends Controller_Layout {
       }
       else
       {
-        $comment->is_approved = Model_Comment::STATUS_APPROVED;
+        $comment->is_approved = Model_Comment::STATUS_PENDING;
       }
       $comment->create();
       $this->redirect('post/view/' . $post_id);
@@ -122,7 +122,7 @@ class Controller_Comment extends Controller_Layout {
     }
     $this->template = new View_Delete;
     $this->template->title = 'Удаление комментария';
-    $this->template->content_title = 'Комментарий от '.$comment->author_name;
+    $this->template->content_title = 'Комментарий от '.$model->author_name;
     $this->template->content = Markdown::instance()->transform($model->content);
 
     $confirmation = $this->request->post('confirmation');
