@@ -14,7 +14,6 @@ class View_Comment_Index extends View_Index {
    **/
   protected function show_item($item)
   {
-    die;
     $output = array(
         'date' => $item->posted_at,
         'author_email' => $item->author_email,
