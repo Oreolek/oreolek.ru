@@ -1,0 +1,12 @@
+<form method="POST" action="{{url}}">
+  <input type="hidden" name="email">
+  <input type="hidden" name="title">
+  <input type="hidden" name="name">
+  <input type="hidden" name="post_id" value="-ID-">
+{{#inputs}}
+  {{{author_name}}}
+  {{{author_email}}}
+  {{{content}}}
+{{/inputs}}
+  <input type="submit" value="Отправить">
+</form>

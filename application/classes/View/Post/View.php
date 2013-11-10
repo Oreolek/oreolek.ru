@@ -22,7 +22,8 @@ class View_Post_View extends View_Layout {
   public $scripts = array(
     'jquery',
     'jquery.autosize-min.js',
-    'lightbox-2.6.min.js'
+    'lightbox-2.6.min.js',
+    'load_comment_form.js'
   );
 
   public function get_tags()
@@ -61,27 +62,12 @@ class View_Post_View extends View_Layout {
     return $result;
   }
 
-  /**
-   * URL for posting comments
-   **/
-  public function comment_action()
-  {
-    return URL::site('comment/create/'.$this->id);
-  }
-  /**
-   * Generates ORM inputs for empty comment
-   **/
-  public function get_comment_inputs()
-  {
-    $comment = ORM::factory('Comment');
-    $inputs = array();
-    $inputs['author_email'] = Form::orm_textinput($comment, 'author_email');
-    $inputs['author_name'] = Form::orm_textinput($comment, 'author_name');
-    $inputs['content'] = Form::orm_textarea($comment, 'content');
-    return $inputs;
-  }
   public function link_edit()
   {
     return HTML::anchor(Route::url('default',array('controller' => 'Post', 'action' => 'edit', 'id' => $this->id)), 'Редактировать');
+  }
+
+  public function load_comment_form_action() {
+    return Route::url('default', array('controller' => 'Comment', 'action' => 'form'));
   }
 }

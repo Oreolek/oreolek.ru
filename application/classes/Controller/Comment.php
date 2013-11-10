@@ -6,14 +6,14 @@ class Controller_Comment extends Controller_Layout {
   );
 
   /**
-   * Create a comment.
+   * AJAX action to create a comment.
    **/
   public function action_create()
   {
     $this->auto_render = FALSE;
     $post_id = $this->request->param('id');
     $comment = ORM::factory('Comment');
-    if (is_null($post_id))
+    if (empty($post_id))
     {
       throw new HTTP_Exception_500('Не указан ID записи');
     }
@@ -50,6 +50,30 @@ class Controller_Comment extends Controller_Layout {
       $this->redirect('post/view/' . $post_id);
     }
     unset($email);
+  }
+
+  /**
+   * AJAX action to get a form for a new comment.
+   * TODO cache it
+   **/
+  public function action_form()
+  {
+    $this->auto_render = FALSE;
+    if ( ! Fragment::load('comment_form', Date::DAY * 7))
+    {
+      $model = ORM::factory('Comment');
+      $inputs = array();
+      $inputs['author_email'] = Form::orm_textinput($model, 'author_email');
+      $inputs['author_name'] = Form::orm_textinput($model, 'author_name');
+      $inputs['content'] = Form::orm_textarea($model, 'content');
+      $this->template = new View_Comment_Form;
+      $this->template->url = URL::site('comment/create/-ID-');
+      $this->template->inputs = $inputs;
+      $renderer = Kostache::factory();
+      $this->response->body($renderer->render($this->template, $this->template->_view));
+
+      Fragment::save();
+    }
   }
 
   public function action_index()
