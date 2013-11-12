@@ -1,6 +1,6 @@
 function ajax_submit(mode_switch)
 {
-  jQuery.post(jQuery("form").attr("action"), {
+  jQuery.post(jQuery(".main_content form").attr("action"), {
       name: jQuery('input[name=name]').val(),
       content: jQuery('textarea[name=content]').val(),
       mode: mode_switch
