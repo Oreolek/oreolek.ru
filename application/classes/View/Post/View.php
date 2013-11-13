@@ -39,6 +39,10 @@ class View_Post_View extends View_Layout {
         $i++;
       }
     }
+    else 
+    {
+      return '';
+    }
     return $output;
   }
 
