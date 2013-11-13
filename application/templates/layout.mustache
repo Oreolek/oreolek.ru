@@ -18,6 +18,9 @@
       <header>
         <h1>{{site_title}}</h1>
       </header>
+      <div class="paging">
+        {{{get_paging}}}
+      </div>
       <div class = "navigation">
         <form action="{{search_url}}" method="POST">
           <input type="text" placeholder="Поиск записей" name="term">
@@ -28,10 +31,13 @@
          {{/navigation}}
         </ul>
       </div>
-      <a href="#" class="link_top hidden-xs"><i class="fa fa-angle-up">&nbsp;</i>К началу страницы</a>
+      <a href="#" class="link_top hidden-xs"><i class="fa fa-angle-up">&nbsp;</i>Наверх</a>
       <div class = "main_content">
         <h2>{{title}}</h2>
 {{>content}}
+      </div>
+      <div class="paging">
+        {{{get_paging}}}
       </div>
       <footer>Сайт сделан на фреймворке Kohana. <a href="https://github.com/oreolek/oreolek.ru">Исходный код</a> движка доступен по лицензии <a href="http://www.gnu.org/licenses/agpl-3.0.html">AGPL</a>.</footer>
     </div>

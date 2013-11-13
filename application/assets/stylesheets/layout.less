@@ -24,10 +24,10 @@ input[type=submit] {
   .center-block;
 }
 
-/*blockquote {
+blockquote {
   padding-left: 0.5 * @font-size-base;
   clear: left;
-}*/
+}
 
 input[type='text'],
 input[type='password'],
@@ -117,6 +117,7 @@ img {
 
 .navigation{
   .make-lg-column(2);
+  .make-sm-column(3);
   input {
     width: 100%;
   }
@@ -145,9 +146,11 @@ code {
 
 .side {
   .make-lg-column(4);
+  .make-sm-column(4);
 }
 
 footer {
+  .make-row();
   margin-top: @font-size-base;
   .text_center;
   .small();
@@ -155,6 +158,7 @@ footer {
 
 .sidequote() {
   .make-lg-column(4);
+  .make-sm-column(4);
   font-size: @font-size-base * 1.5;
   margin-top: @font-size-base / 2;
   margin-bottom: @font-size-base / 2;
@@ -173,6 +177,7 @@ footer {
 
 .sideblock() {
   .make-lg-column(4);
+  .make-sm-column(4);
   margin-top: -@font-size-base / 2;
   margin-bottom: -@font-size-base / 2;
 }
@@ -193,6 +198,7 @@ footer {
 .tag_content,
 .tag_posts {
   .make-lg-column(6);
+  .make-sm-column(6);
 }
 
 .post {
@@ -201,6 +207,7 @@ footer {
 
 .main_content {
   .make-lg-column(10);
+  .make-sm-column(9);
   text-align: justify;
   p {
     text-align: justify;
@@ -216,13 +223,19 @@ footer {
 }
 
 .paging { // pagination
-  .clearfix();
+  .make-row();
   .text_center;
   a {
+    @media screen and (max-width: 767px) {
+      .make-xs-column(1);
+    }
     margin-left: @font-size-base;
-  }
-  a.active {
-    font-size: @font-size-base * 1.25;
+    &.active {
+      font-weight: 700;
+      @media screen and (min-width: 768px) {
+        font-size: @font-size-base * 1.25;
+      }
+    }
   }
 }
 

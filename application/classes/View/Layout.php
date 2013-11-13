@@ -12,6 +12,11 @@ class View_Layout {
     'webfont.js'
   );
   public $errors;
+ 
+  /**
+   * Inherited paging function
+   **/
+  public function get_paging() {}
   
   public function has_errors()
   {
