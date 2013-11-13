@@ -3,17 +3,21 @@
   <head>
     <title>{{title}}</title>
     <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
     <link href='{{favicon}}' rel='shortcut icon' type='image/x-icon'/>
     {{#feeds}}
     <link href="{{{url}}}" rel="alternate" type="application/rss+xml" title="{{title}}">
     {{/feeds}}
+    <!--[if lt IE 9]>
+{{{ie_scripts}}}
+    <![endif]-->
     {{{stylesheet}}}
    </head>
   <body>
-    <div class = "container">
-      <div class = "header text_center">
+    <div class="container-fluid">
+      <header>
         <h1>{{site_title}}</h1>
-      </div>
+      </header>
       <div class = "navigation">
         <form action="{{search_url}}" method="POST">
           <input type="text" placeholder="Поиск записей" name="term">
@@ -24,13 +28,13 @@
          {{/navigation}}
         </ul>
       </div>
-      <a href="#" class="link_top">К началу страницы</a>
+      <a href="#" class="link_top hidden-xs"><i class="fa fa-angle-up">&nbsp;</i>К началу страницы</a>
       <div class = "main_content">
         <h2>{{title}}</h2>
 {{>content}}
       </div>
-      <div class="footer">Сайт сделан на фреймворке Kohana. <a href="https://github.com/oreolek/oreolek.ru">Исходный код</a> движка доступен по лицензии <a href="http://www.gnu.org/licenses/agpl-3.0.html">AGPL</a>.</div>
+      <footer>Сайт сделан на фреймворке Kohana. <a href="https://github.com/oreolek/oreolek.ru">Исходный код</a> движка доступен по лицензии <a href="http://www.gnu.org/licenses/agpl-3.0.html">AGPL</a>.</footer>
     </div>
-    {{{scripts}}}
+{{{scripts}}}
   </body>
 </html>

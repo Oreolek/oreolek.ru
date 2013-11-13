@@ -8,6 +8,9 @@
 @foreground3: #444;
 @foreground4: #666;
 
+@font-family-sans-serif: "Open Sans", Arial, sans-serif;
+@link-color: @foreground2;
+
 .red {
   color: darkred;
 }
@@ -30,7 +33,6 @@ body {
 }
 
 a {
-  color: @foreground2;
   &:hover {
     color: @foreground4;
   }
@@ -41,9 +43,7 @@ a {
 
 .comment {
   &:nth-child(odd) {
-    .content {
-      background: @background2;
-    }
+    background: @background2;
   }
 }
 

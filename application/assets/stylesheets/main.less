@@ -1,28 +1,7 @@
-@import 'normalize';
+@import 'bootstrap/bootstrap';
+@import 'fontawesome/font-awesome';
 @import 'colors';
 @import 'layout';
-
-@columns: 6;
-@gutter: 2%;
-@image_path: '../../assets/images';
-
 @import 'lightbox';
-
-body {
-  font-family: "Playfair Display", serif;
-  text-rendering:optimizeLegibility;
-}
-
-textarea {
-   font-family: monospace;
-}
-
-input[type=checkbox] {
-  cursor: pointer;
-
-  &:hover {
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
-    filter: alpha(opacity=30);
-    opacity: 0.5;
-  }
-}
+@fa-font-path:        "../../assets/fonts";
+@image_path:         '../../assets/images';

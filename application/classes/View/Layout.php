@@ -64,6 +64,20 @@ class View_Layout {
     return $temp;
   }
 
+  /**
+   * Old IE compatibility patch JS
+   **/
+  public function ie_scripts()
+  {
+    $scripts = array('html5shiv.js','css3-mediaqueries.js');
+    $retval = '';
+    foreach ($scripts as $script)
+    {
+      $retval .= HTML::script('application/assets/javascript/'.$script)."\n";
+    }
+    return $retval;
+  }
+
   public function favicon()
   {
     return URL::site('favicon.ico');

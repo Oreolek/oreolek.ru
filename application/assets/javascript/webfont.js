@@ -1,5 +1,5 @@
   WebFontConfig = {
-    google: { families: [ 'Playfair+Display:400,400italic,700:latin,cyrillic' ] }
+    google: { families: [ 'Open+Sans:400,400italic,700:latin,cyrillic' ] }
   };
   (function() {
     var wf = document.createElement('script');

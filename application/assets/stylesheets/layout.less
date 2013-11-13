@@ -1,80 +1,59 @@
-@basesize: 1em; //base font size
-@columns: 16;   //number of columns - for grid
-@gutter: 1.5%;
+@media screen and (min-width: 720px) {
+  @font-size-base: 16px; //base font size
+}
+@media screen and (max-width: 719px) {
+  @font-size-base: 14px;
+}
 
-.clearfix() {
-  *zoom: 1;
+input[type=checkbox] {
+  cursor: pointer;
 
-  &:before,
-  &:after {
-    content: " ";
-    display: table;
+  &:hover {
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+    filter: alpha(opacity=30);
+    opacity: 0.5;
   }
-  &:after {
-    clear: both;
-  }
 }
 
-body{
-  margin: @basesize 2 * @basesize;
-  font-size: @basesize;
-  line-height: 1.5 * @basesize;
-  margin-bottom: 1.5 * @basesize;
+input[type=button] {
+  .btn;
+}
+input[type=submit] {
+  .btn;
+  display: block;
+  .center-block;
 }
 
-h1 {
-  font-size: 2 * @basesize;
-  line-height: 0.75 * @basesize;
-}
-
-h2 {
-  font-size: 1.5 * @basesize;
-  line-height: @basesize;
-}
-
-p {
-  text-align: justify;
-}
-
-blockquote {
-  padding-left: 0.5 * @basesize;
+/*blockquote {
+  padding-left: 0.5 * @font-size-base;
   clear: left;
+}*/
+
+input[type='text'],
+input[type='password'],
+textarea {
+  margin-bottom: @font-size-base;
+  border: 0px;
+  height: auto;
 }
 
-small {
-  font-size: 0.8 * @basesize;
-}
-
-table {
-  border:0px;
-  border-collapse:collapse;
-  td {
-    padding:@basesize / 2;
-  }
-  tr {
-    margin-bottom: @basesize / 2;
-  }
-}
-
-form {
+#new_comment {
+  margin-top: @font-size-base;
   label {
-    .col(1);
+    .make-lg-column(2);
   }
   input[type='text'],
   input[type='password'],
   textarea {
-    .col(@columns - 1);
-    margin-bottom: @basesize;
-    border: 0px;
-    height: auto;
+    .make-lg-column(10);
   }
 }
 
 .vertical {
   li {
     list-style-type: none;
-    padding-right: @basesize;
-    margin-bottom: @basesize * 0.5;
+    padding-right: @font-size-base;
+    margin-bottom: @font-size-base * 0.5;
   }
 }
 
@@ -85,13 +64,13 @@ form {
   }
 }
 
-.centered(@width: auto, @margin: auto) {
-  width: @width;
-  margin: 0 @margin;
+span.hidden-xs {
+  display: inline-block !important;
 }
 
 img {
-  @margin: 0.5 * @basesize;
+  @margin: 0.5 * @font-size-base;
+  .img-responsive();
   margin-bottom: @margin;
   margin-top: @margin;
   &.left {
@@ -106,7 +85,7 @@ img {
   }
   &.center {
     display: block;
-    .centered();
+    .center-block;
   }
   &.gallery {
     margin-right: @margin;
@@ -117,22 +96,14 @@ img {
   display: none;
 }
 
-.grid () {
-  .clearfix();
-  margin-left: -@gutter;
-}
-.col(@width: 1) {
-  float: left;
-  padding-left: @gutter;
-  width: percentage(@width / @columns) - @gutter;
-}
-
 .comment {
+  .make-row();
   .author {
-    .col(2);
+    font-weight: 700;
+    .make-lg-column(4);
   }
   .content {
-    .col(4);
+    .make-lg-column(8);
   }
 }
 
@@ -145,7 +116,10 @@ img {
 }
 
 .navigation{
-  .col(1);
+  .make-lg-column(2);
+  input {
+    width: 100%;
+  }
   ul {
     .vertical();
     .text_center;
@@ -154,68 +128,71 @@ img {
 
 .link_top {
   position: fixed;
-  bottom: (@basesize * 2);
-  left: (@basesize * 2);
+  bottom: (@font-size-base * 2);
+  left: (@font-size-base * 2);
 }
 
-.container{
-  .grid();
+header {
+  h1 {
+    .text_center;
+  }
+  .make-lg-column(12);
 }
 
-.header {
-  .col(@columns);
+code {
+  white-space: normal;
 }
 
 .side {
-  .col(2);
+  .make-lg-column(4);
 }
 
-.footer {
-  margin-top: @basesize;
+footer {
+  margin-top: @font-size-base;
   .text_center;
-  font-size: @basesize / 1.5;
+  .small();
 }
 
 .sidequote() {
-  .col(2);
-  font-size: @basesize * 1.5;
-  margin-top: @basesize / 2;
-  margin-bottom: @basesize / 2;
+  .make-lg-column(4);
+  font-size: @font-size-base * 1.5;
+  margin-top: @font-size-base / 2;
+  margin-bottom: @font-size-base / 2;
 }
 
 .sidequote_left {
   .sidequote;
   padding-left: 0;
-  padding-right: @gutter;
+  padding-right: @grid-gutter-width * 2;
 }
 
 .sidequote_right {
   .sidequote;
-  float: right;
+  .f_right;
 }
 
 .sideblock() {
-  .col(2);
-  margin-top: -@basesize / 2;
-  margin-bottom: -@basesize / 2;
+  .make-lg-column(4);
+  margin-top: -@font-size-base / 2;
+  margin-bottom: -@font-size-base / 2;
 }
 
 .sideblock_left {
   .sideblock;
   padding-left: 0;
-  padding-right: @gutter;
+  padding-right: @grid-gutter-width * 2;
 }
 
 .sideblock_right {
   .sideblock;
   .f_right;
-  padding-left: @gutter;
+  padding-left: @grid-gutter-width * 2;
   padding-right: 0;
 }
 
 .tag_content,
 .tag_posts {
-  .col(3);
+  .make-lg-column(6);
 }
 
 .post {
@@ -223,8 +200,11 @@ img {
 }
 
 .main_content {
-  .col(@columns - 1);
+  .make-lg-column(10);
   text-align: justify;
+  p {
+    text-align: justify;
+  }
 }
 
 .comment_section {
@@ -239,10 +219,10 @@ img {
   .clearfix();
   .text_center;
   a {
-    margin-left: @basesize;
+    margin-left: @font-size-base;
   }
   a.active {
-    font-size: @basesize * 1.25;
+    font-size: @font-size-base * 1.25;
   }
 }
 
@@ -253,7 +233,7 @@ img {
     display: table-row;
     & > div {
       display: table-cell;
-      padding: @basesize / 4;
+      padding: @font-size-base / 4;
     }
   }
 }
@@ -261,21 +241,17 @@ img {
 /* WP legacy */
 .alignleft {
 	float: left;
-  margin-right: 2 * @basesize;
+  margin-right: 2 * @font-size-base;
 }
 
 .alignright {
 	float: right;
-  margin-left: 2 * @basesize;
+  margin-left: 2 * @font-size-base;
 }
 
 .long-song-lyrics{
-  @media (max-width: 768px) {
-    .col(3);
-  }
-  @media (min-width: 769px) {
-    .col(2);
-  }
+  .make-lg-column(4);
+  .make-sm-column(6);
   text-align: center;
   margin-top: 1em;
   margin-bottom: 0.5em;
@@ -291,20 +267,5 @@ img {
  font-style:italic;
 }
 
-// classes for use in plain CSS
-.column   { .col();   }
-.column2  { .col(2);  }
-.column3  { .col(3);  }
-.column4  { .col(4);  }
-.column5  { .col(5);  }
-.column6  { .col(6);  }
-.column7  { .col(7);  }
-.column8  { .col(8);  }
-.column9  { .col(9);  }
-.column10 { .col(10); }
-.column11 { .col(11); }
-.column12 { .col(12); }
-.column13 { .col(13); }
-.column14 { .col(14); }
-.column15 { .col(15); }
-.column16 { .col(16); }
+@media screen and (max-width: 321px) {
+}
