@@ -1,8 +1,13 @@
-@media screen and (min-width: 720px) {
-  @font-size-base: 16px; //base font size
-}
-@media screen and (max-width: 719px) {
-  @font-size-base: 14px;
+.container-fluid {
+  @media (min-width: @screen-tablet) and (max-width: @screen-desktop) {
+    margin: 0 1%;
+  }
+  @media (min-width: @screen-desktop) and (max-width: @screen-lg-desktop) {
+    margin: 0 3%;
+  }
+  @media (min-width: @screen-lg-desktop) {
+    margin: 0 5%;
+  }
 }
 
 input[type=checkbox] {
@@ -15,13 +20,14 @@ input[type=checkbox] {
   }
 }
 
-input[type=button] {
-  .btn;
-}
+input[type=button],
 input[type=submit] {
   .btn;
-  display: block;
-  .center-block;
+}
+
+input[type=submit] {
+  .make-sm-column(4);
+  .make-sm-column-offset(4);
 }
 
 blockquote {
@@ -41,11 +47,13 @@ textarea {
   margin-top: @font-size-base;
   label {
     .make-lg-column(2);
+    .make-sm-column(3);
   }
   input[type='text'],
   input[type='password'],
   textarea {
     .make-lg-column(10);
+    .make-sm-column(9);
   }
 }
 
@@ -116,8 +124,15 @@ img {
 }
 
 .navigation{
-  .make-lg-column(2);
-  .make-sm-column(3);
+  @media(min-width: @screen-tablet) {
+    .make-sm-column(3);
+  }
+  @media(min-width: @screen-desktop) {
+    .make-md-column(2);
+  }
+  @media(min-width: @screen-lg-desktop) {
+    .make-lg-column(2);
+  }
   input {
     width: 100%;
   }
@@ -152,13 +167,19 @@ code {
 footer {
   .make-row();
   margin-top: @font-size-base;
-  .text_center;
-  .small();
+  div {
+    .make-xs-column(12);
+    .text_center;
+  }
 }
 
 .sidequote() {
-  .make-lg-column(4);
-  .make-sm-column(4);
+  @media(min-width: @screen-lg-desktop) {
+    .make-lg-column(4);
+  }
+  @media(min-width: @screen-tablet) {
+    .make-sm-column(4);
+  }
   font-size: @font-size-base * 1.5;
   margin-top: @font-size-base / 2;
   margin-bottom: @font-size-base / 2;
@@ -176,8 +197,12 @@ footer {
 }
 
 .sideblock() {
-  .make-lg-column(4);
-  .make-sm-column(4);
+  @media(min-width: @screen-lg-desktop) {
+    .make-lg-column(4);
+  }
+  @media(min-width: @screen-tablet) {
+    .make-sm-column(4);
+  }
   margin-top: -@font-size-base / 2;
   margin-bottom: -@font-size-base / 2;
 }
@@ -206,8 +231,15 @@ footer {
 }
 
 .main_content {
-  .make-lg-column(10);
-  .make-sm-column(9);
+  @media(min-width: @screen-lg-desktop) {
+    .make-lg-column(10);
+  }
+  @media(min-width: @screen-desktop) and (max-width: @screen-lg-desktop) {
+    .make-md-column(10);
+  }
+  @media(min-width: @screen-tablet) and (max-width: @screen-desktop) {
+    .make-sm-column(9);
+  }
   text-align: justify;
   p {
     text-align: justify;
