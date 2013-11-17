@@ -150,13 +150,23 @@ class Form extends Kohana_Form {
     return self::render_control($template);
   }
 
-  public static function btn($name, $text = 'Send', $btclass = 'default', $type = 'button')
+  public static function btn($name, $text = 'Send', $btclass = NULL, $type = NULL, array $parameters = NULL)
   {
-    $class = 'btn btn-'.$btclass;
-    $parameters = array(
-      'class' => $class,
-      'type' => $type
-    );
+    if (empty($btclass))
+    {
+      $btclass = 'default';
+    }
+    if (empty($type))
+    {
+      $type = 'button';
+    }
+    $class = 'btn btn-'.$btclass.' '.Arr::get($parameters, 'class');
+    if (is_null($parameters))
+    {
+      $parameters = array();
+    }
+    $parameters['class'] = $class;
+    $parameters['type'] = $type;
     return parent::button($name, __($text), $parameters);
   }
 
@@ -178,7 +188,7 @@ class Form extends Kohana_Form {
 
   public static function ajax_submit($name, $value)
   {
-    return self::btn($name, $value, array('onclick' => "ajax_submit('".$name."')"));
+    return self::btn($name, $value, NULL, NULL, array('onclick' => "ajax_submit('".$name."')"));
   }
 
 }

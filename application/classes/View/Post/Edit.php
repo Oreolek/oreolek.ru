@@ -19,8 +19,8 @@ class View_Post_Edit extends View_Edit {
     {
       $output .= Form::orm_input($this->model, $key, $value);
     }
-    $output .= '<div class="container">'.Form::label('tags', 'Теги').Form::input('tags',$this->get_tags()).'</div>';
-    $output .= Form::submit('submit','Сохранить и закончить редактирование');
+    $output .= Form::input('tags', $this->get_tags(), array('label' => 'Теги'));
+    $output .= Form::btn_submit('Сохранить и закончить редактирование');
     $output .= Form::ajax_submit('preview','Предпросмотр');
     if ($this->model->loaded())
     {

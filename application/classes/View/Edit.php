@@ -60,7 +60,7 @@ class View_Edit extends View_Layout {
       }
       $output .= $input.'</div>';
     }
-    $output .= Form::submit('submit','Отправить');
+    $output .= Form::btn_submit('Отправить');
     return $output;
   }
 }
