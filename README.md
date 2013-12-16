@@ -7,7 +7,7 @@ Oreolek.
 ## Requirements
 * Kohana 3.3
 * MySQL or MariaDB
-* PHP 5 with enabled GD and HTMLTidy
+* PHP 5 with enabled GD, APCu and HTMLTidy
 * Sphinx
 
 ## Installation
