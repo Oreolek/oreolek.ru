@@ -81,7 +81,7 @@ class Controller_Post extends Controller_Layout {
     {
       $current_page = 0;
     }
-    if ($current_page === 0)
+    if ($current_page === 0 AND Auth::instance()->logged_in() === FALSE)
     {
       $body = $cache->get('read_posts_0');
       if (!empty($body))
