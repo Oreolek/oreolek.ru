@@ -80,9 +80,12 @@ class Controller_Post extends Controller_Layout {
           $this->response->body($body);
           return;
         }
+        else
+        {
+          $cache->set('latest_post', $latest_change);
+          $cache->delete('read_posts_0');
+        }
       }
-      $cache->delete('read_posts_0');
-      $cache->set('latest_post', $latest_change);
     }
     $this->template = new View_Read;
     $this->template->title = 'Дневник';
