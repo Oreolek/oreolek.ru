@@ -1,6 +1,5 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 class Model_Post extends ORM {
-
   /**
    * @return array validation rules
    **/
@@ -55,5 +54,11 @@ class Model_Post extends ORM {
     $db = Database::instance('sphinx');
     $result = $db->query(Database::SELECT, 'SELECT id FROM `'.$table.'` WHERE MATCH('.$db->quote($term).') LIMIT 100');
     return $result->as_array(NULL, 'id');
+  }
+
+  public static function get_latest_date()
+  {
+    $query = DB::select(array(DB::expr('MAX(`posted_at`)'), 'max_date'))->from('posts');
+    return $query->execute()->get('max_date');
   }
 }

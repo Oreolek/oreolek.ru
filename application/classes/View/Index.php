@@ -17,6 +17,7 @@ class View_Index extends View_Layout {
    * Items to show
    **/
   public $items = NULL;
+  public $item_count = 0;
   /**
    * Index description
    **/
@@ -30,7 +31,7 @@ class View_Index extends View_Layout {
   public function get_paging()
   {
     $current_page = $this->get_current_page();
-    $item_count = count($this->items);
+    $item_count = $this->item_count;
     $page_size = Kohana::$config->load('common.page_size');
     $page_count = ceil($item_count / $page_size);
     if ($page_count === 1.0)
@@ -57,8 +58,11 @@ class View_Index extends View_Layout {
     {
       return 'Не найдено объектов для отображения.';
     };
-    $items = $this->filter_items();
-    foreach ($items as $item)
+    if ($this->item_count === count($this->items))
+    {
+      $items = $this->filter_items();
+    }
+    foreach ($this->items as $item)
     {
       array_push($result, $this->show_item($item));
     }

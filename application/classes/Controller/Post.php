@@ -50,10 +50,16 @@ class Controller_Post extends Controller_Layout {
   public function action_index()
   {
     $this->template = new View_Index;
+    $page_size = Kohana::$config->load('common.page_size');
     $this->template->items = ORM::factory('Post')
       ->where('is_draft', '=', '0')
       ->order_by('posted_at', 'DESC')
+      ->limit($page_size)
       ->find_all();
+    $this->template->item_count = ORM::factory('Post')
+      ->where('is_draft', '=', '0')
+      ->order_by('posted_at', 'DESC')
+      ->count_all();
   }
   
   /**
@@ -61,13 +67,40 @@ class Controller_Post extends Controller_Layout {
    **/
   public function action_read()
   {
+    $this->auto_render = FALSE;
+    $cache = Cache::instance('apcu');
+    if ($this->request->param('page') == 0)
+    {
+      $body = $cache->get('read_posts_0');
+      if (!empty($body))
+      {
+        $latest_change = Model_Post::get_latest_date();
+        if ($cache->get('latest_post') === $latest_change)
+        {
+          $this->response->body($body);
+          return;
+        }
+      }
+      $cache->delete('read_posts_0');
+      $cache->set('latest_post', $latest_change);
+    }
     $this->template = new View_Read;
     $this->template->title = 'Дневник';
+    $page_size = Kohana::$config->load('common.page_size');
     $this->template->items = ORM::factory('Post')
       ->with_count('comments', 'comment_count')
       ->where('is_draft', '=', '0')
       ->order_by('posted_at', 'DESC')
+      ->limit($page_size)
       ->find_all();
+    $this->template->item_count = ORM::factory('Post')
+      ->where('is_draft', '=', '0')
+      ->order_by('posted_at', 'DESC')
+      ->count_all();
+    $renderer = Kostache_Layout::factory('layout');
+    $body = $renderer->render($this->template, $this->template->_view);
+    $cache->set('read_posts_0', $body, 60*60*24); //cache main page for 1 day
+    $this->response->body($body);
   }
 
   /**
@@ -77,6 +110,7 @@ class Controller_Post extends Controller_Layout {
   {
     $this->template = new View_Index;
     $this->template->title = 'Cвежие записи';
+    $this->template->item_count = 10;
     $this->template->items = ORM::factory('Post')
       ->where('is_draft', '=', '0')
       ->order_by('posted_at', 'DESC')
