@@ -65,7 +65,6 @@ class Controller_Post extends Controller_Layout {
       ->find_all();
     $this->template->item_count = ORM::factory('Post')
       ->where('is_draft', '=', '0')
-      ->order_by('posted_at', 'DESC')
       ->count_all();
   }
   
