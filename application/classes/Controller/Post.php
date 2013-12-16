@@ -51,9 +51,11 @@ class Controller_Post extends Controller_Layout {
   {
     $this->template = new View_Index;
     $page_size = Kohana::$config->load('common.page_size');
+    $first_item = $page_size * $this->request->param('page');
     $this->template->items = ORM::factory('Post')
       ->where('is_draft', '=', '0')
       ->order_by('posted_at', 'DESC')
+      ->offset($first_item)
       ->limit($page_size)
       ->find_all();
     $this->template->item_count = ORM::factory('Post')
@@ -90,10 +92,12 @@ class Controller_Post extends Controller_Layout {
     $this->template = new View_Read;
     $this->template->title = 'Дневник';
     $page_size = Kohana::$config->load('common.page_size');
+    $first_item = $page_size * $this->request->param('page');
     $this->template->items = ORM::factory('Post')
       ->with_count('comments', 'comment_count')
       ->where('is_draft', '=', '0')
       ->order_by('posted_at', 'DESC')
+      ->offset($first_item)
       ->limit($page_size)
       ->find_all();
     $this->template->item_count = ORM::factory('Post')
