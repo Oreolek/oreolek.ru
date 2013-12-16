@@ -51,7 +51,12 @@ class Controller_Post extends Controller_Layout {
   {
     $this->template = new View_Index;
     $page_size = Kohana::$config->load('common.page_size');
-    $first_item = $page_size * $this->request->param('page');
+    $current_page = (int) $this->request->param('page') - 1;
+    if ($current_page < 0)
+    {
+      $current_page = 0;
+    }
+    $first_item = $page_size * $current_page;
     $this->template->items = ORM::factory('Post')
       ->where('is_draft', '=', '0')
       ->order_by('posted_at', 'DESC')
@@ -71,7 +76,13 @@ class Controller_Post extends Controller_Layout {
   {
     $this->auto_render = FALSE;
     $cache = Cache::instance('apcu');
-    if ($this->request->param('page') == 0)
+          $cache->delete('read_posts_0');
+    $current_page = (int) $this->request->param('page') - 1;
+    if ($current_page < 0)
+    {
+      $current_page = 0;
+    }
+    if ($current_page === 0)
     {
       $body = $cache->get('read_posts_0');
       if (!empty($body))
@@ -92,7 +103,7 @@ class Controller_Post extends Controller_Layout {
     $this->template = new View_Read;
     $this->template->title = 'Дневник';
     $page_size = Kohana::$config->load('common.page_size');
-    $first_item = $page_size * $this->request->param('page');
+    $first_item = $page_size * $current_page;
     $this->template->items = ORM::factory('Post')
       ->with_count('comments', 'comment_count')
       ->where('is_draft', '=', '0')
@@ -102,7 +113,6 @@ class Controller_Post extends Controller_Layout {
       ->find_all();
     $this->template->item_count = ORM::factory('Post')
       ->where('is_draft', '=', '0')
-      ->order_by('posted_at', 'DESC')
       ->count_all();
     $renderer = Kostache_Layout::factory('layout');
     $body = $renderer->render($this->template, $this->template->_view);
