@@ -76,7 +76,6 @@ class Controller_Post extends Controller_Layout {
   {
     $this->auto_render = FALSE;
     $cache = Cache::instance('apcu');
-          $cache->delete('read_posts_0');
     $current_page = (int) $this->request->param('page') - 1;
     if ($current_page < 0)
     {
