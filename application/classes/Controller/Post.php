@@ -80,9 +80,9 @@ class Controller_Post extends Controller_Layout {
     {
       $current_page = 0;
     }
-    if ($current_page === 0 AND Auth::instance()->logged_in() === FALSE)
+    if (Auth::instance()->logged_in() === FALSE)
     {
-      $body = $cache->get('read_posts_0');
+      $body = $cache->get('read_posts_'.$current_page);
       if (!empty($body))
       {
         $latest_change = Model_Post::get_latest_date();
@@ -94,7 +94,7 @@ class Controller_Post extends Controller_Layout {
         else
         {
           $cache->set('latest_post', $latest_change);
-          $cache->delete('read_posts_0');
+          $cache->delete('read_posts_'.$current_page);
         }
       }
     }
@@ -114,7 +114,7 @@ class Controller_Post extends Controller_Layout {
       ->count_all();
     $renderer = Kostache_Layout::factory('layout');
     $body = $renderer->render($this->template, $this->template->_view);
-    $cache->set('read_posts_0', $body, 60*60*24); //cache main page for 1 day
+    $cache->set('read_posts_'.$current_page, $body, 60*60*24); //cache main page for 1 day
     $this->response->body($body);
   }
 
