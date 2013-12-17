@@ -12,23 +12,49 @@ class Controller_Post extends Controller_Layout {
    **/
   public function action_view()
   {
-    $this->template = new View_Post_View;
+    $this->auto_render = FALSE;
     $id = $this->request->param('id');
     $post = ORM::factory('Post', $id);
-    if (!$post->loaded()) $this->redirect('error/404');
-    $this->template->is_admin = Auth::instance()->logged_in('admin');
-    if ($post->is_draft == true AND !$this->template->is_admin) $this->redirect('error/403');
+    if (!$post->loaded())
+    {
+      $this->redirect('error/404');
+    }
+    $is_admin = Auth::instance()->logged_in('admin');
+    if ($post->is_draft == TRUE AND !$is_admin)
+    {
+      $this->redirect('error/403');
+    }
+    $cache = Cache::instance('apcu');
+    if (Auth::instance()->logged_in() === FALSE)
+    {
+      $body = $cache->get('post_'.$id);
+      if (!empty($body))
+      {
+        $latest_change = $post->posted_at;
+        if ($cache->get('post_'.$id.'_changed') === $latest_change)
+        {
+          $this->response->body($body);
+          return;
+        }
+        else
+        {
+          $cache->set('post_'.$id.'_changed', $latest_change);
+          $cache->delete('post_'.$id);
+        }
+      }
+    }
+    $this->template = new View_Post_View;
+    $this->template->is_admin = $is_admin;
     $this->template->title = $post->name;
     if ($post->is_draft) $this->template->title .= ' (черновик)';
     $this->template->id = $post->id;
     $this->template->tags = $post->tags->find_all();
     $this->template->content = Markdown::instance()->transform($post->content);
     $this->template->date = $post->creation_date();
-    $this->template->comments = ORM::factory('Comment')
-      ->where('post_id', '=', $post->id)
-      ->where('is_approved', '=', Model_Comment::STATUS_APPROVED)
-      ->order_by('posted_at', 'ASC')
-      ->find_all();
+    $renderer = Kostache_Layout::factory('layout');
+    $body = $renderer->render($this->template, $this->template->_view);
+    $cache->set('post_'.$id, $body, 60*60*24); //cache page for 1 day
+    $this->response->body($body);
   }
 
   public function action_edit()
@@ -114,7 +140,7 @@ class Controller_Post extends Controller_Layout {
       ->count_all();
     $renderer = Kostache_Layout::factory('layout');
     $body = $renderer->render($this->template, $this->template->_view);
-    $cache->set('read_posts_'.$current_page, $body, 60*60*24); //cache main page for 1 day
+    $cache->set('read_posts_'.$current_page, $body, 60*60*24); //cache page for 1 day
     $this->response->body($body);
   }
 

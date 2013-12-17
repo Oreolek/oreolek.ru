@@ -189,4 +189,40 @@ class Controller_Comment extends Controller_Layout {
 
   }
 
+  /**
+   * View comments by post ID
+   * AJAX action to load comments
+   **/
+  public function action_view()
+  {
+    $this->auto_render = FALSE;
+    $cache = Cache::instance('apcu');
+    $id = $this->request->param('id');
+    $body = $cache->get('comments_'.$id);
+    if (!empty($body))
+    {
+      $latest_change = Model_Comment::get_latest_date($id);
+      if ($cache->get('comments_'.$id.'_changed') === $latest_change)
+      {
+        $this->response->body($body);
+        return;
+      }
+      else
+      {
+        $cache->set('comments_'.$id.'_changed', $latest_change);
+        $cache->delete('comments_'.$id);
+      }
+    }
+    $this->template = new View_Comment_View;
+    $this->template->comments = ORM::factory('Comment')
+      ->where('post_id', '=', $id)
+      ->where('is_approved', '=', Model_Comment::STATUS_APPROVED)
+      ->order_by('posted_at', 'ASC')
+      ->find_all();
+    $renderer = Kostache::factory();
+    $body = $renderer->render($this->template, $this->template->_view);
+    $cache->set('comments_'.$id, $body, 60*60*24); 
+    $this->response->body($body);
+  }
+
 }

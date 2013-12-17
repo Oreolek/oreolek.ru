@@ -7,17 +7,7 @@
   <div class="comment_section">
     <a name="comments"></a>
     {{{get_tags}}}
-    {{#get_comments}}
-      <div class="comment">
-        <a name="comment_{{id}}"></a>
-        <div class="author">
-          {{#author_email}}<a href="mailto:{{author_email}}">{{/author_email}}
-            {{author_name}}
-          {{#author_email}}</a>{{/author_email}}
-        </div>
-        <div class="content">{{{content}}}</div>
-      </div>
-    {{/get_comments}}
-    <div id="new_comment" data-url="{{load_comment_form_action}}" data-id="{{id}}"></div>
+    <div id="comments" data-url="{{{load_comments_action}}}"></div>
+    <div id="new_comment" data-url="{{{load_comment_form_action}}}" data-id="{{id}}"></div>
   </div>
 </div>

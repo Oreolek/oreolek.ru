@@ -93,4 +93,13 @@ class Model_Comment extends ORM
       return FALSE;
     return TRUE;
   }
+
+  /**
+   * Get date of latest approved comment by post ID
+   **/
+  public static function get_latest_date($id)
+  {
+    $query = DB::select(array(DB::expr('MAX(`posted_at`)'), 'max_date'))->from('comments')->where('post_id', '=', $id)->and_where('is_approved', '=', self::STATUS_APPROVED);
+    return $query->execute()->get('max_date');
+  }
 }

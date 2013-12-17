@@ -12,10 +12,6 @@ class View_Post_View extends View_Layout {
    * Post ID
    **/
   public $id;
-  /**
-   * Post comments
-   **/
-  public $comments;
   public $date;
   public $is_admin = FALSE;
 
@@ -23,7 +19,8 @@ class View_Post_View extends View_Layout {
     'jquery',
     'jquery.autosize-min.js',
     'lightbox-2.6.min.js',
-    'load_comment_form.js'
+    'load_comment_form.js',
+    'load_comments.js'
   );
 
   public function get_tags()
@@ -46,32 +43,18 @@ class View_Post_View extends View_Layout {
     return $output;
   }
 
-  public function get_comments()
-  {
-    $result = array();
-    foreach ($this->comments as $comment)
-    {
-      $comment_out = array(
-        'content' => Markdown::instance()->transform($comment->content),
-        'author_email' => $comment->author_email,
-        'author_name' => $comment->author_name,
-        'id' => $comment->id
-      );
-      if (empty($comment->author_name))
-      {
-        $comment_out['author_name'] = Kohana::$config->load('common')->get('anonymous_name');
-      }
-      array_push($result, $comment_out);
-    }
-    return $result;
-  }
-
   public function link_edit()
   {
     return HTML::anchor(Route::url('default',array('controller' => 'Post', 'action' => 'edit', 'id' => $this->id)), 'Редактировать');
   }
 
-  public function load_comment_form_action() {
+  public function load_comment_form_action()
+  {
     return Route::url('default', array('controller' => 'Comment', 'action' => 'form'));
+  }
+
+  public function load_comments_action()
+  {
+    return Route::url('default', array('controller' => 'Comment', 'action' => 'view', 'id' => $this->id));
   }
 }
