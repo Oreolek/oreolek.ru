@@ -12,23 +12,51 @@ class Controller_Page extends Controller_Layout {
    **/
   public function action_view()
   {
-    $this->template = new View_Page_View;
+    $this->auto_render = FALSE;
     $id = $this->request->param('id');
     $page = ORM::factory('Page', $id);
     if (!$page->loaded())
     {
       $this->redirect('error/404');
     }
-    if ($page->is_draft == true AND !Auth::instance()->logged_in('admin'))
+    $is_admin = Auth::instance()->logged_in('admin');
+    if ($page->is_draft AND !$is_admin)
     {
       $this->redirect('error/403');
     }
+    $cache = Cache::instance('apcu');
+    $latest_change = $page->posted_at;
+    if (!$is_admin)
+    {
+      $body = $cache->get('page_'.$id);
+      if (!empty($body))
+      {
+        if ($cache->get('page_'.$id.'_changed') === $latest_change)
+        {
+          $this->response->body($body);
+          return;
+        }
+        else
+        {
+          $cache->delete('page_'.$id);
+        }
+      }
+    }
+    $this->template = new View_Page_View;
     $this->template->title = $page->name;
+    $this->template->content = Markdown::instance()->transform($page->content);
     if ($page->is_draft)
     {
       $this->template->title .= ' (черновик)';
     }
-    $this->template->content = Markdown::instance()->transform($page->content);
+    $renderer = Kostache_Layout::factory('layout');
+    $body = $renderer->render($this->template, $this->template->_view);
+    if (!$is_admin)
+    {
+      $cache->set('page_'.$id, $body, 60*60*24); //cache page for 1 day
+    }
+    $cache->set('page_'.$id.'_changed', $latest_change);
+    $this->response->body($body);
   }
   /**
    * Page index

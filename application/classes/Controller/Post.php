@@ -25,12 +25,12 @@ class Controller_Post extends Controller_Layout {
       $this->redirect('error/403');
     }
     $cache = Cache::instance('apcu');
-    if (Auth::instance()->logged_in() === FALSE)
+    $latest_change = $post->posted_at;
+    if (!$is_admin)
     {
       $body = $cache->get('post_'.$id);
       if (!empty($body))
       {
-        $latest_change = $post->posted_at;
         if ($cache->get('post_'.$id.'_changed') === $latest_change)
         {
           $this->response->body($body);
@@ -38,7 +38,6 @@ class Controller_Post extends Controller_Layout {
         }
         else
         {
-          $cache->set('post_'.$id.'_changed', $latest_change);
           $cache->delete('post_'.$id);
         }
       }
@@ -53,7 +52,11 @@ class Controller_Post extends Controller_Layout {
     $this->template->date = $post->creation_date();
     $renderer = Kostache_Layout::factory('layout');
     $body = $renderer->render($this->template, $this->template->_view);
-    $cache->set('post_'.$id, $body, 60*60*24); //cache page for 1 day
+    if (!$is_admin)
+    {
+      $cache->set('post_'.$id, $body, 60*60*24); //cache page for 1 day
+      $cache->set('post_'.$id.'_changed', $latest_change);
+    }
     $this->response->body($body);
   }
 
@@ -101,12 +104,13 @@ class Controller_Post extends Controller_Layout {
   {
     $this->auto_render = FALSE;
     $cache = Cache::instance('apcu');
+    $logged_in = Auth::instance()->logged_in();
     $current_page = (int) $this->request->param('page') - 1;
     if ($current_page < 0)
     {
       $current_page = 0;
     }
-    if (Auth::instance()->logged_in() === FALSE)
+    if ($logged_in === FALSE)
     {
       $body = $cache->get('read_posts_'.$current_page);
       if (!empty($body))
@@ -140,7 +144,10 @@ class Controller_Post extends Controller_Layout {
       ->count_all();
     $renderer = Kostache_Layout::factory('layout');
     $body = $renderer->render($this->template, $this->template->_view);
-    $cache->set('read_posts_'.$current_page, $body, 60*60*24); //cache page for 1 day
+    if ($logged_in === FALSE)
+    {
+      $cache->set('read_posts_'.$current_page, $body, 60*60*24); //cache page for 1 day 
+    }
     $this->response->body($body);
   }
 
