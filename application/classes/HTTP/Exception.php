@@ -31,7 +31,6 @@ class HTTP_Exception extends Kohana_HTTP_Exception {
 
           return Request::factory(Route::get('error')->uri($attributes)) 
             ->execute() 
-            ->send_headers() 
             ->body();
         }
     }
