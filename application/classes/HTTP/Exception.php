@@ -16,7 +16,7 @@ class HTTP_Exception extends Kohana_HTTP_Exception {
         // Lets log the Exception, Just in case it's important!
         Kohana_Exception::log($this);
  
-        if (Kohana::$environment >= Kohana::DEVELOPMENT)
+        if (FALSE && Kohana::$environment >= Kohana::DEVELOPMENT)
         {
             // Show the normal Kohana error page.
             return parent::get_response();
@@ -28,10 +28,16 @@ class HTTP_Exception extends Kohana_HTTP_Exception {
             'action' => $this->getCode(),
             'message' => rawurlencode($this->getMessage())
           ); 
-
-          return Request::factory(Route::get('error')->uri($attributes)) 
+          
+          $body = Request::factory(Route::get('error')->uri($attributes)) 
             ->execute() 
             ->body();
+
+          $response = Response::factory()
+                ->status($this->getCode())
+                ->body($body);
+ 
+          return $response;
         }
     }
 }
