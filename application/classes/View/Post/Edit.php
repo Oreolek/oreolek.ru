@@ -39,7 +39,7 @@ class View_Post_Edit extends View_Edit {
 
   public function input_buttons()
   {
-    $output .= '';
+    $output = '';
     $output .= Form::btn_submit('Сохранить и закончить редактирование');
     $output .= Form::ajax_submit('preview','Предпросмотр');
     if ($this->model->loaded())
