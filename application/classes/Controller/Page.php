@@ -119,7 +119,7 @@ class Controller_Page extends Controller_Layout {
    **/
   public function action_edit()
   {
-    $this->template = new View_Edit;
+    $this->template = new View_Page_Edit;
     $this->template->title = 'Редактирование страницы';
     $id = $this->request->param('id');
     $page = ORM::factory('Page', $id);
@@ -137,11 +137,6 @@ class Controller_Page extends Controller_Layout {
   protected function edit_page($page)
   {
     $this->template->errors = array();
-    $this->template->controls = array(
-      'name' => 'input',
-      'content' => 'text',
-      'is_draft' => 'checkbox',
-    );
     if ($this->request->method() === HTTP_Request::POST) {
       $page->content = $this->request->post('content');
       $page->name = $this->request->post('name');
@@ -149,14 +144,7 @@ class Controller_Page extends Controller_Layout {
       try {
         if ($page->check())
         {
-          if ($page->loaded())
-          {
-            $page->update();
-          }
-          else
-          {
-            $page->create();
-          }
+          $page->save();
         }
       }
       catch (ORM_Validation_Exception $e)

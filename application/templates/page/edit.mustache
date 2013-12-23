@@ -1,0 +1,31 @@
+<form role="form" method="POST">
+{{#has_errors}}
+  <p class="message">При проверке формы были найдены ошибки:</p>
+  <ul class="errors">
+    {{#get_errors}}
+    <li>{{.}}</li>
+    {{/get_errors}}
+  </ul>
+{{/has_errors}}
+<div class="row">
+  <div class="col-sm-9">
+    {{{input_name}}}
+  </div>
+  <div class="col-sm-3">
+    {{{input_is_draft}}}
+  </div>
+</div>
+{{{input_content}}}
+{{{get_controls}}}
+</form>
+<h2>Предпросмотр</h2>
+{{#preview}}
+<hr>
+<div class="hyphenate" id="preview">
+  {{{preview}}}
+</div>
+<hr>
+{{/preview}}
+{{^preview}}
+<div class="hyphenate" id="preview"></div>
+{{/preview}}

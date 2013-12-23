@@ -251,12 +251,6 @@ class Controller_Post extends Controller_Layout {
   {
     $this->template->errors = array();
     $this->template->tags = $post->tags->find_all();
-    $this->template->controls = array(
-      'name' => 'input',
-      'content' => 'text',
-      'is_draft' => 'checkbox',
-      'posted_at' => 'input',
-    );
     
     if ($this->request->method() === HTTP_Request::POST) {
       $post->content = $this->request->post('content');

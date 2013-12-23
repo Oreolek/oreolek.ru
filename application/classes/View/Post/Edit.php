@@ -4,7 +4,6 @@
  * Edit post view controller
  **/
 class View_Post_Edit extends View_Edit {
-  public $_view = 'edit';
   public $scripts = array(
     'jquery',
     'jquery.autosize-min.js',
@@ -12,14 +11,35 @@ class View_Post_Edit extends View_Edit {
     'autosave.js'
   );
   public $tags;
-  public function get_controls()
+
+  public function input_name()
   {
-    $output = '';
-    foreach ($this->controls as $key => $value)
-    {
-      $output .= Form::orm_input($this->model, $key, $value);
-    }
-    $output .= Form::input('tags', $this->get_tags(), array('label' => 'Теги'));
+    return Form::orm_input($this->model, 'name');
+  }
+
+  public function input_is_draft()
+  {
+    return Form::orm_input($this->model, 'is_draft', 'checkbox');
+  }
+
+  public function input_content()
+  {
+    return Form::orm_input($this->model, 'content', 'textarea');
+  }
+
+  public function input_posted_at()
+  {
+    return Form::orm_input($this->model, 'posted_at', 'date');
+  }
+
+  public function input_tags()
+  {
+    return Form::input('tags', $this->get_tags(), array('label' => 'Теги'));
+  }
+
+  public function input_buttons()
+  {
+    $output .= '';
     $output .= Form::btn_submit('Сохранить и закончить редактирование');
     $output .= Form::ajax_submit('preview','Предпросмотр');
     if ($this->model->loaded())
@@ -27,7 +47,8 @@ class View_Post_Edit extends View_Edit {
       $output .= Form::ajax_submit('save','Сохранить');
     }
     return $output;
-  } 
+  }
+   
   protected function get_tags()
   {
     $output = '';

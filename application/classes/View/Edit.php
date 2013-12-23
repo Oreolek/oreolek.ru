@@ -1,7 +1,7 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
 /**
- * Контроллер вида оглавлений
+ * Edit view controller
  **/
 class View_Edit extends View_Layout {
   public $model;

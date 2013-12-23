@@ -6,7 +6,7 @@
  **/
  
 class Form extends Kohana_Form {
-  public static function orm_input($model, $name, $type)
+  public static function orm_input($model, $name, $type = 'input')
   {
     switch($type)
     {
@@ -34,6 +34,8 @@ class Form extends Kohana_Form {
       case 'text_inline':
       case 'textarea_inline':
         return self::orm_textarea_inline($model, $name);
+      case 'date':
+        return self::orm_dateinput($model, $name);
       default:
         return self::orm_textinput($model, $name);
     }
@@ -53,6 +55,14 @@ class Form extends Kohana_Form {
     $template->name = $name;
     $template->label = __(Arr::get($attributes, 'label'));
     $template->value = $value;
+    return self::render_control($template);
+  }
+  public static function orm_dateinput($model, $name)
+  {
+    $template = new View_Form_Date;
+    $template->name = $name;
+    $template->label = __($model->get_label($name));
+    $template->value = strftime('%Y-%m-%dT%H:%M:%S', strtotime($model->$name));
     return self::render_control($template);
   }
   public static function orm_password($model, $name)
@@ -117,7 +127,7 @@ class Form extends Kohana_Form {
    **/
   public static function orm_checkbox($model, $name)
   {
-    return self::checkbox($name, $model->$name, (boolean) $model->$name, array('label' => $model->get_label($name)));
+    return self::checkbox($name, 1, (boolean) $model->$name, array('label' => $model->get_label($name)));
   }
 
   /**
