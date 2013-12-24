@@ -20,7 +20,7 @@ class View_Post_View extends View_Layout {
     'jquery.autosize-min.js',
     'lightbox-2.6.min.js',
     'load_comment_form.js',
-    'load_comments.js'
+    'load_comments.js',
   );
 
   public function get_tags()

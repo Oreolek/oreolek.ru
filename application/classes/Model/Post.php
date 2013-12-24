@@ -42,6 +42,7 @@ class Model_Post extends ORM {
     'content' => 'Текст записи',
     'is_draft' => 'Черновик',
     'posted_at' => 'Дата',
+    'password' => 'Пароль для расшифровки'
   );
 
   /**

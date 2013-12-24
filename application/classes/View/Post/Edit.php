@@ -16,6 +16,10 @@ class View_Post_Edit extends View_Edit {
   {
     return Form::orm_input($this->model, 'name');
   }
+  public function input_password()
+  {
+    return Form::orm_input($this->model, 'password', 'password');
+  }
 
   public function input_is_draft()
   {

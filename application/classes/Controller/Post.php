@@ -24,6 +24,30 @@ class Controller_Post extends Controller_Layout {
     {
       $this->redirect('error/403');
     }
+    if (!empty($post->password))
+    {
+      $password_post = $this->request->post('password');
+      if ($password_post)
+      {
+        Cookie::set('password', $password_post);
+      }
+      $password = Cookie::get('password', $password_post);
+      if ($password != $post->password)
+      {
+        $this->auto_render = TRUE;
+        $this->template = new View_Post_Password;
+        $this->template->model = ORM::factory('Post');
+        $this->template->controls = array(
+          'password' => 'password',
+        );
+        $this->template->message = 'Эта запись закрыта. Введите пароль для доступа к тексту и комментариям.';
+        if (!empty($password))
+        {
+          $this->template->message = 'Сохранённый пароль не подходит. Попробуйте ещё раз.';
+        }
+        return;
+      }
+    }
     $cache = Cache::instance('apcu');
     $latest_change = $post->posted_at;
     if (!$is_admin)
@@ -48,7 +72,8 @@ class Controller_Post extends Controller_Layout {
     if ($post->is_draft) $this->template->title .= ' (черновик)';
     $this->template->id = $post->id;
     $this->template->tags = $post->tags->find_all();
-    $this->template->content = Markdown::instance()->transform($post->content);
+    $post->content = Markdown::instance()->transform($post->content);
+    $this->template->content = $post->content;
     $this->template->date = $post->creation_date();
     $renderer = Kostache_Layout::factory('layout');
     $body = $renderer->render($this->template, $this->template->_view);
@@ -128,7 +153,7 @@ class Controller_Post extends Controller_Layout {
         }
       }
     }
-    $this->template = new View_Read;
+    $this->template = new View_Post_Read;
     $this->template->title = 'Дневник';
     $page_size = Kohana::$config->load('common.page_size');
     $first_item = $page_size * $current_page;
@@ -185,9 +210,17 @@ class Controller_Post extends Controller_Layout {
     $items = array();
     foreach ($posts as $post)
     {
+      if (!empty($post->password))
+      {
+        $description = '<p>Закрытая запись. Доступ только после ввода пароля.</p>';
+      }
+      else
+      {
+        $description = Markdown::instance()->transform($post->content);
+      }
       array_push($items, array(
             'title' => $post->name,
-            'description' => Markdown::instance()->transform($post->content),
+            'description' => $description,
             'author' => Kohana::$config->load('common.author_email').' ('.Kohana::$config->load('common.author').')',
             'link' => Route::url('default', array('controller' => 'Post', 'action' => 'view', 'id' => $post->id)),
             'guid' => Route::url('default', array('controller' => 'Post', 'action' => 'view', 'id' => $post->id)),
@@ -255,6 +288,7 @@ class Controller_Post extends Controller_Layout {
     if ($this->request->method() === HTTP_Request::POST) {
       $post->content = $this->request->post('content');
       $post->name = $this->request->post('name');
+      $post->password = $this->request->post('password');
       if ($this->request->is_ajax())
       {
         $this->auto_render = FALSE;

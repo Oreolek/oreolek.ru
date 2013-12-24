@@ -1,12 +1,15 @@
 .container-fluid {
   @media (min-width: @screen-tablet) and (max-width: @screen-desktop) {
     margin: 0 1%;
+    min-width: @screen-tablet;
   }
   @media (min-width: @screen-desktop) and (max-width: @screen-lg-desktop) {
     margin: 0 3%;
+    min-width: @screen-desktop;
   }
   @media (min-width: @screen-lg-desktop) {
     margin: 0 5%;
+    min-width: @screen-lg-desktop;
   }
 }
 
@@ -256,8 +259,11 @@ footer {
   .clearfix();
 }
 
-.text_center {
-  text-align: center;
+.text_center, .text-center {
+  text-align: center !important;
+  p {
+    text-align: center !important;
+  }
 }
 
 .paging { // pagination
