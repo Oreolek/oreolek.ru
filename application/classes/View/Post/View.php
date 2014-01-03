@@ -21,6 +21,7 @@ class View_Post_View extends View_Layout {
     'lightbox-2.6.min.js',
     'load_comment_form.js',
     'load_comments.js',
+    'http://yandex.st/share/share.js'
   );
 
   public function get_tags()
