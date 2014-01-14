@@ -31,3 +31,6 @@
 [submodule "modules/cache"]
 	path = modules/cache
 	url = git@github.com:Oreolek/cache.git
+[submodule "modules/sitemap"]
+	path = modules/sitemap
+	url = git@github.com:flody/kohana-sitemap.git

@@ -29,4 +29,14 @@ class Model_Page extends ORM {
     'content' => 'Текст страницы',
     'is_draft' => 'Черновик'
   );
+
+  /**
+   * Returns array of ids and posted_at timestamps.
+   * Used in sitemap generation.
+   **/
+  public static function get_ids()
+  {
+    $query = DB::select('id')->from('pages');
+    return $query->execute()->as_array(NULL, 'id');
+  }
 }

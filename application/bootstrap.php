@@ -117,12 +117,20 @@ Kohana::modules(array(
 	 'unittest'      => MODPATH.'unittest',          // Unit testing
 	 'cache'         => MODPATH.'cache',             // Caching with multiple backends
 	//  'codebench'  => MODPATH.'codebench',         // Benchmarking tool
+	 'sitemap'       => MODPATH.'sitemap',           // Sitemap generator
 	));
 
 /**
  * Set the routes. Each route must have a minimum of a name, a URI and a set of
  * defaults for the URI.
  */
+Route::set('sitemap_index', 'sitemap.xml(<gzip>)', array('gzip' => '\.gz'))
+	->defaults(array(
+		'controller' => 'Sitemap',
+		'action' => 'index'
+	));
+
+
 Route::set('error', 'error/<action>(/<message>)', array('action' => '[0-9]++','message' => '.+'))
  ->defaults(array( 
   'controller' => 'Error',

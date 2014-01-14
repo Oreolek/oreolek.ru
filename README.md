@@ -20,4 +20,5 @@ Oreolek.
 * Copy `application/config/auth.php.example` to `application/config/auth.php` and edit it.
 * Import SQL schema from schema.sql (autoinstall currently not working)
 * Open in browser `SERVER_ADDR/install`
+* Edit robots.txt with your domain
 * Set server variable `KOHANA_ENV` to `production` when you're done hacking

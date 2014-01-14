@@ -62,4 +62,14 @@ class Model_Post extends ORM {
     $query = DB::select(array(DB::expr('MAX(`posted_at`)'), 'max_date'))->from('posts');
     return $query->execute()->get('max_date');
   }
+
+  /**
+   * Returns array of ids and posted_at timestamps.
+   * Used in sitemap generation.
+   **/
+  public static function get_dates()
+  {
+    $query = DB::select('id', 'posted_at')->from('posts');
+    return $query->execute()->as_array('id', 'posted_at');
+  }
 }

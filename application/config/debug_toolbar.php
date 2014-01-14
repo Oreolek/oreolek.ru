@@ -14,7 +14,9 @@ $config['skip_configs'] = array('database', 'encrypt');
  * Disabled routes
  */
 $config['excluded_routes'] = array(
-	'docs/media'  // Userguide media route
+	'docs/media',  // Userguide media route
+  'sitemap', // Sitemaps
+  'sitemap_index' // Main sitemap
 );
 
 return $config;
