@@ -84,7 +84,7 @@ class Controller_Note extends Controller_Layout {
     $this->template->title = 'Редактирование заметки';
     $this->template->controls = array(
       'name' => 'input',
-      'password' => 'password',
+      'password' => 'input',
       'content' => 'text',
     );
     $note = ORM::factory('Note', $this->request->param('id'));
@@ -144,7 +144,7 @@ class Controller_Note extends Controller_Layout {
     $this->template->title = 'Новая записка';
     $this->template->controls = array(
       'name' => 'input',
-      'password' => 'password',
+      'password' => 'input',
       'content' => 'text',
     );
     $this->template->errors = array();
