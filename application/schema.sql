@@ -83,6 +83,7 @@ CREATE TABLE `notes` (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` text NOT NULL,
   `content` longtext NOT NULL,
+  `password` varchar(50),
   `posted_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

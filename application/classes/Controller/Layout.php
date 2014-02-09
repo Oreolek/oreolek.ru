@@ -12,7 +12,8 @@ class Controller_Layout extends Controller {
     $action_name = $this->request->action();
     if (
       is_array($this->secure_actions) &&
-      array_key_exists($action_name, $this->secure_actions)
+      array_key_exists($action_name, $this->secure_actions) &&
+      Kohana::$environment != Kohana::DEVELOPMENT
     )
     {
       if ( Auth::instance()->logged_in($this->secure_actions[$action_name]) === FALSE)

@@ -23,6 +23,7 @@ class Model_Note extends ORM {
    **/
   protected $_labels = array(
     'name' => 'Заголовок',
+    'password' => 'Пароль',
     'content' => 'Текст заметки',
   );
 }

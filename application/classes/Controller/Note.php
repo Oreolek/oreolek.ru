@@ -38,8 +38,44 @@ class Controller_Note extends Controller_Layout {
     {
       $this->redirect('error/404');
     }
-    $this->template->title = $note->name;
-    $this->template->content = Markdown::instance()->transform($note->content);
+    $access = FALSE;
+    if (!empty($note->password))
+    {
+      $password_post = $this->request->post('password');
+      if ($password_post)
+      {
+        Cookie::set('password', $password_post);
+      }
+      $password = Cookie::get('password', $password_post);
+      if ($password != $note->password)
+      {
+        $this->auto_render = TRUE;
+        $this->template = new View_Post_Password;
+        $this->template->model = ORM::factory('Note');
+        $this->template->controls = array(
+          'password' => 'password',
+        );
+        $this->template->message = 'Эта заметка закрыта паролем. Введите пароль для доступа к тексту и комментариям.';
+        if (!empty($password))
+        {
+          $this->template->message = 'Сохранённый пароль не подходит. Попробуйте ещё раз.';
+        }
+        return;
+      }
+      else
+      {
+        $access = TRUE;
+      }
+    }
+    else
+    {
+        $access = TRUE;
+    }
+    if ($access)
+    {
+      $this->template->title = $note->name;
+      $this->template->content = Markdown::instance()->transform($note->content);
+    }
   }
 
   public function action_edit()
@@ -48,6 +84,7 @@ class Controller_Note extends Controller_Layout {
     $this->template->title = 'Редактирование заметки';
     $this->template->controls = array(
       'name' => 'input',
+      'password' => 'password',
       'content' => 'text',
     );
     $note = ORM::factory('Note', $this->request->param('id'));
@@ -58,8 +95,7 @@ class Controller_Note extends Controller_Layout {
     $this->template->errors = array();
 
     if (HTTP_Request::POST == $this->request->method()) {
-      $note->content = $this->request->post('content');
-      $note->name = $this->request->post('name');
+      $note->values($this->request->post(), array('content', 'name', 'password'));
       try {
         if ($note->check())
         {
@@ -108,13 +144,13 @@ class Controller_Note extends Controller_Layout {
     $this->template->title = 'Новая записка';
     $this->template->controls = array(
       'name' => 'input',
+      'password' => 'password',
       'content' => 'text',
     );
     $this->template->errors = array();
     $note = ORM::factory('Note');
     if (HTTP_Request::POST == $this->request->method()) {
-      $note->content = $this->request->post('content');
-      $note->name = $this->request->post('name');
+      $note->values($this->request->post(), array('content', 'name', 'password'));
       try {
         if ($note->check())
         {
