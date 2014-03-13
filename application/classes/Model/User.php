@@ -5,8 +5,8 @@ class Model_User extends Model_Auth_User {
    * Used in forms.
    **/
   protected $_labels = array(
-      'username' => 'Имя пользователя',
-      'password' => 'Пароль пользователя',
+      'username' => 'Логин',
+      'password' => 'Пароль',
       'email' => 'Email',
       );
 }

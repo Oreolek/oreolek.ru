@@ -1,22 +1,26 @@
-@background1: #fff;
-@background2: #ddd;
-@background3: #bbb;
-@background4: #999;
+@ps-text:         #766e3f;
+@ps-link-text:    darken(@ps-text, 15%);
+@ps-nav-text:     #a69e70;
+@ps-nav-bg:       #dbdfd9;
+@ps-well-bg:      #b6b9a3;
+@ps-jumbotron-bg: #dbdfd9;
+@ps-bg:           #eeefea;
 
-@foreground1: #000;
-@foreground2: #222;
-@foreground3: #444;
-@foreground4: #666;
+@gray-lighter:           #eee;
+
+@brand-primary:         #8D9DB4;
+@brand-success:         #5cb85c;
+@brand-info:            #5bc0de;
+@brand-warning:         #f0ad4e;
+@brand-danger:          #d9534f;
 
 @font-family-sans-serif: "Open Sans", Arial, sans-serif;
-@link-color: @foreground2;
 
-@btn-primary-color: @foreground1;
-@btn-primary-bg: @background1;
-@btn-primary-border: @foreground4;
-@btn-default-color: @foreground1;
-@btn-default-bg: @background2;
-@btn-default-border: @foreground4;
+@body-bg:               @ps-bg;
+@text-color:            @ps-text;
+
+@link-color:            @ps-link-text;
+@link-hover-color:      darken(@link-color, 15%);
 
 .red {
   color: darkred;
@@ -30,57 +34,67 @@
   color: darkblue;
 }
 
-body {
-  color: @foreground1;
-  background: url('../../assets/images/mooning.png') @background1;
-}
-
-.navigation {
-  background: @background2;
-}
-
-a {
-  &:hover {
-    color: @foreground4;
-  }
-  &:visited {
-    color: @foreground3;
-  }
-}
-
 .comment {
   &:nth-child(odd) {
-    background: @background2;
+    background: lighten(@ps-bg, 5%);
   }
 }
 
 .paging {
   a.active {
-    color: @foreground4;
+    color: @ps-well-bg;
   }
 }
 
-input[type='text'],
-input[type='password'],
-textarea,
-.form-control {
-  background: @background2;
-}
-
-.sidequote() {
-  color: @foreground4;
-}
-
-.footer {
-  color: @foreground2;
+footer {
+  color: @ps-nav-text;
 }
 
 acronym, abbr {
-  border-bottom: 1px dashed @foreground4;
-  color: @foreground4;
+  border-bottom: 1px dashed @gray;
+  color: @gray-lighter;
 }
 
 blockquote {
-  border-left: 1px dashed @background4;
-  background: @background3;
+  border-left: 1px dashed @gray;
+  background: @gray-lighter;
 }
+
+// Navbar
+@navbar-default-color:             @ps-nav-text;
+@navbar-default-bg:                @ps-nav-bg;
+@navbar-default-border:            darken(@navbar-default-bg, 6.5%);
+
+// Navbar links
+@navbar-default-link-color:                @navbar-default-color;
+@navbar-default-link-hover-color:          lighten(@navbar-default-color, 20%);
+@navbar-default-link-hover-bg:             transparent;
+@navbar-default-link-active-color:         @navbar-default-link-color;
+@navbar-default-link-active-bg:            darken(@navbar-default-bg, 6.5%);
+@navbar-default-link-disabled-color:       desaturate(@navbar-default-color, 50%);
+@navbar-default-link-disabled-bg:          transparent;
+
+// Navbar brand label
+@navbar-default-brand-color:               @navbar-default-link-color;
+@navbar-default-brand-hover-color:         darken(@navbar-default-brand-color, 10%);
+@navbar-default-brand-hover-bg:            transparent;
+
+// Navbar toggle
+@navbar-default-toggle-hover-bg:           #ddd;
+@navbar-default-toggle-icon-bar-bg:        #ccc;
+@navbar-default-toggle-border-color:       #ddd;
+
+@dropdown-bg:                    @navbar-default-bg;
+@dropdown-border:                rgba(0,0,0,.15);
+@dropdown-fallback-border:       #ccc;
+@dropdown-divider-bg:            #e5e5e5;
+
+@dropdown-link-color:            @ps-nav-text;
+@dropdown-link-hover-color:      #fff;
+@dropdown-link-hover-bg:         @dropdown-link-active-bg;
+
+@dropdown-link-active-color:     @component-active-color;
+@dropdown-link-active-bg:        @component-active-bg;
+@dropdown-link-disabled-color:   @gray-light;
+
+@dropdown-header-color:          @gray-light;

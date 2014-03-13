@@ -9,7 +9,9 @@ class View_Layout {
   public $scripts = array();
   public $base_scripts = array(
     'hyphenator.min.js',
-    'webfont.js'
+    'webfont.js',
+    'jquery',
+    'bootstrap'
   );
   public $errors;
  
@@ -36,7 +38,7 @@ class View_Layout {
   }
   public function stylesheet()
   {
-    return Less::compile(APPPATH.'assets/stylesheets/main');
+    return HTML::style('https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css')."\n".Less::compile(APPPATH.'assets/stylesheets/main', 'all');
   }
 
   public function get_content()
@@ -53,7 +55,11 @@ class View_Layout {
       {
         if ($script === 'jquery') // CDN shortcut
         {
-          $temp .= HTML::script('https://yandex.st/jquery/2.0.3/jquery.min.js')."\n";
+          $temp .= HTML::script('https://yandex.st/jquery/2.1.0/jquery.min.js')."\n";
+        }
+        elseif ($script === 'bootstrap')
+        {
+          $temp .= HTML::script('https://yandex.st/bootstrap/3.1.1/js/bootstrap.min.js')."\n";
         }
         else
         {
@@ -91,37 +97,48 @@ class View_Layout {
   public function navigation()
   {
     $result = array();
+    $drop_links = array(
+      'Свежие записи' => 'post/fresh',
+      'Все записи' => 'post/index',
+      'Метки' => 'tag/index'
+    );
     $navigation = array(
-      'Свежие записи дневника' => 'post/fresh',
-      'Дневник' => 'post/read',
-      'Содержание дневника' => 'post/index',
-      'Метки записей' => 'tag/index',
-      'Список страниц' => 'page/index',
-      'О сайте' => 'page/view/1',
-      'Подписаться на RSS' => '/post/feed',
+      'Страницы' => 'page/index',
+      'О блоге' => 'page/view/1',
     );
     if (!Auth::instance()->logged_in())
     {
-      $navigation = array_merge($navigation, array('Вход' => 'user/signin'));
+      $navigation['Вход'] = 'user/signin';
     }
     else
     {
       $navigation = array_merge($navigation, array(
         'Комментарии' => 'comment/index',
-        'Черновики дневника' => 'post/drafts',
         'Черновики страниц' => 'page/drafts',
         'Заметки' => 'note/index',
       ));
+      $drop_links['Черновики дневника'] = 'post/drafts';
     }
 
     foreach ($navigation as $key => $value)
     {
-      array_push($result, array(
-        'url' => URL::site('/'.$value),
-        'title' => $key
-      ));
+      $result[] = HTML::anchor(URL::site('/'.$value), $key);
     }
-    return $result;
+
+    $dropdown = array(
+      'name' => 'Дневник',
+      'links' => array()
+    );
+
+    foreach ($drop_links as $key => $value)
+    {
+      $dropdown['links'][] = HTML::anchor(URL::site('/'.$value), $key);
+    }
+    return array(
+      'links' => $result,
+      'dropdown' => $dropdown,
+      'search_url' => Route::url('default', array('controller' => 'Post', 'action' => 'search'))
+    );
   }
 
   public function get_errors()
@@ -147,11 +164,6 @@ class View_Layout {
       $output .= sprintf($yandex_metrika, $yandex_metrika_id, $yandex_metrika_id, $yandex_metrika_id);
     }
     return $output;
-  }
-
-  public function search_url()
-  {
-    return Route::url('default', array('controller' => 'Post', 'action' => 'search'));
   }
 
   /**

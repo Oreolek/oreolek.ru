@@ -46,4 +46,9 @@ class View_Read extends View_Index {
     $output['content'] = HTML::tidy($output['content']);
     return $output;
   }
+
+  public function rss_link()
+  {
+    return HTML::anchor(Route::url('default', array('controller' => Request::current()->controller(), 'action' => 'feed')), '<span class="fa fa-rss">&nbsp;</span> RSS');
+  }
 }

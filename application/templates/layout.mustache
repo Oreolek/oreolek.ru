@@ -14,24 +14,46 @@
     {{{stylesheet}}}
    </head>
   <body>
-    <div class="container-fluid">
-      <header>
-        <h1>{{site_title}}</h1>
-      </header>
+   {{#navigation}}
+    <nav class="navbar navbar-default" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="fa fa-volume-off">&nbsp;</span>
+        </button>
+        <a class="navbar-brand" href="/">{{site_title}}</a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            {{#dropdown}}
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{name}} <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                {{#links}}
+                  <li>{{{.}}}</li>
+                {{/links}}
+              </ul>
+            </li>
+            {{/dropdown}}
+            {{#links}}
+            <li>{{{.}}}</li>
+            {{/links}}
+          </ul>
+          <form action="{{search_url}}" class="navbar-form navbar-right" role="search" method="POST">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Поиск" name="term">
+            </div>
+          </form>
+        </div>
+      </div>
+    </nav>
+    {{/navigation}}
+    
+    <div class="container">
       <div class="paging">
         {{{get_paging}}}
       </div>
-      <div class = "navigation">
-        <form action="{{search_url}}" method="POST">
-          <input type="text" placeholder="Поиск записей" name="term">
-        </form>
-        <ul>
-         {{#navigation}}
-          <li><a href="{{url}}">{{title}}</a></li> 
-         {{/navigation}}
-        </ul>
-      </div>
-      <a href="#" class="link_top hidden-xs"><i class="fa fa-angle-up">&nbsp;</i>Наверх</a>
       <div class = "main_content">
         <h2>{{title}}</h2>
 {{>content}}

@@ -42,8 +42,8 @@ class Model_Comment extends ORM
    * Used in forms.
    **/
   protected $_labels = array(
-    'author_name' => 'Имя комментатора',
-    'author_email' => 'Ваш e-mail',
+    'author_name' => 'Ваша подпись (имя)',
+    'author_email' => 'E-mail для обратной связи',
     'content' => 'Комментарий',
     'is_approved' => 'Проверено'
   );
