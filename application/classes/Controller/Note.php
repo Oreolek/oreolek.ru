@@ -133,9 +133,9 @@ class Controller_Note extends Controller_Layout {
 
     if (HTTP_Request::POST == $this->request->method()) {
       $validation = $note->validate_create($this->request->post());
+      $note->values($this->request->post(), array('content', 'name', 'password'));
       if ($validation->check())
       {
-        $note->values($this->request->post(), array('content', 'name', 'password'));
         try {
           $note->save();
         }
