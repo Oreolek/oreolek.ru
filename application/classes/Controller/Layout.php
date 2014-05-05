@@ -36,15 +36,15 @@ class Controller_Layout extends Controller {
       {
         //user is clear to go but his pages are cache-sensitive
         $this->is_private = TRUE;
-        // force https
-        if (Kohana::$config->load('common')->get('force_https'))
-        {          
-          if (!$this->request->secure())
-          {
-            $this->request->secure(TRUE);
-          } 
-        }
       }
+    }
+    // force https everywhere
+    if (Kohana::$config->load('common')->get('force_https'))
+    {          
+      if (!$this->request->secure())
+      {
+        $this->request->secure(TRUE);
+      } 
     }
   }
   public function after()
