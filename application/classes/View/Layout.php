@@ -126,7 +126,7 @@ class View_Layout {
 
     foreach ($drop_links as $key => $value)
     {
-      $dropdown['links'][] = HTML::anchor(URL::site('/'.$value), $key);
+      $dropdown['links'][] = HTML::anchor($value, $key);
     }
     return array(
       'links' => $result,
