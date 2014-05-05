@@ -1,12 +1,4 @@
 <form method="POST">
-{{#has_errors}}
-  <p class="message">При проверке формы были найдены ошибки:</p>
-  <ul class="errors">
-    {{#get_errors}}
-    <li>{{.}}</li>
-    {{/get_errors}}
-  </ul>
-{{/has_errors}}
 {{{get_controls}}}
 </form>
 <h2>Предпросмотр</h2>

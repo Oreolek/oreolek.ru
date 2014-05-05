@@ -5,6 +5,7 @@
  **/
 class View_Edit extends View_Layout {
   public $model;
+  public $errors;
   public $scripts = array(
     'jquery',
     'jquery.autosize-min.js',
@@ -28,6 +29,7 @@ class View_Edit extends View_Layout {
     $output = '';
     foreach ($this->controls as $key => $value)
     {
+      $output .= $this->error($key);
       $output .= Form::orm_input($this->model, $key, $value);
     }
     foreach ($this->custom_controls as $key => $value)
@@ -38,6 +40,7 @@ class View_Edit extends View_Layout {
       }
       $output .= '<div class="container">'.Form::label($key, $value['label']);
       $input = '';
+      $input .= $this->error($key);
       switch($value['type'])
       {
         case 'file':
@@ -62,5 +65,14 @@ class View_Edit extends View_Layout {
     }
     $output .= Form::btn_submit('Отправить');
     return $output;
+  }
+
+  /**
+   * Show all errors for a field
+   **/
+  protected function error($key)
+  {
+    $error = Arr::get($this->errors, $key);
+    return '<div class="bg-warning">'.$error.'</div>';
   }
 }

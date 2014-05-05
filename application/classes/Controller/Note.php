@@ -81,38 +81,14 @@ class Controller_Note extends Controller_Layout {
   public function action_edit()
   {
     $this->template = new View_Edit;
-    $this->template->title = 'Редактирование заметки';
-    $this->template->controls = array(
-      'name' => 'input',
-      'password' => 'input',
-      'content' => 'text',
-    );
-    $note = ORM::factory('Note', $this->request->param('id'));
+    $this->template->title = __('Edit note');
+    $id = $this->request->param('id');
+    $note = ORM::factory('Note', $id);
     if (!$note->loaded())
     {
       $this->redirect('error/404');
     }
-    $this->template->errors = array();
-
-    if (HTTP_Request::POST == $this->request->method()) {
-      $note->values($this->request->post(), array('content', 'name', 'password'));
-      try {
-        if ($note->check())
-        {
-          $note->update();
-        }
-      }
-      catch (ORM_Validation_Exception $e)
-      {
-        $this->template->errors = $e->errors();
-      }
-
-      if (empty($this->template->errors))
-      {
-        $this->redirect('note/view/' . $note->id);
-      }
-    }
-    $this->template->model = $note;
+    $this->edit($note);
   }
 
   public function action_delete()
@@ -142,28 +118,40 @@ class Controller_Note extends Controller_Layout {
   {
     $this->template = new View_Edit;
     $this->template->title = 'Новая записка';
+    $note = ORM::factory('Note');
+    $this->edit($note);
+  }
+
+  protected function edit($note)
+  {
     $this->template->controls = array(
       'name' => 'input',
       'password' => 'input',
       'content' => 'text',
     );
     $this->template->errors = array();
-    $note = ORM::factory('Note');
+
     if (HTTP_Request::POST == $this->request->method()) {
-      $note->values($this->request->post(), array('content', 'name', 'password'));
-      try {
-        if ($note->check())
+      $validation = $note->validate_create($this->request->post());
+      if ($validation->check())
+      {
+        $note->values($this->request->post(), array('content', 'name', 'password'));
+        try {
+          $note->save();
+        }
+        catch (ORM_Validation_Exception $e)
         {
-          $note->create();
+          $this->template->errors = $e->errors('note');
         }
       }
-      catch (ORM_Validation_Exception $e)
+      else
       {
-        $this->template->errors = $e->errors();
+        $this->template->errors = $validation->errors('note');
       }
+
       if (empty($this->template->errors))
       {
-        $this->redirect('note/view/'.$note->id);
+        $this->redirect('note/view/' . $note->id);
       }
     }
     $this->template->model = $note;

@@ -13,18 +13,12 @@ class View_Layout {
     'jquery',
     'bootstrap'
   );
-  public $errors;
  
   /**
    * Inherited paging function
    **/
   public function get_paging() {}
   
-  public function has_errors()
-  {
-    return !empty($this->errors);
-  }
-
   public function site_title()
   {
     if (Auth::instance()->logged_in())
@@ -139,16 +133,6 @@ class View_Layout {
       'dropdown' => $dropdown,
       'search_url' => Route::url('default', array('controller' => 'Post', 'action' => 'search'))
     );
-  }
-
-  public function get_errors()
-  {
-    $result = array();
-    foreach ($this->errors as $key => $string)
-    {
-      array_push($result, $string);
-    }
-    return $result;
   }
 
   /**
