@@ -11,6 +11,5 @@ return array(
  'page_size' => 20, // pagination
  'comment_trust' => 5, // comment trust points - see Model_Comment::antispam_check
  'brief_limit' => 80, // word limit on brief descriptions
- 'force_https' => TRUE, // force HTTPS on sensitive actions
  'anonymous_name' => 'Серый голос'
 );

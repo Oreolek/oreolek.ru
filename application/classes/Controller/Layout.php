@@ -38,14 +38,6 @@ class Controller_Layout extends Controller {
         $this->is_private = TRUE;
       }
     }
-    // force https everywhere
-    if (Kohana::$config->load('common')->get('force_https'))
-    {          
-      if (!$this->request->secure())
-      {
-        $this->request->secure(TRUE);
-      } 
-    }
   }
   public function after()
   {
