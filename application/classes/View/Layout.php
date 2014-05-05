@@ -122,7 +122,7 @@ class View_Layout {
 
     foreach ($navigation as $key => $value)
     {
-      $result[] = HTML::anchor(URL::site('/'.$value), $key);
+      $result[] = HTML::anchor($value, $key);
     }
 
     $dropdown = array(
