@@ -27,28 +27,35 @@ class Controller_Comment extends Controller_Layout {
     $email = $this->request->post('email');
     $title = $this->request->post('title');
     $name = $this->request->post('name');
-    if (empty($email) AND empty($title) AND empty($name) AND $comment->check()) {
-      if (Kohana::$config->load('common')->get('comment_approval'))
-      {
-        if (
-          Model_Comment::antispam_check($comment->content) == FALSE OR
-          Model_Comment::useragent_check(Request::user_agent('browser') == FALSE)
-        )
+    try
+    {
+      if (empty($email) AND empty($title) AND empty($name) AND $comment->check()) {
+        if (Kohana::$config->load('common')->get('comment_approval'))
         {
-          $comment->is_approved = Model_Comment::STATUS_SPAM;
+          if (
+            Model_Comment::antispam_check($comment->content) == FALSE OR
+            Model_Comment::useragent_check(Request::user_agent('browser') == FALSE)
+          )
+          {
+            $comment->is_approved = Model_Comment::STATUS_SPAM;
+          }
+          else
+          {
+            $comment->is_approved = Model_Comment::STATUS_APPROVED;
+          }
         }
         else
         {
-          $comment->is_approved = Model_Comment::STATUS_APPROVED;
+          $comment->is_approved = Model_Comment::STATUS_PENDING;
         }
+        $comment->create();
       }
-      else
-      {
-        $comment->is_approved = Model_Comment::STATUS_PENDING;
-      }
-      $comment->create();
-      $this->redirect('post/view/' . $post_id);
     }
+    catch (ORM_Validation_Exception $e)
+    {
+      Session::instance()->set('flash_error', implode($e->errors(''), '<br>'));
+    }
+    $this->redirect('post/view/' . $post_id);
     unset($email);
   }
 
@@ -121,12 +128,12 @@ class Controller_Comment extends Controller_Layout {
         }
         else
         {
-          $this->template->errors = $validation->errors('default');
+          $this->template->errors = $validation->errors('comment');
         }
       }
       catch (ORM_Validation_Exception $e)
       {
-        $this->template->errors = $e->errors('default');
+        $this->template->errors = $e->errors('comment');
       }
       if (empty($this->template->errors) AND !$this->request->is_ajax())
       {

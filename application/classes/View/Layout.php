@@ -168,4 +168,16 @@ class View_Layout {
       )
     );
   }
+
+  public function flashes()
+  {
+    $session = Session::instance();
+    return array(
+      'info' => $session->get_once('flash_info'),
+      'success' => $session->get_once('flash_success'),
+      'error' => $session->get_once('flash_error'),
+      'warning' => $session->get_once('flash_warning'),
+    );
+  }
+
 }
