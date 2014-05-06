@@ -24,7 +24,7 @@ class Controller_Post extends Controller_Layout {
     {
       $this->redirect('error/403');
     }
-    if (!empty($post->password))
+    if (!empty($post->password) && !Auth::instance()->logged_in('admin'))
     {
       $password_post = $this->request->post('password');
       if ($password_post)

@@ -39,7 +39,7 @@ class Controller_Note extends Controller_Layout {
       $this->redirect('error/404');
     }
     $access = FALSE;
-    if (!empty($note->password))
+    if (!empty($note->password) && !Auth::instance()->logged_in('admin'))
     {
       $password_post = $this->request->post('password');
       if ($password_post)
