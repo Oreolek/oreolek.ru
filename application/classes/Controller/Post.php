@@ -60,10 +60,10 @@ class Controller_Post extends Controller_Layout {
         $this->template->controls = array(
           'password' => 'password',
         );
-        $this->template->message = 'Эта запись закрыта. Введите пароль для доступа к тексту и комментариям.';
+        $this->template->message = __('This post is closed. Enter password to read text and comments.');
         if (!empty($password))
         {
-          $this->template->message = 'Сохранённый пароль не подходит. Попробуйте ещё раз.';
+          $this->template->message = __('Saved password does not match. Try again.');
         }
         return;
       }
@@ -89,7 +89,7 @@ class Controller_Post extends Controller_Layout {
     $this->template = new View_Post_View;
     $this->template->is_admin = $is_admin;
     $this->template->title = $post->name;
-    if ($post->is_draft) $this->template->title .= ' (черновик)';
+    if ($post->is_draft) $this->template->title .= ' '.__('(draft)');
     $this->template->id = $post->id;
     $this->template->tags = $post->tags->find_all();
     $post->content = Markdown::instance()->transform($post->content);
@@ -108,7 +108,7 @@ class Controller_Post extends Controller_Layout {
   public function action_edit()
   {
     $this->template = new View_Post_Edit;
-    $this->template->title = 'Редактирование записи';
+    $this->template->title = __('Edit post');
     $id = $this->request->param('id');
     $post = ORM::factory('Post', $id);
     if (!$post->loaded())
@@ -202,7 +202,7 @@ class Controller_Post extends Controller_Layout {
   public function action_fresh()
   {
     $this->template = new View_Index;
-    $this->template->title = 'Cвежие записи';
+    $this->template->title = __('Fresh posts');
     $this->template->item_count = 10;
     $this->template->items = ORM::factory('Post')
       ->where('is_draft', '=', '0')
@@ -232,7 +232,7 @@ class Controller_Post extends Controller_Layout {
     {
       if (!empty($post->password))
       {
-        $description = '<p>Закрытая запись. Доступ только после ввода пароля.</p>';
+        $description = '<p>'.__('Closed post. Access protected by password.').'</p>';
       }
       else
       {
@@ -259,7 +259,7 @@ class Controller_Post extends Controller_Layout {
     {
       $this->redirect('error/404');
     }
-    $this->template->title = 'Удаление записи дневника';
+    $this->template->title = __('Post deletion');
     $this->template->content_title = $post->name;
     $this->template->content = Markdown::instance()->transform($post->content);
 
@@ -276,7 +276,7 @@ class Controller_Post extends Controller_Layout {
   public function action_create()
   {
     $this->template = new View_Post_Edit;
-    $this->template->title = 'Новая запись';
+    $this->template->title = __('New post');
     $this->template->errors = array();
     $post = ORM::factory('Post');
     $this->edit_post($post);
@@ -406,7 +406,7 @@ class Controller_Post extends Controller_Layout {
     }
     $result = Model_Post::search($term);
     $this->template = new View_Read;
-    $this->template->title = 'Результаты поиска';
+    $this->template->title = __('Search results');
     $this->template->items = ORM::factory('Post')->with_count('comments', 'comment_count')->load_by_id($result);
   }
 }
