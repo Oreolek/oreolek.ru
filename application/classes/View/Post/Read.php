@@ -60,7 +60,7 @@ class View_Post_Read extends View_Read {
     else
     {
       // now limit words in content
-      $output['content'] = Text::limit_words(Markdown::instance()->transform($item->content), Kohana::$config->load('common.brief_limit'));
+      $output['content'] = Markdown::instance()->transform(Text::limit_words($item->content, Kohana::$config->load('common.brief_limit')));
       // but we have to close all unclosed tags
       $output['content'] = HTML::tidy($output['content']);
     }
