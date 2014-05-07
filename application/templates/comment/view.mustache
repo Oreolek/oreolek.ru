@@ -2,9 +2,11 @@
 <div class="comment" typeof="comment">
   <a name="comment_{{id}}"></a>
   <div class="author" typeof="creator">
-    {{#author_email}}<a href="mailto:{{author_email}}" typeof="email">{{/author_email}}
-    <span typeof="name">{{author_name}}</span>
-    {{#author_email}}</a>{{/author_email}}
+    {{#author_email}}<a href="mailto:{{author_email}}">{{/author_email}}
+    <span property="name">{{author_name}}</span>
+    {{#author_email}}
+      </a><meta property="email" content="{{author_email}}" />
+    {{/author_email}}
   </div>
   <div class="content" property="commentText">{{{content}}}</div>
 </div>
