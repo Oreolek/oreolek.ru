@@ -3,20 +3,20 @@
   {{{content}}}
 </div>
 {{#get_items}}
-  <div class="post">
-    <h3><a href="{{view_link}}">{{heading}}</a></h3>
+  <div class="post" typeof="blogPost">
+    <h3 property="headline"><a href="{{view_link}}" property="url">{{heading}}</a></h3>
     <div class="meta">
       {{#date}}
-        <div class="date">{{date}}</div>
+        <div class="date" property="datePublished">{{date}}</div>
       {{/date}}
       {{#edit_link}}
         <a class="edit_link" href="{{edit_link}}">Редактировать</a>
       {{/edit_link}}
     </div>
-    <div class="hyphenate">{{{content}}}</div>
-    <a class="link_comments" href="{{comments_link}}">
+    <div class="hyphenate" property="description">{{{content}}}</div>
+    <a class="link_comments" property="discussionUrl" href="{{comments_link}}">
       {{#comment_count}}
-      Комментарии ({{comment_count}})
+      Комментарии (<span property="commentCount">{{comment_count}}</span>)
       {{/comment_count}}
     </a>
   </div>

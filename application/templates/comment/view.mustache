@@ -1,11 +1,11 @@
 {{#get_comments}}
-<div class="comment">
+<div class="comment" typeof="comment">
   <a name="comment_{{id}}"></a>
-  <div class="author">
-    {{#author_email}}<a href="mailto:{{author_email}}">{{/author_email}}
-      {{author_name}}
+  <div class="author" typeof="creator">
+    {{#author_email}}<a href="mailto:{{author_email}}" typeof="email">{{/author_email}}
+    <span typeof="name">{{author_name}}</span>
     {{#author_email}}</a>{{/author_email}}
   </div>
-  <div class="content">{{{content}}}</div>
+  <div class="content" property="commentText">{{{content}}}</div>
 </div>
 {{/get_comments}}

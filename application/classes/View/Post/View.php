@@ -49,7 +49,7 @@ class View_Post_View extends View_Layout {
       foreach ($this->tags as $tag)
       {
         if ($i > 0) $output .= ', ';
-        $output .= '<a href="'.URL::site('tag/view/'.$tag->id).'">'.$tag->name.'</a>';
+        $output .= '<a href="'.URL::site('tag/view/'.$tag->id).'"><span property="keywords">'.$tag->name.'</span></a>';
         $i++;
       }
     }
