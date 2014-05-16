@@ -96,7 +96,7 @@ class Controller_Note extends Controller_Layout {
 
   public function action_edit()
   {
-    $this->template = new View_Edit;
+    $this->template = new View_Note_Edit;
     $this->template->title = __('Edit note');
     $id = $this->request->param('id');
     $note = ORM::factory('Note', $id);
@@ -147,23 +147,38 @@ class Controller_Note extends Controller_Layout {
     );
     $this->template->errors = array();
 
-    if (HTTP_Request::POST == $this->request->method()) {
+    if (HTTP_Request::POST === $this->request->method()) {
       $validation = $note->validate_create($this->request->post());
       $note->values($this->request->post(), array('content', 'name', 'password'));
+      if ($this->request->is_ajax())
+      {
+        $this->auto_render = FALSE;
+        $retval = array(
+          'preview' => Markdown::instance()->transform($note->content),
+        );
+        $this->response->body(json_encode($retval));
+      }
       if ($validation->check())
       {
-        try {
-          $note->save();
-        }
-        catch (ORM_Validation_Exception $e)
+        if ($this->request->post('mode') === 'save')
         {
-          $this->template->errors = $e->errors('note');
+          try
+          {
+            $note->save();
+          }
+          catch (ORM_Validation_Exception $e)
+          {
+            $this->template->errors = $e->errors('note');
+          }
         }
       }
       else
       {
         $this->template->errors = $validation->errors('note');
       }
+
+      if ($this->request->is_ajax())
+        return;
 
       if (empty($this->template->errors))
       {

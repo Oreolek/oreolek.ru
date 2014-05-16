@@ -81,7 +81,7 @@ if (isset($_SERVER['KOHANA_ENV']))
  */
 Kohana::init(array(
  'base_url'   => '/',
- 'index_file' => false,
+ 'index_file' => 'index.php',
  'errors'     => TRUE,
  'profile'    => (Kohana::$environment == Kohana::DEVELOPMENT), 
  'caching'    => (Kohana::$environment == Kohana::PRODUCTION) 
@@ -100,7 +100,7 @@ Kohana::$config->attach(new Config_File);
 /**
  * Set cookie salt (required)
  */
-Cookie::$salt = 'Dz75cE_TgeDXvo2';
+Cookie::$salt = '33jfnN';
 
 /**
  * Enable modules. Modules are referenced by a relative or absolute path.
