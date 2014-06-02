@@ -160,7 +160,7 @@ class Controller_Note extends Controller_Layout {
       }
       if ($validation->check())
       {
-        if ($this->request->post('mode') === 'save')
+        if (!$this->request->is_ajax() || $this->request->post('mode') === 'save')
         {
           try
           {
