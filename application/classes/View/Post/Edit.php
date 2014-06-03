@@ -22,7 +22,7 @@
 class View_Post_Edit extends View_Edit {
   public $scripts = array(
     'jquery',
-    'jquery.autosize-min.js',
+    'autosize',
     'lightbox-2.6.min.js',
     'autosave.js'
   );

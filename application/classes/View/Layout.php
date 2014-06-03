@@ -24,8 +24,8 @@ class View_Layout {
   public $title = '';
   public $scripts = array();
   public $base_scripts = array(
-    'hyphenator.min.js',
     'webfont.js',
+    'hyphenator',
     'jquery',
     'bootstrap'
   );
@@ -63,17 +63,26 @@ class View_Layout {
     foreach($scripts as $script):
       if (strstr($script, '://') === FALSE) //no protocol given, script is local
       {
-        if ($script === 'jquery') // CDN shortcut
+        switch ($script) // CDN shortcuts
         {
-          $temp .= HTML::script('https://yandex.st/jquery/2.1.0/jquery.min.js')."\n";
-        }
-        elseif ($script === 'bootstrap')
-        {
-          $temp .= HTML::script('https://yandex.st/bootstrap/3.1.1/js/bootstrap.min.js')."\n";
-        }
-        else
-        {
-          $temp .= HTML::script('application/assets/javascript/'.$script)."\n";
+          case 'jquery':
+            $temp .= HTML::script('https://cdn.jsdelivr.net/jquery/2.1.1/jquery.min.js')."\n";
+            break;
+
+          case 'bootstrap':
+            $temp .= HTML::script('https://cdn.jsdelivr.net/bootstrap/3.1.1/js/bootstrap.min.js')."\n";
+            break;
+
+          case 'hyphenator':
+            $temp .= HTML::script('https://cdn.jsdelivr.net/hyphenator/4.2.0/hyphenator.min.js')."\n";
+            break;
+
+          case 'autosize':
+            $temp .= HTML::script('https://cdn.jsdelivr.net/jquery.autosize/1.18.9/jquery.autosize.min.js')."\n";
+            break;
+
+          default:
+            $temp .= HTML::script('application/assets/javascript/'.$script)."\n";
         }
       }
       else
@@ -90,11 +99,14 @@ class View_Layout {
    **/
   public function ie_scripts()
   {
-    $scripts = array('html5shiv.js','css3-mediaqueries.js');
+    $scripts = array(
+      'https://cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js',
+      'https://cdn.jsdelivr.net/css3-mediaqueries/0.1/css3-mediaqueries.min.js'
+    );
     $retval = '';
     foreach ($scripts as $script)
     {
-      $retval .= HTML::script('application/assets/javascript/'.$script)."\n";
+      $retval .= HTML::script($script)."\n";
     }
     return $retval;
   }

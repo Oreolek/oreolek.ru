@@ -25,7 +25,7 @@ class View_Edit extends View_Layout {
   public $errors;
   public $scripts = array(
     'jquery',
-    'jquery.autosize-min.js',
+    'autosize',
   );
   /**
    * Array of ORM inputs as:
