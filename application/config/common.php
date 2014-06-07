@@ -8,7 +8,8 @@ return array(
  'thumbnail_width' => 200,
  'thumbnail_height' => 150,
  'comment_approval' => TRUE, // every comment must be approved
- 'page_size' => 20, // pagination
+ 'page_size' => 7, // pagination: items on page. Small numbers are good on mobiles.
+ 'page_display' => 17, // pagination: pages to display
  'comment_trust' => 5, // comment trust points - see Model_Comment::antispam_check
  'brief_limit' => 80, // word limit on brief descriptions
  'anonymous_name' => 'Серый голос'
