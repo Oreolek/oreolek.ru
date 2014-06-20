@@ -24,10 +24,10 @@ class View_Layout {
   public $title = '';
   public $scripts = array();
   public $base_scripts = array(
-    'webfont.js',
     'hyphenator',
     'jquery',
-    'bootstrap'
+    'bootstrap',
+    'common.js',
   );
  
   /**

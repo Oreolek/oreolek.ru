@@ -86,7 +86,6 @@ class Controller_Comment extends Controller_Layout {
 
   /**
    * AJAX action to get a form for a new comment.
-   * TODO cache it
    **/
   public function action_form()
   {
