@@ -76,6 +76,9 @@ class Controller_Comment extends Controller_Layout {
     catch (ORM_Validation_Exception $e)
     {
       Session::instance()->set('flash_error', implode($e->errors(''), '<br>'));
+      Session::instance()->set('comment_body', $comment->content);
+      Session::instance()->set('comment_author', $comment->author_name);
+      Session::instance()->set('comment_email', $comment->author_email);
     }
     $this->redirect('post/view/' . $post_id);
     unset($email);
@@ -91,6 +94,9 @@ class Controller_Comment extends Controller_Layout {
     if ( ! Fragment::load('comment_form', Date::DAY * 7))
     {
       $model = ORM::factory('Comment');
+      $model->content = Session::instance()->get_once('comment_body');
+      $model->author_name = Session::instance()->get_once('comment_author');
+      $model->author_email = Session::instance()->get_once('comment_email');
       $inputs = array();
       $inputs['author_email'] = Form::orm_textinput($model, 'author_email');
       $inputs['author_name'] = Form::orm_textinput($model, 'author_name');
