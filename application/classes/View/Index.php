@@ -49,21 +49,53 @@ class View_Index extends View_Layout {
     $current_page = $this->get_current_page();
     $item_count = $this->item_count;
     $page_size = Kohana::$config->load('common.page_size');
+    $page_display = Kohana::$config->load('common.page_display');
     $page_count = ceil($item_count / $page_size);
     if ($page_count === 1.0)
       return '';
-    $i = 1;
-    $output = '';
-    while ($i <= $page_count)
+    $i = $current_page - floor($page_display / 2);
+    $end_page = $current_page + floor($page_display / 2);
+    if ($end_page > $page_count)
     {
-      $output .= '<a href="'.Route::url('default', array('controller' => Request::current()->controller(), 'action' => Request::current()->action(), 'page' => $i)).'"';
-      if ($i == $current_page)
-      {
-        $output .= ' class="active"';
-      }
-      $output .= '>'.$i.'</a>';
+      $end_page = $page_count;
+    }
+    $output = '';
+    if ($i <= 1)
+    {
+      $i = 1;
+    }
+    else
+    {
+      $output .= $this->page_link(1);
+      $output .= $this->page_link($i-1, TRUE);
+    }
+    while ($i <= $end_page)
+    {
+      $output .= $this->page_link($i);
       $i++;
     }
+    if ($i < $page_count)
+    {
+      $output .= $this->page_link($i+1, TRUE);
+      $output .= $this->page_link($page_count);
+    }
+    return $output;
+  }
+
+  protected function page_link($i, $ellipsis = FALSE)
+  {
+    $current_page = $this->get_current_page();
+    $text = $i;
+    if ($ellipsis)
+    {
+      $text = '&hellip;';
+    }
+    $output = '<a href="'.Route::url('default', array('controller' => Request::current()->controller(), 'action' => Request::current()->action(), 'page' => $i)).'"';
+    if ($i == $current_page)
+    {
+      $output .= ' class="active"';
+    }
+    $output .= '>'.$text.'</a>';
     return $output;
   }
 

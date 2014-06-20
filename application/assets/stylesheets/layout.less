@@ -42,7 +42,7 @@ input[type=submit] {
 }
 
 blockquote {
-  padding-left: 0.5 * @font-size-base;
+  padding-left: (0.5 * @font-size-base);
   clear: left;
 }
 
@@ -72,7 +72,7 @@ textarea {
   li {
     list-style-type: none;
     padding-right: @font-size-base;
-    margin-bottom: @font-size-base * 0.5;
+    margin-bottom: (@font-size-base * 0.5);
   }
 }
 
@@ -88,8 +88,8 @@ span.hidden-xs {
 }
 
 img {
-  @margin: 0.5 * @font-size-base;
-  .img-responsive();
+  @margin: (0.5 * @font-size-base);
+  &:extend(.img-responsive);
   margin-bottom: @margin;
   margin-top: @margin;
   &.left {
@@ -114,12 +114,9 @@ img {
 .hidden {
   display: none;
 }
-.clear_both {
-  clear: both;
-}
 
 .comment {
-  .make-row();
+  &:extend(.make-row);
   .author {
     font-weight: 700;
     .make-lg-column(4);
@@ -138,7 +135,7 @@ img {
 }
 
 .rss {
-  float: right;
+  &:extend(.f_right);
 }
 
 code {
@@ -151,7 +148,7 @@ code {
 }
 
 footer {
-  .make-row();
+  &:extend(.make-row);
   margin-top: @font-size-base;
   div {
     .make-xs-column(12);
@@ -172,14 +169,14 @@ footer {
 }
 
 .sidequote_left {
-  .sidequote;
+  &:extend(.sidequote);
   padding-left: 0;
   padding-right: @grid-gutter-width * 2;
 }
 
 .sidequote_right {
-  .sidequote;
-  .f_right;
+  &:extend(.sidequote);
+  &:extend(.f_right);
 }
 
 .sideblock() {
@@ -194,14 +191,14 @@ footer {
 }
 
 .sideblock_left {
-  .sideblock;
+  &:extend(.sideblock);
   padding-left: 0;
   padding-right: @grid-gutter-width * 2;
 }
 
 .sideblock_right {
-  .sideblock;
-  .f_right;
+  &:extend(.sideblock);
+  &:extend(.f_right);
   padding-left: @grid-gutter-width * 2;
   padding-right: 0;
 }
@@ -212,8 +209,9 @@ footer {
   .make-sm-column(6);
 }
 
-.post {
-  .clearfix();
+.post,
+.comment_section {
+  &:extend(.clearfix);
 }
 
 .main_content {
@@ -221,10 +219,6 @@ footer {
   p {
     text-align: justify;
   }
-}
-
-.comment_section {
-  .clearfix();
 }
 
 .text_center, .text-center {
@@ -235,7 +229,7 @@ footer {
 }
 
 .paging { // pagination
-  .make-row();
+  &:extend(.make-row);
   .text_center;
   a {
     @media screen and (max-width: 767px) {
@@ -252,7 +246,7 @@ footer {
 }
 
 .table_index { // table in every index view
-  .table;
+  &:extend(.table);
   .clearfix();
   .table_row {
     .clearfix();
@@ -287,11 +281,24 @@ footer {
  margin-left: auto;
  text-align: left;
  width: 40%;
-}
-.epigraph .author{
- text-align: right;
- font-style:italic;
+ .author {
+   text-align: right;
+   font-style: italic;
+ }
 }
 
-@media screen and (max-width: 321px) {
+.repl {
+  margin-left: 25%;
+  font-family: @font-family-caption;
+}
+
+.stagedir {
+  font-style: italic;
+  font-family: @font-family-caption;
+}
+
+div.stagedir,
+p.stagedir {
+  margin-top: @padding-large-vertical;
+  margin-bottom: @padding-large-vertical;
 }
