@@ -128,7 +128,7 @@ class Controller_Page extends Controller_Layout {
    **/
   public function action_create()
   {
-    $this->template = new View_Edit;
+    $this->template = new View_Page_Edit;
     $this->template->title = 'Новая страница';
     $this->template->errors = array();
     $page = ORM::factory('Page');
