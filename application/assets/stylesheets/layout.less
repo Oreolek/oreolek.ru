@@ -306,3 +306,12 @@ p.stagedir {
   margin-top: @padding-large-vertical;
   margin-bottom: @padding-large-vertical;
 }
+
+@media print {
+  footer,
+  .rss,
+  .paging,
+  #kohana-debug-toolbar {
+    display: none;
+  }
+}

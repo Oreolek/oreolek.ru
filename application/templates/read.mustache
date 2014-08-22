@@ -14,11 +14,11 @@
       {{/edit_link}}
     </div>
     <div class="hyphenate" property="description">{{{content}}}</div>
+    {{#comment_count}}
     <a class="link_comments" href="{{{comments_link}}}">
-      {{#comment_count}}
       Комментарии (<span property="commentCount">{{comment_count}}</span>)
-      {{/comment_count}}
     </a>
+    {{/comment_count}}
     <meta property="discussionUrl" content="{{{comments_link}}}" />
     <meta property="url" content="{{{view_link}}}" />
   </div>
