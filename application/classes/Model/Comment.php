@@ -75,7 +75,7 @@ class Model_Comment extends ORM
   **/
   public static function useragent_check($useragent = '')
   {
-    if (empty($userbrowser))
+    if ($useragent == '')
       return FALSE;
     return TRUE;
   }

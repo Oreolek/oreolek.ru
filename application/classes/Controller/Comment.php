@@ -55,11 +55,11 @@ class Controller_Comment extends Controller_Layout {
         if (Kohana::$config->load('common')->get('comment_approval'))
         {
           if (
-            Model_Comment::antispam_check($comment->content) == FALSE OR
-            Model_Comment::useragent_check(Request::user_agent('browser')) == FALSE OR
-            !empty($email) OR
-            !empty($title) OR
-            !empty($name)
+            Model_Comment::antispam_check($comment->content) === FALSE OR
+            Model_Comment::useragent_check(Request::user_agent('browser')) === FALSE OR
+            $email != '' OR
+            $title != '' OR
+            $name != ''
           )
           {
             $comment->is_approved = Model_Comment::STATUS_SPAM;
