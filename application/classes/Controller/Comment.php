@@ -33,15 +33,15 @@ class Controller_Comment extends Controller_Layout {
   public function action_create()
   {
     $this->auto_render = FALSE;
-    $post_id = $this->request->param('id');
-    $comment = ORM::factory('Comment');
+    if (HTTP_Request::POST != $this->request->method()) {
+      throw new HTTP_Exception_500('Только запросы POST');
+    }
+    $post_id = $this->request->post('id');
     if (empty($post_id))
     {
       throw new HTTP_Exception_500('Не указан ID записи');
     }
-    if (HTTP_Request::POST != $this->request->method()) {
-      throw new HTTP_Exception_500('Только запросы POST');
-    }
+    $comment = ORM::factory('Comment');
     $comment->post_id = $post_id;
     $comment->content = $this->request->post('content');
     $comment->author_name = $this->request->post('author_name');
@@ -51,12 +51,15 @@ class Controller_Comment extends Controller_Layout {
     $name = $this->request->post('name');
     try
     {
-      if (empty($email) AND empty($title) AND empty($name) AND $comment->check()) {
+      if ($comment->check()) {
         if (Kohana::$config->load('common')->get('comment_approval'))
         {
           if (
             Model_Comment::antispam_check($comment->content) == FALSE OR
-            Model_Comment::useragent_check(Request::user_agent('browser') == FALSE)
+            Model_Comment::useragent_check(Request::user_agent('browser')) == FALSE OR
+            !empty($email) OR
+            !empty($title) OR
+            !empty($name)
           )
           {
             $comment->is_approved = Model_Comment::STATUS_SPAM;
