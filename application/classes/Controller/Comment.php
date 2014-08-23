@@ -36,7 +36,7 @@ class Controller_Comment extends Controller_Layout {
     if (HTTP_Request::POST != $this->request->method()) {
       throw new HTTP_Exception_500('Только запросы POST');
     }
-    $post_id = $this->request->post('id');
+    $post_id = $this->request->param('id');
     if (empty($post_id))
     {
       throw new HTTP_Exception_500('Не указан ID записи');
