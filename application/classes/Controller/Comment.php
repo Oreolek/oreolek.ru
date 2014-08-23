@@ -62,6 +62,7 @@ class Controller_Comment extends Controller_Layout {
             $name != ''
           )
           {
+            Session::instance()->set('flash_error', 'Ваш комментарий принят. К сожалению, но он выглядел подозрительно для технического анализатора, поэтому был помечен как спам. Он не будет отображаться в списке комментариев, пока владелец блога не укажет обратное.', '<br>'));
             $comment->is_approved = Model_Comment::STATUS_SPAM;
           }
           else
