@@ -32,7 +32,6 @@ class View_Post_View extends View_Layout {
   public $is_admin = FALSE;
 
   public $scripts = array(
-    'jquery',
     'autosize',
     'lightbox-2.6.min.js',
     'load_comment_form.js',
