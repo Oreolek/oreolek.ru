@@ -15,6 +15,6 @@ $('.date').each(function(){
   if ($(this).text() != '')
   {
     day = moment($(this).text());
-    $(this).text(day.startOf('day').fromNow()+", "+day.format('LL'));
+    $(this).text(day.fromNow()+", "+day.format('LL'));
   }
 });
