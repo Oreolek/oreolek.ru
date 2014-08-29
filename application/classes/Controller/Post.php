@@ -94,7 +94,7 @@ class Controller_Post extends Controller_Layout {
     $this->template->tags = $post->tags->find_all();
     $post->content = Markdown::instance()->transform($post->content);
     $this->template->content = $post->content;
-    $this->template->date = $post->creation_date();
+    $this->template->date = date('c', strtotime($post->creation_date()));
     $renderer = Kostache_Layout::factory('layout');
     $body = $renderer->render($this->template, $this->template->_view);
     if (!$is_admin)

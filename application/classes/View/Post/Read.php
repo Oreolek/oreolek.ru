@@ -47,7 +47,7 @@ class View_Post_Read extends View_Read {
     );
     if ($this->show_date)
     {
-      $output['date'] = $item->creation_date();
+      $output['date'] = date('c', strtotime($item->creation_date()));
     }
     if ($this->is_admin)
     {
