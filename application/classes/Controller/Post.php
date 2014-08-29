@@ -133,7 +133,7 @@ class Controller_Post extends Controller_Layout {
     $first_item = $page_size * $current_page;
     $this->template->items = ORM::factory('Post')
       ->where('is_draft', '=', '0')
-      ->and_where(DB::expr('DATEDIFF(SYSDATE(), `post`.`posted_at`'), '>=', '0');
+      ->and_where(DB::expr('DATEDIFF(SYSDATE(), `post`.`posted_at`)'), '>=', '0')
       ->order_by('posted_at', 'DESC')
       ->offset($first_item)
       ->limit($page_size)
@@ -181,7 +181,7 @@ class Controller_Post extends Controller_Layout {
     $this->template->items = ORM::factory('Post')
       ->with_count('comments', 'comment_count')
       ->where('is_draft', '=', '0')
-      ->and_where(DB::expr('DATEDIFF(SYSDATE(), `post`.`posted_at`'), '>=', '0');
+      ->and_where(DB::expr('DATEDIFF(SYSDATE(), `post`.`posted_at`)'), '>=', '0')
       ->order_by('posted_at', 'DESC')
       ->offset($first_item)
       ->limit($page_size)
@@ -208,7 +208,7 @@ class Controller_Post extends Controller_Layout {
     $this->template->item_count = 10;
     $this->template->items = ORM::factory('Post')
       ->where('is_draft', '=', '0')
-      ->and_where(DB::expr('DATEDIFF(SYSDATE(), `post`.`posted_at`'), '>=', '0');
+      ->and_where(DB::expr('DATEDIFF(SYSDATE(), `post`.`posted_at`)'), '>=', '0')
       ->order_by('posted_at', 'DESC')
       ->limit(10)
       ->find_all(); 
@@ -222,7 +222,7 @@ class Controller_Post extends Controller_Layout {
     $this->auto_render = false;
     $posts = ORM::factory('Post')
       ->where('is_draft', '=', '0')
-      ->and_where(DB::expr('DATEDIFF(SYSDATE(), `post`.`posted_at`'), '>=', '0');
+      ->and_where(DB::expr('DATEDIFF(SYSDATE(), `post`.`posted_at`)'), '>=', '0')
       ->order_by('posted_at', 'DESC')
       ->limit(10)
       ->find_all(); 
