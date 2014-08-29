@@ -33,11 +33,9 @@ class Model_Comment extends ORM
 	{
 		return array(
       'author_name' => array(
-				array('not_empty'),
 				array('max_length', array(':value', 32)),
       ),
       'author_email' => array(
-				array('not_empty'),
         array('email'),
 				array('max_length', array(':value', 127)),
       ),
