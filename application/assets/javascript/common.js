@@ -12,7 +12,9 @@ WebFontConfig = {
 })();
 
 $('.date').each(function(){
-  var d = new Date($(this).text());
-  var today = new Date();
-  console.log (today - d);
+  if ($(this).text() != '')
+  {
+    day = moment($(this).text());
+    $(this).text(day.startOf('day').fromNow()+", "+day.format('LL'));
+  }
 });

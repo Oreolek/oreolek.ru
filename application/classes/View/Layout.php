@@ -27,6 +27,8 @@ class View_Layout {
     'hyphenator',
     'jquery',
     'bootstrap',
+    'moment',
+    'moment_ru.js',
     'common.js',
   );
  
@@ -75,6 +77,10 @@ class View_Layout {
 
           case 'hyphenator':
             $temp .= HTML::script('https://cdn.jsdelivr.net/hyphenator/4.2.0/hyphenator.min.js')."\n";
+            break;
+          
+          case 'moment':
+            $temp .= HTML::script('https://cdn.jsdelivr.net/momentjs/2.8.2/moment.min.js')."\n";
             break;
 
           case 'autosize':

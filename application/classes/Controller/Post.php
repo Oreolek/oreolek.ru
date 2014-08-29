@@ -40,7 +40,7 @@ class Controller_Post extends Controller_Layout {
       $this->redirect('error/404');
     }
     $is_admin = Auth::instance()->logged_in('admin');
-    if ($post->is_draft == TRUE AND !$is_admin)
+    if (($post->is_draft == TRUE || strtotime($post->posted_at) > time()) AND !$is_admin)
     {
       $this->redirect('error/403');
     }
@@ -133,6 +133,7 @@ class Controller_Post extends Controller_Layout {
     $first_item = $page_size * $current_page;
     $this->template->items = ORM::factory('Post')
       ->where('is_draft', '=', '0')
+      ->and_where('post.posted_at', '<=', DB::expr('NOW()'))
       ->order_by('posted_at', 'DESC')
       ->offset($first_item)
       ->limit($page_size)
@@ -180,6 +181,7 @@ class Controller_Post extends Controller_Layout {
     $this->template->items = ORM::factory('Post')
       ->with_count('comments', 'comment_count')
       ->where('is_draft', '=', '0')
+      ->and_where('post.posted_at', '<=', DB::expr('NOW()'))
       ->order_by('posted_at', 'DESC')
       ->offset($first_item)
       ->limit($page_size)
@@ -206,6 +208,7 @@ class Controller_Post extends Controller_Layout {
     $this->template->item_count = 10;
     $this->template->items = ORM::factory('Post')
       ->where('is_draft', '=', '0')
+      ->and_where('post.posted_at', '<=', DB::expr('NOW()'))
       ->order_by('posted_at', 'DESC')
       ->limit(10)
       ->find_all(); 
@@ -219,6 +222,7 @@ class Controller_Post extends Controller_Layout {
     $this->auto_render = false;
     $posts = ORM::factory('Post')
       ->where('is_draft', '=', '0')
+      ->and_where('post.posted_at', '<=', DB::expr('NOW()'))
       ->order_by('posted_at', 'DESC')
       ->limit(10)
       ->find_all(); 
@@ -309,6 +313,19 @@ class Controller_Post extends Controller_Layout {
       $post->content = $this->request->post('content');
       $post->name = $this->request->post('name');
       $post->password = $this->request->post('password');
+      $posted_at = strtotime($this->request->post('posted_at'));
+      if ($posted_at > 0)
+      {
+        $post->posted_at = date('c', $posted_at);
+      }
+      else
+      {
+        $post->posted_at = NULL;
+      }
+      if (empty($post->posted_at))
+      {
+        $post->posted_at = date('c');
+      }
       if ($this->request->is_ajax())
       {
         $this->auto_render = FALSE;
@@ -316,20 +333,13 @@ class Controller_Post extends Controller_Layout {
         {
           $post->save();
         }
-        $post->posted_at = date('c');
         $retval = array(
           'preview' => Markdown::instance()->transform($post->content),
-          'date' => date('Y-m-d H:i:s'),
         );
         $this->response->body(json_encode($retval));
         return;
       }
-      $post->posted_at = $this->request->post('posted_at');
       $post->is_draft = $this->request->post('is_draft');
-      if (empty($post->posted_at))
-      {
-        $post->posted_at = date('c');
-      }
       $tags = $this->request->post('tags');
       $validation = $post->validate_create($this->request->post());
       $mode = 'edit';
