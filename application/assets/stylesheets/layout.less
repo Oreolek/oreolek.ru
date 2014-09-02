@@ -160,26 +160,21 @@ footer {
   }
 }
 
-.sidequote() {
-  @media(min-width: @screen-lg-desktop) {
-    .make-lg-column(4);
-  }
-  @media(min-width: @screen-tablet) {
-    .make-sm-column(4);
-  }
+.sidequote_left, 
+.sidequote_right {
+  .make-sm-column(4);
+  .make-lg-column(4);
   font-size: @font-size-base * 1.5;
   margin-top: @font-size-base / 2;
   margin-bottom: @font-size-base / 2;
 }
 
 .sidequote_left {
-  &:extend(.sidequote);
   padding-left: 0;
   padding-right: @grid-gutter-width * 2;
 }
 
 .sidequote_right {
-  &:extend(.sidequote);
   &:extend(.f_right);
 }
 
