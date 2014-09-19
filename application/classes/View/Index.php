@@ -20,6 +20,7 @@
  * Index view controller.
  **/
 class View_Index extends View_Layout {
+  public $need_paging = TRUE;
   public $show_date = TRUE;
   /**
    * Show a link to add new entry
@@ -46,6 +47,8 @@ class View_Index extends View_Layout {
    **/
   public function get_paging()
   {
+    if (!$this->need_paging)
+      return FALSE;
     $current_page = $this->get_current_page();
     $item_count = $this->item_count;
     $page_size = Kohana::$config->load('common.page_size');

@@ -206,10 +206,12 @@ class Controller_Post extends Controller_Layout {
     $this->template = new View_Index;
     $this->template->title = __('Fresh posts');
     $this->template->item_count = 10;
+    $this->template->need_paging = FALSE;
     $this->template->items = ORM::factory('Post')
       ->where('is_draft', '=', '0')
       ->and_where(DB::expr('DATEDIFF(SYSDATE(), `post`.`posted_at`)'), '>=', '0')
       ->order_by('posted_at', 'DESC')
+      ->offset(0)
       ->limit(10)
       ->find_all(); 
   }

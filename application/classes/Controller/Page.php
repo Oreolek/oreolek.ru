@@ -86,22 +86,11 @@ class Controller_Page extends Controller_Layout {
     $this->template = new View_Index;
     $this->template->title = 'Содержание';
     $this->template->show_date = FALSE;
-    $page_size = Kohana::$config->load('common.page_size');
-    $current_page = (int) $this->request->param('page') - 1;
-    if ($current_page < 0)
-    {
-      $current_page = 0;
-    }
-    $first_item = $page_size * $current_page;
+    $this->template->need_paging = FALSE;
     $this->template->items = ORM::factory('Page')
       ->where('is_draft', '=', '0')
       ->order_by('name', 'ASC')
-      ->offset($first_item)
-      ->limit($page_size)
       ->find_all(); 
-    $this->template->item_count = ORM::factory('Page')
-      ->where('is_draft', '=', '0')
-      ->count_all();
 
   }
   public function action_delete()
