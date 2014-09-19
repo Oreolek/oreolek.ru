@@ -1,5 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
+$config['auto_render'] = Kohana::$environment === Kohana::DEVELOPMENT;
 /*
  * Log toolbar data to FirePHP
  */

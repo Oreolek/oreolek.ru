@@ -80,11 +80,11 @@ if (isset($_SERVER['KOHANA_ENV']))
  * - boolean  caching     enable or disable internal caching                 FALSE
  */
 Kohana::init(array(
- 'base_url'   => '/',
- 'index_file' => 'index.php',
- 'errors'     => TRUE,
- 'profile'    => (Kohana::$environment == Kohana::DEVELOPMENT), 
- 'caching'    => (Kohana::$environment == Kohana::PRODUCTION) 
+  'base_url'   => '/',
+  'index_file' => FALSE,
+  'errors'     => (Kohana::$environment === Kohana::DEVELOPMENT),
+  'profile'    => (Kohana::$environment === Kohana::DEVELOPMENT), 
+  'caching'    => (Kohana::$environment === Kohana::PRODUCTION) 
 ));
 
 /**
@@ -100,25 +100,31 @@ Kohana::$config->attach(new Config_File);
 /**
  * Set cookie salt (required)
  */
-Cookie::$salt = '33jfnN';
+Cookie::$salt = Kohana::$config->load('auth.cookie_salt');
 
 /**
  * Enable modules. Modules are referenced by a relative or absolute path.
  */
-Kohana::modules(array(
+$modules = array(
 	 'auth'          => MODPATH.'auth',              // Basic authentication
 	 'database'      => MODPATH.'database',          // Database access
 	 'orm'           => MODPATH.'orm',               // Object Relationship Mapping
 	 'markdown'      => MODPATH.'markdown',          // Markdown module
    'less'          => MODPATH.'less',              // LEaner CSS
-   'debug-toolbar' => MODPATH.'debug-toolbar',     // Debug toolbar
 	 'image'         => MODPATH.'image',             // Image manipulation
 	 'kostache'      => MODPATH.'kostache',          // Logic-less Mustache views
-	 'unittest'      => MODPATH.'unittest',          // Unit testing
 	 'cache'         => MODPATH.'cache',             // Caching with multiple backends
-	//  'codebench'  => MODPATH.'codebench',         // Benchmarking tool
 	 'sitemap'       => MODPATH.'sitemap',           // Sitemap generator
-	));
+);
+if (Kohana::$environment === Kohana::DEVELOPMENT)
+{
+  $modules = array_merge($modules, array(
+    'debug-toolbar' => MODPATH.'debug-toolbar',     // Debug toolbar
+	  'unittest'      => MODPATH.'unittest',          // Unit testing
+//  'codebench'     => MODPATH.'codebench',         // Benchmarking tool
+  ));
+}
+Kohana::modules($modules);
 
 /**
  * Set the routes. Each route must have a minimum of a name, a URI and a set of

@@ -31,14 +31,14 @@ class Controller_Layout extends Controller {
     parent::before();
     $action_name = $this->request->action();
     // clear cache in dev mode
-    if (Kohana::$environment == Kohana::DEVELOPMENT)
+    if (Kohana::$environment === Kohana::DEVELOPMENT)
     {
       Cache::instance('apcu')->delete_all();
     }
     if (
       is_array($this->secure_actions) &&
       array_key_exists($action_name, $this->secure_actions) &&
-      Kohana::$environment != Kohana::DEVELOPMENT
+      Kohana::$environment !== Kohana::DEVELOPMENT
     )
     {
       if ( Auth::instance()->logged_in($this->secure_actions[$action_name]) === FALSE)

@@ -82,6 +82,8 @@ class Controller_User extends Controller_Layout {
    **/
   public function action_password()
   {
+    if (Kohana::$environment !== Kohana::DEVELOPMENT)
+      $this->redirect('error/403');
     $this->template = new View_Edit;
     $this->template->title = 'Изменение пароля';
     $this->template->errors = array();

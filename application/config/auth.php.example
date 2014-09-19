@@ -6,6 +6,8 @@ return array(
 	'hash_method'  => 'sha256',
 	'hash_key'     => "choose your own hash key",
 	'lifetime'     => 1209600,
+	'session_type' => Session::$default,
 	'session_key'  => 'auth_user',
+  'cookie_salt'  => 'choose your own cookie salt',
 
 );
