@@ -33,7 +33,6 @@ class View_Post_View extends View_Layout {
 
   public $scripts = array(
     'autosize',
-    'lightbox-2.6.min.js',
     'load_comment_form.js',
     'load_comments.js',
     'https://yandex.st/share/share.js'

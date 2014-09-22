@@ -24,7 +24,6 @@ class View_Edit extends View_Layout {
   public $model;
   public $errors;
   public $scripts = array(
-    'jquery',
     'autosize',
   );
   /**

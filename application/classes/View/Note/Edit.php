@@ -22,6 +22,5 @@
 class View_Note_Edit extends View_Post_Edit {
   public $scripts = array(
     'autosize',
-    'lightbox-2.6.min.js',
   );
 }

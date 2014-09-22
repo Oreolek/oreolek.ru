@@ -26,10 +26,6 @@ class View_Post_Read extends View_Read {
   public $show_date = TRUE;
   public $show_create = FALSE;
   
-  public $scripts = array(
-    'lightbox-2.6.min.js',
-  );
-
   protected function show_item($item)
   {
     if (is_null($this->is_admin))

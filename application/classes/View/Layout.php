@@ -30,6 +30,7 @@ class View_Layout {
     'moment',
     'moment_ru.js',
     'common.js',
+    'lightbox',
   );
  
   /**
@@ -85,6 +86,10 @@ class View_Layout {
 
           case 'autosize':
             $temp .= HTML::script('https://cdn.jsdelivr.net/jquery.autosize/1.18.9/jquery.autosize.min.js')."\n";
+            break;
+
+          case 'lightbox':
+            $temp .= HTML::script('https://cdn.jsdelivr.net/lightbox2/2.6/js/lightbox-2.6.min.js')."\n";
             break;
 
           default:
