@@ -69,11 +69,11 @@ class View_Layout {
         switch ($script) // CDN shortcuts
         {
           case 'jquery':
-            $temp .= HTML::script('https://cdn.jsdelivr.net/jquery/2.1.1/jquery.min.js')."\n";
+            $temp .= HTML::script('https://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.1.min.js')."\n";
             break;
 
           case 'bootstrap':
-            $temp .= HTML::script('https://cdn.jsdelivr.net/bootstrap/3.1.1/js/bootstrap.min.js')."\n";
+            $temp .= HTML::script('https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js')."\n";
             break;
 
           case 'hyphenator':
