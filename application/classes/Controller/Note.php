@@ -48,6 +48,9 @@ class Controller_Note extends Controller_Layout {
   {
     $this->template = new View_Layout;
     $this->template->_view = 'view';
+    $this->template->scripts = array(
+      'lightbox-2.6.min.js',
+    );
     $id = $this->request->param('id');
     $note = ORM::factory('Note', $id);
     if (!$note->loaded())
@@ -98,6 +101,9 @@ class Controller_Note extends Controller_Layout {
   {
     $this->template = new View_Note_Edit;
     $this->template->title = __('Edit note');
+    $this->template->scripts = array(
+      'lightbox-2.6.min.js',
+    );
     $id = $this->request->param('id');
     $note = ORM::factory('Note', $id);
     if (!$note->loaded())
