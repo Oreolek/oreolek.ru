@@ -411,14 +411,6 @@ class Controller_Post extends Controller_Layout {
 
   public function action_search()
   {
-    $term = $this->request->post('term');
-    if ($term == '')
-    {
-      $this->redirect('');
-    }
-    $result = Model_Post::search($term);
-    $this->template = new View_Read;
-    $this->template->title = __('Search results');
-    $this->template->items = ORM::factory('Post')->with_count('comments', 'comment_count')->load_by_id($result);
+    $this->template = new View_Search;
   }
 }
