@@ -69,27 +69,27 @@ class View_Layout {
         switch ($script) // CDN shortcuts
         {
           case 'jquery':
-            $temp .= HTML::script('https://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.1.min.js')."\n";
+            $temp .= HTML::script('https://code.jquery.com/jquery-2.1.3.min.js')."\n";
             break;
 
           case 'bootstrap':
-            $temp .= HTML::script('https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js')."\n";
+            $temp .= HTML::script('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js')."\n";
             break;
 
           case 'hyphenator':
-            $temp .= HTML::script('https://cdn.jsdelivr.net/hyphenator/4.2.0/hyphenator.min.js')."\n";
+            $temp .= HTML::script('https://cdn.jsdelivr.net/hyphenator/4.3.0/hyphenator.min.js')."\n";
             break;
           
           case 'moment':
-            $temp .= HTML::script('https://cdn.jsdelivr.net/momentjs/2.8.2/moment.min.js')."\n";
+            $temp .= HTML::script('https://cdn.jsdelivr.net/momentjs/2.10.2/moment.min.js')."\n";
             break;
 
           case 'autosize':
-            $temp .= HTML::script('https://cdn.jsdelivr.net/jquery.autosize/1.18.9/jquery.autosize.min.js')."\n";
+            $temp .= HTML::script('https://cdn.jsdelivr.net/jquery.autosize/3.0.3/autosize.min.js')."\n";
             break;
 
           case 'lightbox':
-            $temp .= HTML::script('https://cdn.jsdelivr.net/lightbox2/2.6/js/lightbox-2.6.min.js')."\n";
+            $temp .= HTML::script('https://cdn.jsdelivr.net/lightbox2/2.7.1/js/lightbox.min.js')."\n";
             break;
 
           default:
