@@ -14,43 +14,42 @@
     {{{stylesheet}}}
    </head>
   <body vocab="http://schema.org">
-   {{#navigation}}
-    <nav class="navbar navbar-default" role="navigation">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="fa fa-volume-off">&nbsp;</span>
-        </button>
-        <a class="navbar-brand" href="/">{{site_title}}</a>
-        </div>
-        <div class="collapse navbar-collapse" id="navbar-collapse">
-          <ul class="nav navbar-nav navbar-right">
-            {{#dropdown}}
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{name}} <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                {{#links}}
-                  <li>{{{.}}}</li>
-                {{/links}}
-              </ul>
-            </li>
-            {{/dropdown}}
+    {{#navigation}}
+      <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
+              <span class="sr-only">{{text_navigation}}</span>
+              <span class="fa fa-volume-off">&nbsp;</span>
+            </button>
+            <a class="navbar-brand" href="/">{{site_title}}</a>
+          </div>
+          <div class="collapse navbar-collapse" id="navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+              {{#dropdown}}
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{name}} <b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                    {{#links}}
+                      <li>{{{.}}}</li>
+                    {{/links}}
+                  </ul>
+                </li>
+              {{/dropdown}}
             {{#links}}
-            <li>{{{.}}}</li>
+              <li>{{{.}}}</li>
             {{/links}}
-          </ul>
-          <div class="ya-site-form ya-site-form_inited_no" onclick="return {'action':'/Post/search','arrow':false,'bg':'transparent','fontsize':12,'fg':'#000000','language':'ru','logo':'rb','publicname':'Поиск по oreolek.ru','suggest':true,'target':'_self','tld':'ru','type':3,'usebigdictionary':true,'searchid':2201150,'webopt':false,'websearch':false,'input_fg':'#000000','input_bg':'#ffffff','input_fontStyle':'normal','input_fontWeight':'normal','input_placeholder':null,'input_placeholderColor':'#000000','input_borderColor':'#7f9db9'}"><form action="http://yandex.ru/sitesearch" method="get" target="_self"><input type="hidden" name="searchid" value="2201150"/><input type="hidden" name="l10n" value="ru"/><input type="hidden" name="reqenc" value="utf-8"/><input type="search" name="text" value=""/><input type="submit" value="Найти"/></form></div><script type="text/javascript">(function(w,d,c){var s=d.createElement('script'),h=d.getElementsByTagName('script')[0],e=d.documentElement;if((' '+e.className+' ').indexOf(' ya-page_js_yes ')===-1){e.className+=' ya-page_js_yes';}s.type='text/javascript';s.async=true;s.charset='utf-8';s.src=(d.location.protocol==='https:'?'https:':'http:')+'//site.yandex.net/v2.0/js/all.js';h.parentNode.insertBefore(s,h);(w[c]||(w[c]=[])).push(function(){Ya.Site.Form.init()})})(window,document,'yandex_site_callbacks');</script>
+            </ul>
+            {{{search}}}
+          </div>
         </div>
-      </div>
-    </nav>
+      </nav>
     {{/navigation}}
-
     <div class="container">
-      <div class="paging">
-        {{{get_paging}}}
-      </div>
       <div class = "main_content">
+        <div class="paging">
+          {{{get_paging}}}
+        </div>
         <h2>{{title}}</h2>
         {{#flashes}}
           {{#info}}
@@ -67,9 +66,39 @@
           {{/success}}
         {{/flashes}}
 {{>content}}
+        <div class="paging">
+          {{{get_paging}}}
+        </div>
       </div>
-      <div class="paging">
-        {{{get_paging}}}
+      <div class="sidebar">
+        <div class="col-md-12">
+          {{#navigation}}
+          <a href="/"><h1 class="navbar-brand" href="/">{{site_title}}</h1></a>
+          <div class="rss">{{{rss_link}}}</div>
+          <div class="blog-author clearfix">
+            <p>
+              <img alt="Author" src="{{{author_img}}}" class="img-responsive" height="320" width="240">
+              {{author_about}}
+            </p>
+          </div>
+          <ul>
+            {{#dropdown}}
+            <li>
+              <a href="#">{{name}}</a>
+              <ul>
+                {{#links}}
+                  <li>{{{.}}}</li>
+                {{/links}}
+              </ul>
+            </li>
+            {{/dropdown}}
+            {{#links}}
+            <li>{{{.}}}</li>
+            {{/links}}
+          </ul>
+          {{{search}}}
+        </div>
+        {{/navigation}}
       </div>
       <footer><div class="small">Сайт сделан на фреймворке Kohana. <a href="https://github.com/oreolek/oreolek.ru">Исходный код</a> движка доступен по лицензии <a href="http://www.gnu.org/licenses/agpl-3.0.html">AGPL</a>.</div></footer>
     </div>

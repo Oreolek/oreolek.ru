@@ -1,18 +1,7 @@
-@font-size-base: 16px;
+@font-size-base: 15px;
 
-.container-fluid {
-  @media (min-width: @screen-tablet) and (max-width: @screen-desktop) {
-    margin: 0 1%;
-    min-width: @screen-tablet;
-  }
-  @media (min-width: @screen-desktop) and (max-width: @screen-lg-desktop) {
-    margin: 0 3%;
-    min-width: @screen-desktop;
-  }
-  @media (min-width: @screen-lg-desktop) {
-    margin: 0 5%;
-    min-width: @screen-lg-desktop;
-  }
+body {
+  margin-top: @line-height-computed;
 }
 
 input[type=checkbox] {
@@ -115,8 +104,10 @@ img {
   display: none;
 }
 
+#comments {
+  margin-top: @line-height-computed;
+}
 .comment {
-  &:extend(.make-row);
   .author {
     font-weight: 700;
     .make-lg-column(4);
@@ -132,10 +123,6 @@ img {
 
 .f_left {
   float: left;
-}
-
-.rss {
-  &:extend(.f_right);
 }
 
 .yashare-auto-init { // Yandex sharing buttons
@@ -209,12 +196,19 @@ footer {
 }
 
 .post,
-.comment_section {
+.comment_section,
+.rss {
   &:extend(.clearfix);
+}
+
+.sidebar {
+  .make-sm-column(12);
+  .make-lg-column(3);
 }
 
 .main_content {
   .make-sm-column(12);
+  .make-lg-column(9);
   p {
     text-align: justify;
   }
@@ -312,10 +306,8 @@ p.stagedir {
 }
 
 @media (min-width: @screen-tablet) {
-  #ya-site-form0 {
-    width: 30%;
-    float: right;
-    margin-top: 10px !important;
+  .navbar {
+    display: none;
   }
 }
 
