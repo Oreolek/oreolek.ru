@@ -1,12 +1,15 @@
-@import '1pxdeep/1pxdeep';
-@import '1pxdeep/scheme';
-
-@gray-lighter:           #eee;
+@color-nav-bg:       #A69CA3;
+@color-bg:           #F2DDB6;
+@color-text:         #5E6E85;
+@color-link-text:    #7B6265;
+@color-nav-text:     @color-bg;
+@color-well-bg:      #84929F;
+@color-jumbotron-bg: #7B6265;
 
 @font-family-sans-serif: "PT Sans", "Open Sans", Arial, sans-serif;
-@font-family-serif:      "Barnaul Grotesk", "PT Serif", Georgia, "Times New Roman", Times, serif;
-@font-family-caption: "PT Serif Caption", @font-family-serif;
-@headings-font-family: "PT Sans Caption", @font-family-sans-serif;
+@font-family-serif:      "PT Serif", Georgia, "Times New Roman", Times, serif;
+@font-family-caption:    "PT Serif Caption", @font-family-serif;
+@headings-font-family:   "PT Sans Caption", @font-family-sans-serif;
 @font-family-base:       @font-family-serif;
 
 .red {
@@ -38,5 +41,30 @@ acronym, abbr {
 
 blockquote {
   border-left: 1px dashed @gray;
-  background: @gray-lighter;
 }
+
+@body-bg:                     @color-bg;
+@text-color:                  @color-text;
+@brand-primary:               @color-link-text;
+@dropdown-link-color:         @color-nav-text;
+@navbar-default-color:        @color-nav-text;
+@navbar-default-link-color:   @color-nav-text;
+@navbar-default-bg:           @color-nav-bg;
+@panel-bg:                    @color-bg;
+@panel-footer-bg:             @color-well-bg;
+@panel-default-text:          @color-text;
+@panel-default-heading-bg:    @color-well-bg;
+@well-bg:                     @color-well-bg;
+@hr-border:                   @color-jumbotron-bg;
+@jumbotron-bg:                @color-jumbotron-bg;
+
+@navbar-default-link-hover-color:          lighten(@navbar-default-color, 20%);
+@navbar-default-link-hover-bg:             transparent;
+@navbar-default-link-active-color:         @navbar-default-link-color;
+@navbar-default-link-active-bg:            darken(@navbar-default-bg, 6.5%);
+@navbar-default-link-disabled-color:       desaturate(@navbar-default-color, 50%);
+@navbar-default-link-disabled-bg:          transparent;
+
+@navbar-default-brand-color:               @navbar-default-link-color;
+@navbar-default-brand-hover-color:         darken(@navbar-default-brand-color, 10%);
+@navbar-default-brand-hover-bg:            transparent;

@@ -47,8 +47,10 @@
     {{/navigation}}
     <div class="container">
       <div class = "main_content">
-        <div class="paging">
-          {{{get_paging}}}
+        <div class="row">
+          <nav>
+            {{{get_paging}}}
+          </nav>
         </div>
         <h2>{{title}}</h2>
         {{#flashes}}
@@ -66,18 +68,24 @@
           {{/success}}
         {{/flashes}}
 {{>content}}
-        <div class="paging">
-          {{{get_paging}}}
+        <div class="row">
+          <nav>
+            {{{get_paging}}}
+          </nav>
         </div>
       </div>
       <div class="sidebar">
         <div class="col-md-12">
           {{#navigation}}
-          <a href="/"><h1 class="navbar-brand" href="/">{{site_title}}</h1></a>
-          <div class="rss">{{{rss_link}}}</div>
-          <div class="blog-author clearfix">
+          <div class="row">
+            <a href="/"><h1 class="navbar-brand" href="/">{{site_title}}</h1></a>
+          </div>
+          <div class="row">
+            <div class="rss">{{{rss_link}}}</div>
+          </div>
+          <div class="row">
+            <img alt="Author" src="{{{author_img}}}" class="img-responsive" height="320" width="240">
             <p>
-              <img alt="Author" src="{{{author_img}}}" class="img-responsive" height="320" width="240">
               {{author_about}}
             </p>
           </div>
@@ -100,7 +108,10 @@
         </div>
         {{/navigation}}
       </div>
-      <footer><div class="small">Сайт сделан на фреймворке Kohana. <a href="https://github.com/oreolek/oreolek.ru">Исходный код</a> движка доступен по лицензии <a href="http://www.gnu.org/licenses/agpl-3.0.html">AGPL</a>.</div></footer>
+      <footer>
+        <div class="footer_text">Сайт сделан на фреймворке Kohana. <a href="https://github.com/oreolek/oreolek.ru">Исходный код</a> движка доступен по лицензии <a href="http://www.gnu.org/licenses/agpl-3.0.html">AGPL.</a></div>
+        </div>
+      </footer>
     </div>
 {{{scripts}}}
   </body>

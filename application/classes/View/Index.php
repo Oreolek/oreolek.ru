@@ -62,7 +62,7 @@ class View_Index extends View_Layout {
     {
       $end_page = $page_count;
     }
-    $output = '';
+    $output = '<ul class="pagination">';
     if ($i <= 1)
     {
       $i = 1;
@@ -82,6 +82,7 @@ class View_Index extends View_Layout {
       $output .= $this->page_link($i+1, TRUE);
       $output .= $this->page_link($page_count);
     }
+    $output .= '</ul>';
     return $output;
   }
 
@@ -93,12 +94,18 @@ class View_Index extends View_Layout {
     {
       $text = '&hellip;';
     }
-    $output = '<a href="'.Route::url('default', array('controller' => Request::current()->controller(), 'action' => Request::current()->action(), 'page' => $i)).'"';
+    $output = '<li';
     if ($i == $current_page)
     {
       $output .= ' class="active"';
     }
-    $output .= '>'.$text.'</a>';
+    $output .= '><a href="'.Route::url('default', array('controller' => Request::current()->controller(), 'action' => Request::current()->action(), 'page' => $i)).'"';
+    $output .= '>'.$text;
+    if ($i == $current_page)
+    {
+      $output .= '<span class="sr-only">(текущая)</span>';
+    }
+    $output .= '</a>';
     return $output;
   }
 

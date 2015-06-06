@@ -133,16 +133,13 @@ code {
   white-space: normal;
 }
 
-.side {
-  .make-lg-column(4);
-  .make-sm-column(4);
-}
-
-footer {
-  &:extend(.make-row);
-  margin-top: @font-size-base;
-  div {
+footer{
+  .make-row();
+  .footer_text {
+    margin-top: (@font-size-base * 2);
+    .small;
     .make-xs-column(12);
+    .make-lg-column(9);
     .text_center;
   }
 }
@@ -222,7 +219,6 @@ footer {
 }
 
 .paging { // pagination
-  &:extend(.make-row);
   .text_center;
   a {
     @media screen and (max-width: 767px) {
