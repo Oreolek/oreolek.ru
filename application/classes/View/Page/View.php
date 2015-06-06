@@ -20,4 +20,7 @@
  * Page view controller
  **/
 class View_Page_View extends View_Layout {
+  public function get_breadcrumbs() {
+    return '<ol class="breadcrumb"><li><a href="'.Route::url('default', array('controller' => 'Page', 'action' => 'index')).'">Страницы</a></li><li class="active">'.$this->title.'</li></ol>';
+  }
 }

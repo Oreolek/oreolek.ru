@@ -72,4 +72,8 @@ class View_Post_View extends View_Layout {
   {
     return Route::url('default', array('controller' => 'Comment', 'action' => 'view', 'id' => $this->id));
   }
+
+  public function get_breadcrumbs() {
+    return '<ol class="breadcrumb"><li><a href="/">Дневник</a></li><li class="active">'.$this->title.'</li></ol>';
+  }
 }

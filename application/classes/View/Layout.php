@@ -37,6 +37,11 @@ class View_Layout {
    * Inherited paging function
    **/
   public function get_paging() {}
+
+  /**
+   * Inherited breadcrumbs function
+   **/
+  public function get_breadcrumbs() {}
   
   public function site_title()
   {
