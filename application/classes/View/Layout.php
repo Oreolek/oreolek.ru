@@ -177,6 +177,7 @@ class View_Layout {
       'links' => $result,
       'dropdown' => $dropdown,
       'text_navigation' => 'Переключить навигацию',
+      'author' => $config['author'],
       'author_img' => $config['author_img'],
       'author_img_alt' => $config['author_img_alt'],
       'author_about' => $config['author_about'],

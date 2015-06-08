@@ -47,11 +47,6 @@
     {{/navigation}}
     <div class="container">
       <div class = "main_content">
-        <div class="row">
-          <nav>
-            {{{get_paging}}}
-          </nav>
-        </div>
         {{{get_breadcrumbs}}}
         <h2>{{title}}</h2>
         {{#flashes}}
@@ -68,9 +63,14 @@
             <div class="alert alert-success">{{{.}}}</div>
           {{/success}}
         {{/flashes}}
+        <div class="row">
+          <nav class="paging">
+            {{{get_paging}}}
+          </nav>
+        </div>
 {{>content}}
         <div class="row">
-          <nav>
+          <nav class="paging">
             {{{get_paging}}}
           </nav>
         </div>
@@ -85,10 +85,9 @@
             <div class="rss">{{{rss_link}}}</div>
           </div>
           <div class="row">
+            <h5>{{author}}</h5>
             <img alt="{{author_img_alt}}" src="{{{author_img}}}" class="img-responsive" height="320" width="240">
-            <p>
-              {{author_about}}
-            </p>
+            <p>{{author_about}}</p>
           </div>
           <ul>
             {{#dropdown}}

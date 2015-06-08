@@ -3,7 +3,7 @@
 return array(
  'title' => 'Из Тишины',
  'author' => 'Александр Яковлев',
- 'author_about' => 'Александр Яковлев',
+ 'author_about' => 'Чаеголик, сайтобурист, картофан.',
  'author_img' => '/application/assets/images/author.jpg',
  'author_img_alt' => 'Фотограф Евгения Цвеклинская, 2014',
  'author_email' => 'keloero@oreolek.ru',
