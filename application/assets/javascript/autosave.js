@@ -19,4 +19,4 @@ function ajax_submit(mode_switch)
 }
 
 setInterval(ajax_submit(), 5*60*1000);
-$('textarea').autosize(); // somewhere need to have this
+autosize(document.querySelector('textarea'));// somewhere need to have this
