@@ -8,7 +8,7 @@ return array(
  'author_img_alt' => 'Фотограф Евгения Цвеклинская, 2014',
  'author_email' => 'keloero@oreolek.ru',
  'uploads_dir' => '/uploads',
- 'thumbnail_width' => 400,
+ 'thumbnail_width' => 500,
  'thumbnail_height' => 300,
  'comment_approval' => TRUE, // every comment must be approved
  'page_size' => 7, // pagination: items on page. Small numbers are good on mobiles.
