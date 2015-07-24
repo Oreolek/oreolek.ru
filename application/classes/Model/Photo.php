@@ -78,6 +78,14 @@ class Model_Photo extends ORM {
 
 		if (!is_file(DOCROOT.$thumbnail_path)) {
 			$image = Image::factory(DOCROOT.$image_path);
+      if ($image->height < $height)
+      {
+        $height = $image->height;
+      }
+      if ($image->width < $width)
+      {
+        $width = $image->width;
+      }
 			$image->resize($width, $height, Image::WIDTH); 
 			$image->crop($width, $height);
 			$image->save(DOCROOT.$thumbnail_path, 80); //save thumbnail with quality of 80
