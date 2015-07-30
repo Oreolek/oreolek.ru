@@ -15,6 +15,12 @@
   <div class="comment_section">
     <a name="comments"></a>
     {{{get_tags}}}
+    {{#donate}}
+    <div id="donate">
+      <h3>{{heading}}</h3>
+      {{{code}}}
+    </div>
+    {{/donate}}
     <div id="comments" data-url="{{{load_comments_action}}}"></div>
     <div id="new_comment" data-url="{{{load_comment_form_action}}}" data-id="{{id}}"></div>
   </div>
