@@ -3,6 +3,9 @@
 </div>
 {{#get_items}}
   <div class="post" typeof="blogPost">
+    {{#speed}}
+      <div class="speed">{{{speed}}}</div>
+    {{/speed}}
     <h3 property="headline"><a href="{{{view_link}}}">{{heading}}</a></h3>
     <div class="meta">
       {{#date}}

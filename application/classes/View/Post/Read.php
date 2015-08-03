@@ -39,7 +39,8 @@ class View_Post_Read extends View_Read {
         'comment_count' => '',
         'edit_link' => '',
         'view_link' => '',
-        'comments_link' => ''
+        'comments_link' => '',
+        'speed' => '',
     );
     if ($this->show_date)
     {
@@ -49,6 +50,8 @@ class View_Post_Read extends View_Read {
     {
       $output['edit_link'] = Route::url('default', array('controller' => Request::current()->controller(), 'action' => 'edit','id' => $item->id));
     }
+    // ~900 chars per minute is average reading speed, according to Wikipedia
+    $output['speed'] = '<span class="fa fa-clock-o"></span> ≈'.ceil(mb_strlen($item->content) / 700).' '.__('min');
     $output['view_link'] = Route::url('default', array('controller' => Request::current()->controller(), 'action' => 'view','id' => $item->id));
     $output['heading'] = $item->name;
     $output['comment_count'] = $item->comment_count;
