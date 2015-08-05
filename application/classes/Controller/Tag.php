@@ -184,18 +184,52 @@ class Controller_Tag extends Controller_Layout {
       ->limit(10)
       ->find_all(); 
     $info = array(
-        'title' => Kohana::$config->load('common.title'),
-        'author' => Kohana::$config->load('common.author'),
-        'pubDate' => $posts[0]->posted_at,
-        );
+      'title' => Kohana::$config->load('common.title'),
+      'author' => Kohana::$config->load('common.author'),
+      'pubDate' => $posts[0]->posted_at,
+    );
     $items = array();
     foreach ($posts as $post)
     {
       array_push($items, array(
-            'title' => $post->name,
-            'description' => Markdown::instance()->transform($post->content),
-            'link' => 'post/view/' . $post->id,
-            ));
+        'title' => $post->name,
+        'description' => Markdown::instance()->transform($post->content),
+        'link' => 'post/view/' . $post->id,
+      ));
+    }
+    $this->response->body( Feed::create($info, $items) );
+  }
+
+  /**
+   * Atom feed for fresh posts in tag - headings only
+   **/
+  public function action_shortfeed()
+  {
+    $this->auto_render = false;
+    $id = $this->request->param('id');
+    $tag = ORM::factory('Tag',$id);
+    if (!$tag->loaded())
+    {
+      $this->redirect('error/404');
+    }
+    $posts = $tag->posts
+      ->where('is_draft', '=', '0')
+      ->order_by('posted_at', 'DESC')
+      ->limit(10)
+      ->find_all(); 
+    $info = array(
+      'title' => Kohana::$config->load('common.title'),
+      'author' => Kohana::$config->load('common.author'),
+      'pubDate' => $posts[0]->posted_at,
+    );
+    $items = array();
+    foreach ($posts as $post)
+    {
+      array_push($items, array(
+        'title' => $post->name,
+        'description' => '',
+        'link' => 'post/view/' . $post->id,
+      ));
     }
     $this->response->body( Feed::create($info, $items) );
   }
