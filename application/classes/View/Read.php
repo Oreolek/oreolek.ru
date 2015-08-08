@@ -64,4 +64,20 @@ class View_Read extends View_Index {
     $output['content'] = HTML::tidy($output['content']);
     return $output;
   }
+
+  public function prefetch()
+  {
+    $retval = '';
+    $scripts = array(
+      '/application/assets/javascript/autosize.js',
+      '/application/assets/javascript/load_comment_form.js',
+      '/application/assets/javascript/load_comments.js',
+      'https://yandex.st/share/share.js'
+    );
+    foreach ($scripts as $script)
+    {
+      $retval .= '<link rel="prefetch" href="'.$script.'">';
+    }
+    return $retval;
+  }
 }
