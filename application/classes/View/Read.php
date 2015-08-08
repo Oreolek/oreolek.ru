@@ -69,7 +69,6 @@ class View_Read extends View_Index {
   {
     $retval = '';
     $scripts = array(
-      '/application/assets/javascript/autosize.js',
       '/application/assets/javascript/load_comment_form.js',
       '/application/assets/javascript/load_comments.js',
       'https://yandex.st/share/share.js'
