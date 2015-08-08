@@ -56,7 +56,7 @@ class View_Layout {
   }
   public function stylesheet()
   {
-    return HTML::style('https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css')."\n".Less::compile(APPPATH.'assets/stylesheets/main', 'all');
+    return HTML::style('https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css')."\n".Less::compile(APPPATH.'assets/stylesheets/main', 'all')."\n".HTML::style('https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.1/css/lightbox.css');
   }
 
   public function get_content()
@@ -74,11 +74,11 @@ class View_Layout {
         switch ($script) // CDN shortcuts
         {
           case 'jquery':
-            $temp .= HTML::script('https://code.jquery.com/jquery-2.1.3.min.js')."\n";
+            $temp .= HTML::script('https://code.jquery.com/jquery-2.1.4.min.js')."\n";
             break;
 
           case 'bootstrap':
-            $temp .= HTML::script('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js')."\n";
+            $temp .= HTML::script('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js')."\n";
             break;
 
           case 'hyphenator':
@@ -86,15 +86,15 @@ class View_Layout {
             break;
           
           case 'moment':
-            $temp .= HTML::script('https://cdn.jsdelivr.net/momentjs/2.10.2/moment.min.js')."\n";
+            $temp .= HTML::script('https://cdn.jsdelivr.net/momentjs/2.10.6/moment.min.js')."\n";
             break;
 
           case 'autosize':
-            $temp .= HTML::script('https://cdn.jsdelivr.net/jquery.autosize/3.0.3/autosize.min.js')."\n";
+            $temp .= HTML::script('https://cdn.jsdelivr.net/jquery.autosize/3.0.8/autosize.min.js')."\n";
             break;
 
           case 'lightbox':
-            $temp .= HTML::script('https://cdn.jsdelivr.net/lightbox2/2.7.1/js/lightbox.min.js')."\n";
+            $temp .= HTML::script('https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.1/js/lightbox.min.js')."\n";
             break;
 
           default:

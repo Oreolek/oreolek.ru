@@ -71,6 +71,7 @@ class View_Read extends View_Index {
     $scripts = array(
       '/application/assets/javascript/load_comment_form.js',
       '/application/assets/javascript/load_comments.js',
+      'https://cdn.jsdelivr.net/jquery.autosize/3.0.8/autosize.min.js',
       'https://yandex.st/share/share.js'
     );
     foreach ($scripts as $script)
