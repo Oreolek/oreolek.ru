@@ -220,6 +220,7 @@ class Controller_Comment extends Controller_Layout {
             'author' => $comment->author_email,
             'link' => Route::url('default', array('controller' => 'Post', 'action' => 'view', 'id' => $comment->post_id)).'#comment_'.$comment->id,
             'guid' => Route::url('default', array('controller' => 'Post', 'action' => 'view', 'id' => $comment->post_id)).'#comment_'.$comment->id,
+            'pubDate' => strtotime($comment->posted_at),
       ));
     }
     $this->response->headers('Content-type', 'application/rss+xml');
