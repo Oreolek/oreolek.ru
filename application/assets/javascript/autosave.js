@@ -13,7 +13,7 @@ function ajax_submit(mode_switch)
       mode: mode_switch
     },function(data) {
       data = jQuery.parseJSON(data)
-      jQuery('#preview').html(data.preview);\
+      jQuery('#preview').html(data.preview);
       Hyphenator.run();
     }
   );
