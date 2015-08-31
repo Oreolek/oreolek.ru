@@ -233,26 +233,8 @@ class Controller_Post extends Controller_Layout {
         'pubDate' => strtotime($posts[0]->posted_at),
         'description' => ''
     );
-    $items = array();
-    foreach ($posts as $post)
-    {
-      if (!empty($post->password))
-      {
-        $description = '<p>'.__('Closed post. Access protected by password.').'</p>';
-      }
-      else
-      {
-        $description = Markdown::instance()->transform($post->content);
-      }
-      array_push($items, array(
-            'title' => $post->name,
-            'description' => $description,
-            'author' => Kohana::$config->load('common.author_email').' ('.Kohana::$config->load('common.author').')',
-            'link' => Route::url('default', array('controller' => 'Post', 'action' => 'view', 'id' => $post->id)),
-            'guid' => Route::url('default', array('controller' => 'Post', 'action' => 'view', 'id' => $post->id)),
-            'pubDate' => strtotime($post->posted_at),
-      ));
-    }
+    $items = Feed::prepare_posts($posts);
+    
     $this->response->headers('Content-type', 'application/rss+xml');
     $this->response->body( Feed::create($info, $items) );
   }

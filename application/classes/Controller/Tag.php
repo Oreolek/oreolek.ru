@@ -171,40 +171,18 @@ class Controller_Tag extends Controller_Layout {
    **/
   public function action_feed()
   {
-    $this->auto_render = false;
-    $id = $this->request->param('id');
-    $tag = ORM::factory('Tag',$id);
-    if (!$tag->loaded())
-    {
-      $this->redirect('error/404');
-    }
-    $posts = $tag->posts
-      ->where('is_draft', '=', '0')
-      ->order_by('posted_at', 'DESC')
-      ->limit(10)
-      ->find_all(); 
-    $info = array(
-      'title' => Kohana::$config->load('common.title'),
-      'author' => Kohana::$config->load('common.author'),
-      'pubDate' => $posts[0]->posted_at,
-    );
-    $items = array();
-    foreach ($posts as $post)
-    {
-      array_push($items, array(
-        'title' => $post->name,
-        'description' => Markdown::instance()->transform($post->content),
-        'pubDate' => strtotime($post->posted_at),
-        'link' => 'post/view/' . $post->id,
-      ));
-    }
-    $this->response->body( Feed::create($info, $items) );
+    $this->rss_feed();
   }
 
   /**
    * Atom feed for fresh posts in tag - headings only
    **/
   public function action_shortfeed()
+  {
+    $this->rss_feed(FALSE);
+  }
+
+  protected function rss_feed($use_description = TRUE)
   {
     $this->auto_render = false;
     $id = $this->request->param('id');
@@ -223,16 +201,7 @@ class Controller_Tag extends Controller_Layout {
       'author' => Kohana::$config->load('common.author'),
       'pubDate' => $posts[0]->posted_at,
     );
-    $items = array();
-    foreach ($posts as $post)
-    {
-      array_push($items, array(
-        'title' => $post->name,
-        'description' => '',
-        'pubDate' => strtotime($post->posted_at),
-        'link' => 'post/view/' . $post->id,
-      ));
-    }
+    $items = Feed::prepare_posts($posts, $use_description);
     $this->response->body( Feed::create($info, $items) );
   }
 
