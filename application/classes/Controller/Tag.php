@@ -194,6 +194,7 @@ class Controller_Tag extends Controller_Layout {
       array_push($items, array(
         'title' => $post->name,
         'description' => Markdown::instance()->transform($post->content),
+        'pubDate' => strtotime($post->posted_at),
         'link' => 'post/view/' . $post->id,
       ));
     }

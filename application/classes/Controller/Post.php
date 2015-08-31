@@ -24,8 +24,8 @@ class Controller_Post extends Controller_Layout {
   protected $secure_actions = array(
     'drafts' => array('login','admin'),
     'create' => array('login','admin'),
-		'edit' => array('login','admin'),
-	  'delete' => array('login','admin')
+    'edit' => array('login','admin'),
+    'delete' => array('login','admin')
   );
   /**
    * View a post.
@@ -250,6 +250,7 @@ class Controller_Post extends Controller_Layout {
             'author' => Kohana::$config->load('common.author_email').' ('.Kohana::$config->load('common.author').')',
             'link' => Route::url('default', array('controller' => 'Post', 'action' => 'view', 'id' => $post->id)),
             'guid' => Route::url('default', array('controller' => 'Post', 'action' => 'view', 'id' => $post->id)),
+            'pubDate' => strtotime($post->posted_at),
       ));
     }
     $this->response->headers('Content-type', 'application/rss+xml');
