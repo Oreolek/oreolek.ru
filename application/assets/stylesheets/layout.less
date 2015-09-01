@@ -178,18 +178,20 @@ footer{
   @media(min-width: @screen-tablet) {
     .make-sm-column(4);
   }
+  hyphens: auto;
+  -moz-hyphens: auto;
   margin-top: -@font-size-base / 2;
   margin-bottom: -@font-size-base / 2;
 }
 
 .sideblock_left {
-  &:extend(.sideblock);
+  .sideblock();
   padding-left: 0;
   padding-right: @grid-gutter-width * 2;
 }
 
 .sideblock_right {
-  &:extend(.sideblock);
+  .sideblock();
   &:extend(.f_right);
   padding-left: @grid-gutter-width * 2;
   padding-right: 0;
