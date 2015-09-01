@@ -1,4 +1,5 @@
-@font-size-base: 15px;
+@font-size-base: 16px;
+@line-height-base: (20/13); //default is 20/14
 
 body {
   margin-top: @line-height-computed;
@@ -15,14 +16,14 @@ input[type=checkbox] {
   width: @line-height-computed;
 }
 
-input[type=button],
-input[type=submit] {
-  .btn;
-}
-
 .btn {
   margin-left: 5px;
   margin-right: 5px;
+}
+
+input[type=button],
+input[type=submit] {
+  &:extend(.btn);
 }
 
 input[type=submit] {
