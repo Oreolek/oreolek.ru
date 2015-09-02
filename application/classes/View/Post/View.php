@@ -85,7 +85,7 @@ class View_Post_View extends View_Layout {
 <input type="hidden" name="cmd" value="_s-xclick">
 <input type="hidden" name="hosted_button_id" value="M5RYZF8BK7R8W">
 <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal">
-</form>',
+</form><script data-gratipay-username="Oreolek" data-gratipay-widget="button" src="https://gttp.co/v1.js"></script><script src="/uploads/2014/09/coin.min.js"></script><script>CoinWidgetCom.go({wallet_address: "1GR5BqTJicETf9H6QnM1VsYwRw2cFcWiCb", currency: "bitcoin", counter: "amount", alignment: "bl", qrcode: false, auto_show: false, lbl_button: "Пожертвовать", lbl_address: "Мой адрес Bitcoin", lbl_count: "пожертвований", lbl_amount: "BTC"});</script>',
     );
   }
 }
