@@ -81,11 +81,7 @@ class View_Post_View extends View_Layout {
   {
     return array(
       'heading' => 'Понравилось? Поддержите, чтобы таких статей было больше!',
-      'code' => '<iframe frameborder="0" allowtransparency="true" scrolling="no" src="https://money.yandex.ru/embed/small.xml?account=410011560528046&quickpay=small&any-card-payment-type=on&button-text=04&button-size=s&button-color=orange&targets=oreolek.ru+%D0%BD%D0%B0+%D0%BD%D0%BE%D0%B2%D1%8B%D0%B5+%D1%81%D1%82%D0%B0%D1%82%D1%8C%D0%B8+%D0%BF%D1%80%D0%BE...&default-sum=100&successURL=" width="158" height="31"></iframe><form class="alignleft" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-<input type="hidden" name="cmd" value="_s-xclick">
-<input type="hidden" name="hosted_button_id" value="M5RYZF8BK7R8W">
-<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal">
-</form><script data-gratipay-username="Oreolek" data-gratipay-widget="button" src="https://gttp.co/v1.js"></script><script src="/uploads/2014/09/coin.min.js"></script><script>CoinWidgetCom.go({wallet_address: "1GR5BqTJicETf9H6QnM1VsYwRw2cFcWiCb", currency: "bitcoin", counter: "amount", alignment: "bl", qrcode: false, auto_show: false, lbl_button: "Пожертвовать", lbl_address: "Мой адрес Bitcoin", lbl_count: "пожертвований", lbl_amount: "BTC"});</script>',
+      'code' => '<iframe frameborder="0" allowtransparency="true" scrolling="no" src="https://money.yandex.ru/embed/small.xml?account=410011560528046&quickpay=small&any-card-payment-type=on&button-text=04&button-size=s&button-color=orange&targets=oreolek.ru+%D0%BD%D0%B0+%D0%BD%D0%BE%D0%B2%D1%8B%D0%B5+%D1%81%D1%82%D0%B0%D1%82%D1%8C%D0%B8+%D0%BF%D1%80%D0%BE...&default-sum=100&successURL=" width="158" height="31"></iframe><script data-gratipay-username="Oreolek" data-gratipay-widget="button" src="https://gttp.co/v1.js"></script><script src="/uploads/2014/09/coin.min.js"></script><script>CoinWidgetCom.go({wallet_address: "1GR5BqTJicETf9H6QnM1VsYwRw2cFcWiCb", currency: "bitcoin", counter: "amount", alignment: "bl", qrcode: false, auto_show: false, lbl_button: "Пожертвовать", lbl_address: "Мой адрес Bitcoin", lbl_count: "пожертвований", lbl_amount: "BTC"});</script>',
     );
   }
 }
