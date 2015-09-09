@@ -73,6 +73,7 @@ class Controller_Post extends Controller_Layout {
     $this->template = new View_Post_View;
     $this->template->is_admin = $is_admin;
     $this->template->id = $id;
+    $this->template->tags = $post->tags->find_all();
     $post_cached = array();
     $to_cache = FALSE;
     if (!$is_admin)
@@ -85,14 +86,12 @@ class Controller_Post extends Controller_Layout {
           $to_cache = TRUE;
           $cache->delete('post_'.$id);
           $post_cached['content'] = Markdown::instance()->transform($post->content);
-          $post_cached['tags'] = $post->tags->find_all();
           $post_cached['name'] = $post->name;
           $post_cached['date'] = date('c', strtotime($post->creation_date()));
         }
       }
     }
     $this->template->content = $post_cached['content'];
-    $this->template->tags = $post_cached['tags'];
     $this->template->title = $post_cached['name'];
     $this->template->date = $post_cached['date'];
     if ($post->is_draft) $this->template->title .= ' '.__('(draft)');
