@@ -74,7 +74,6 @@ class Controller_Post extends Controller_Layout {
     $this->template->is_admin = $is_admin;
     $this->template->id = $id;
     $this->template->tags = $post->tags->find_all();
-    $post_cached = array();
     $to_cache = FALSE;
     $post_cached = $cache->get('post_'.$id);
     if (empty($post_cached) || !isset($post_cached['content']) || $cache->get('post_'.$id.'_changed') !== $latest_change)
@@ -83,6 +82,7 @@ class Controller_Post extends Controller_Layout {
     }
     if ($to_cache)
     {
+      $post_cached = array();
       $cache->delete('post_'.$id);
       $post_cached['content'] = Markdown::instance()->transform($post->content);
       $post_cached['name'] = $post->name;
