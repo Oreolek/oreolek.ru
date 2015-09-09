@@ -77,7 +77,7 @@ class Controller_Post extends Controller_Layout {
     if (!$is_admin)
     {
       $post_cached = $cache->get('post_'.$id);
-      if (!empty($post))
+      if (!empty($post_cached))
       {
         if ($cache->get('post_'.$id.'_changed') !== $latest_change)
         {
