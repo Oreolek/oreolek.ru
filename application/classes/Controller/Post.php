@@ -70,36 +70,35 @@ class Controller_Post extends Controller_Layout {
     }
     $cache = Cache::instance('apcu');
     $latest_change = $post->posted_at;
+    $this->template = new View_Post_View;
+    $this->template->is_admin = $is_admin;
+    $this->template->id = $id;
+    $post_cached = array();
     if (!$is_admin)
     {
-      $body = $cache->get('post_'.$id);
-      if (!empty($body))
+      $post_cached = $cache->get('post_'.$id);
+      if (!empty($post))
       {
-        if ($cache->get('post_'.$id.'_changed') === $latest_change)
-        {
-          $this->response->body($body);
-          return;
-        }
-        else
+        if ($cache->get('post_'.$id.'_changed') !== $latest_change)
         {
           $cache->delete('post_'.$id);
+          $post_cached['content'] = Markdown::instance()->transform($post->content);
+          $post_cached['tags'] = $post->tags->find_all();
+          $post_cached['name'] = $post->name;
+          $post_cached['date'] = date('c', strtotime($post->creation_date()));
         }
       }
     }
-    $this->template = new View_Post_View;
-    $this->template->is_admin = $is_admin;
-    $this->template->title = $post->name;
+    $this->template->content = $post_cached['content'];
+    $this->template->tags = $post_cached['tags'];
+    $this->template->title = $post_cached['name'];
+    $this->template->date = $post_cached['date'];
     if ($post->is_draft) $this->template->title .= ' '.__('(draft)');
-    $this->template->id = $post->id;
-    $this->template->tags = $post->tags->find_all();
-    $post->content = Markdown::instance()->transform($post->content);
-    $this->template->content = $post->content;
-    $this->template->date = date('c', strtotime($post->creation_date()));
     $renderer = Kostache_Layout::factory('layout');
     $body = $renderer->render($this->template, $this->template->_view);
     if (!$is_admin)
     {
-      $cache->set('post_'.$id, $body, 60*60*24); //cache page for 1 day
+      $cache->set('post_'.$id, $post_cached, 60*60*24); //cache page for 1 day
       $cache->set('post_'.$id.'_changed', $latest_change);
     }
     $this->response->body($body);
