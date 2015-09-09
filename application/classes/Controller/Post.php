@@ -69,18 +69,20 @@ class Controller_Post extends Controller_Layout {
       }
     }
     $cache = Cache::instance('apcu');
-    $latest_change = $post->posted_at;
+    $latest_change = $post->creation_date();
     $this->template = new View_Post_View;
     $this->template->is_admin = $is_admin;
     $this->template->id = $id;
     $post_cached = array();
+    $to_cache = FALSE;
     if (!$is_admin)
     {
       $post_cached = $cache->get('post_'.$id);
       if (!empty($post_cached))
       {
-        if ($cache->get('post_'.$id.'_changed') !== $latest_change)
+        if (!isset($post_cached['content']) || $cache->get('post_'.$id.'_changed') !== $latest_change)
         {
+          $to_cache = TRUE;
           $cache->delete('post_'.$id);
           $post_cached['content'] = Markdown::instance()->transform($post->content);
           $post_cached['tags'] = $post->tags->find_all();
@@ -96,9 +98,9 @@ class Controller_Post extends Controller_Layout {
     if ($post->is_draft) $this->template->title .= ' '.__('(draft)');
     $renderer = Kostache_Layout::factory('layout');
     $body = $renderer->render($this->template, $this->template->_view);
-    if (!$is_admin)
+    if ($to_cache)
     {
-      $cache->set('post_'.$id, $post_cached, 60*60*24); //cache page for 1 day
+      $cache->set('post_'.$id, $post_cached, 60*60*7*24); //cache page for 7 days
       $cache->set('post_'.$id.'_changed', $latest_change);
     }
     $this->response->body($body);
