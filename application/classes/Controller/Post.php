@@ -79,17 +79,19 @@ class Controller_Post extends Controller_Layout {
     if (!$is_admin)
     {
       $post_cached = $cache->get('post_'.$id);
-      if (!empty($post_cached))
+      if (empty($post_cached) || !isset($post_cached['content']) || $cache->get('post_'.$id.'_changed') !== $latest_change)
       {
-        if (!isset($post_cached['content']) || $cache->get('post_'.$id.'_changed') !== $latest_change)
-        {
-          $to_cache = TRUE;
-          $cache->delete('post_'.$id);
-          $post_cached['content'] = Markdown::instance()->transform($post->content);
-          $post_cached['name'] = $post->name;
-          $post_cached['date'] = date('c', strtotime($post->creation_date()));
-        }
+        $to_cache = TRUE;
       }
+    }
+    if ($to_cache)
+    {
+      $cache->delete('post_'.$id);
+      $post_cached['content'] = Markdown::instance()->transform($post->content);
+      $post_cached['name'] = $post->name;
+      $post_cached['date'] = date('c', strtotime($post->creation_date()));
+      $cache->set('post_'.$id, $post_cached, 60*60*7*24); //cache page for 7 days
+      $cache->set('post_'.$id.'_changed', $latest_change);
     }
     $this->template->content = $post_cached['content'];
     $this->template->title = $post_cached['name'];
@@ -97,11 +99,6 @@ class Controller_Post extends Controller_Layout {
     if ($post->is_draft) $this->template->title .= ' '.__('(draft)');
     $renderer = Kostache_Layout::factory('layout');
     $body = $renderer->render($this->template, $this->template->_view);
-    if ($to_cache)
-    {
-      $cache->set('post_'.$id, $post_cached, 60*60*7*24); //cache page for 7 days
-      $cache->set('post_'.$id.'_changed', $latest_change);
-    }
     $this->response->body($body);
   }
 
