@@ -76,13 +76,10 @@ class Controller_Post extends Controller_Layout {
     $this->template->tags = $post->tags->find_all();
     $post_cached = array();
     $to_cache = FALSE;
-    if (!$is_admin)
+    $post_cached = $cache->get('post_'.$id);
+    if (empty($post_cached) || !isset($post_cached['content']) || $cache->get('post_'.$id.'_changed') !== $latest_change)
     {
-      $post_cached = $cache->get('post_'.$id);
-      if (empty($post_cached) || !isset($post_cached['content']) || $cache->get('post_'.$id.'_changed') !== $latest_change)
-      {
-        $to_cache = TRUE;
-      }
+      $to_cache = TRUE;
     }
     if ($to_cache)
     {
