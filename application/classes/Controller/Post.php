@@ -311,6 +311,8 @@ class Controller_Post extends Controller_Layout {
         if ($this->request->post('mode') === 'save')
         {
           $post->save();
+          $cache = Cache::instance('apcu');
+          $cache->set('post_'.$post->id, NULL);
         }
         $retval = array(
           'preview' => Markdown::instance()->transform($post->content),
@@ -333,6 +335,8 @@ class Controller_Post extends Controller_Layout {
           if ($mode === 'edit')
           {
             $post->save();
+            $cache = Cache::instance('apcu');
+            $cache->set('post_'.$post->id, NULL);
           }
         }
         else
