@@ -4,17 +4,21 @@
 <div class="hyphenate">
   {{{content}}}
 </div>
-<div class="table_index">
+<div class="table-responsive"><table class="table table-hover">
+  <tbody>
 {{#get_items}}
-  <div class="table_row">
-    {{#date}}
-      <div class="date">{{date}}</div>
-    {{/date}}
-    <div class="hyphenate"><a class="link_view" href="{{{view_link}}}">{{{name}}}</a></div>
-    {{#edit_link}}
-      <div><a class="link_edit" href="{{{edit_link}}}">Редактировать</a></div>
-      <div><a class="link_delete" href="{{{delete_link}}}">Удалить</a></div>
-    {{/edit_link}}
-  </div>
+    <tr>
+      {{#date}}
+        <td class="date">{{date}}</td>
+      {{/date}}
+      <td class="hyphenate">
+        <a class="link_view" href="{{{view_link}}}">{{{name}}}</a>
+      </td>
+      {{#edit_link}}
+      <td><a class="btn" href="{{edit_link}}"><i class="fa fa-pencil-square-o"></i></a></td>
+      <td><a class="btn" href="{{delete_link}}"><i class="fa fa-times"></i></a></td>
+      {{/edit_link}}
+  </tr>
 {{/get_items}}
-</div>
+  </tbody>
+</table></div>

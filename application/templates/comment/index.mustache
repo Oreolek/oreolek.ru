@@ -1,23 +1,25 @@
-<div class="table_index">
-  <div class="table_row table_header">
-    <div>Дата</div>
-    <div>Автор</div>
-    <div>Текст</div>
-    <div>OK?</div>
-    <div>Действия</div>
-  </div>
+<div class="table-responsive"><table class="table table-striped table-hover">
+  <thead>
+    <th>Meta</th>
+    <th>Текст</th>
+    <th>OK?</th>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+  </thead>
+  <tbody>
 {{#get_items}}
-  <div class="table_row">
-    <div class="date"><a href="{{post_link}}#comment_{{comment_id}}">{{date}}</a></div>
-    <div>
-      {{#author_email}}<a class="author" href="mailto:{{author_email}}">{{/author_email}} {{author_name}} {{#author_email}}</a>{{/author_email}}
-    </div>
-    <div>{{{content}}}</div>
-    <div>{{{is_approved}}}</div>
-    <div>
-      <a href="{{edit_link}}">Редактировать</a>
-      <a href="{{delete_link}}">Удалить</a>
-    </div>
-  </div>
+    <tr>
+      <td>
+        <div class="date"><a href="{{post_link}}#comment_{{comment_id}}">{{date}}</a></div>
+        <div class="text-primary">
+          {{#author_email}}<a class="author" href="mailto:{{author_email}}">{{/author_email}} {{author_name}} {{#author_email}}</a>{{/author_email}}
+        </div>
+      </td>
+      <td>{{{content}}}</td>
+      <td>{{{is_approved}}}</td>
+      <td><a class="btn" href="{{edit_link}}"><i class="fa fa-pencil-square-o"></i></a></td>
+      <td><a class="btn" href="{{delete_link}}"><i class="fa fa-times"></i></a></td>
+    </tr>
 {{/get_items}}
-</div>
+  </tbody>
+</table></div>
