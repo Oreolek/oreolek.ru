@@ -4,16 +4,16 @@
 <div class="hyphenate">
   {{{content}}}
 </div>
-<div class="table-responsive"><table class="table table-hover">
+<table class="table table-hover">
   <tbody>
 {{#get_items}}
     <tr>
-      {{#date}}
-        <td class="date">{{date}}</td>
-      {{/date}}
       <td class="hyphenate">
         <a class="link_view" href="{{{view_link}}}">{{{name}}}</a>
       </td>
+      {{#date}}
+        <td class="date">{{date}}</td>
+      {{/date}}
       {{#edit_link}}
       <td><a class="btn" href="{{edit_link}}"><i class="fa fa-pencil-square-o"></i></a></td>
       <td><a class="btn" href="{{delete_link}}"><i class="fa fa-times"></i></a></td>
@@ -21,4 +21,4 @@
   </tr>
 {{/get_items}}
   </tbody>
-</table></div>
+</table>
