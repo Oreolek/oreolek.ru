@@ -23,9 +23,11 @@ class View_Layout {
   public $_view = NULL;
   public $title = '';
   public $scripts = array();
+  public $scripts_head = array(
+    'jquery',
+  );
   public $base_scripts = array(
     'hyphenator',
-    'jquery',
     'bootstrap',
     'moment',
     'moment_ru.js',
@@ -64,50 +66,52 @@ class View_Layout {
     return Kostache::factory()->render($this->content);
   }
 
+  public function head_scripts()
+  {
+    $scripts = $this->scripts_head;
+    $temp = "";
+    foreach($scripts as $script):
+      $temp .= $this->find_script($script)."\n";
+    endforeach;
+    return $temp;
+  }
   public function scripts()
   {
     $scripts = array_unique(array_merge ($this->base_scripts, $this->scripts));
     $temp = "";
     foreach($scripts as $script):
-      if (strstr($script, '://') === FALSE) //no protocol given, script is local
-      {
-        switch ($script) // CDN shortcuts
-        {
-          case 'jquery':
-            $temp .= HTML::script('https://code.jquery.com/jquery-2.1.4.min.js')."\n";
-            break;
-
-          case 'bootstrap':
-            $temp .= HTML::script('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js')."\n";
-            break;
-
-          case 'hyphenator':
-            $temp .= HTML::script('https://cdn.jsdelivr.net/hyphenator/4.3.0/hyphenator.min.js')."\n";
-            break;
-          
-          case 'moment':
-            $temp .= HTML::script('https://cdn.jsdelivr.net/momentjs/2.10.6/moment.min.js')."\n";
-            break;
-
-          case 'autosize':
-            $temp .= HTML::script('https://cdn.jsdelivr.net/jquery.autosize/3.0.8/autosize.min.js')."\n";
-            break;
-
-          case 'lightbox':
-            $temp .= HTML::script('https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.1/js/lightbox.min.js')."\n";
-            break;
-
-          default:
-            $temp .= HTML::script('application/assets/javascript/'.$script)."\n";
-        }
-      }
-      else
-      {
-        $temp .= HTML::script($script)."\n";
-      }
+      $temp .= $this->find_script($script)."\n";
     endforeach;
     $temp .= $this->stat_scripts();
     return $temp;
+  }
+
+  /**
+   * Find script by shortcut or file name. CDN shortcuts include jquery, bootstrap, moment etc.
+   **/
+  protected function find_script($shortcut)
+  {
+    if (strstr($shortcut, '://') === FALSE) //no protocol given, script is local
+    {
+      switch ($shortcut) // CDN shortcuts
+      {
+        case 'jquery':
+          return HTML::script('https://code.jquery.com/jquery-2.1.4.min.js');
+        case 'bootstrap':
+          return HTML::script('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js');
+        case 'hyphenator':
+          return HTML::script('https://cdn.jsdelivr.net/hyphenator/4.3.0/hyphenator.min.js');
+        case 'moment':
+          return HTML::script('https://cdn.jsdelivr.net/momentjs/2.10.6/moment.min.js');
+        case 'autosize':
+          return HTML::script('https://cdn.jsdelivr.net/jquery.autosize/3.0.8/autosize.min.js');
+        case 'lightbox':
+          return HTML::script('https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.1/js/lightbox.min.js');
+        default:
+          return HTML::script('application/assets/javascript/'.$script);
+      }
+    }
+    return HTML::script($shortcut);
   }
 
   /**
