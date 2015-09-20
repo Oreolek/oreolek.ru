@@ -39,4 +39,12 @@ class HTML extends Kohana_HTML {
     $tidy->cleanRepair();
     return $tidy->body(); 
   }
+
+  /**
+   * Remove all <script> tags from HTML. Naive implementation, not for comments.
+   **/
+  public static function remove_scripts($html)
+  {
+    return preg_replace('/<script\b[^>]*>(.*?)<\/script>/is', '', $html);
+  }
 }

@@ -43,7 +43,7 @@ class Controller_Comment extends Controller_Layout {
     }
     $comment = ORM::factory('Comment');
     $comment->post_id = $post_id;
-    $comment->content = $this->request->post('content');
+    $comment->content = HTML::chars($this->request->post('content'));
     $comment->author_name = $this->request->post('author_name');
     $comment->author_email = $this->request->post('author_email');
     $email = $this->request->post('email');
