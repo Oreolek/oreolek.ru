@@ -69,7 +69,7 @@ class Controller_Post extends Controller_Layout {
       }
     }
     $cache = Cache::instance('apcu');
-    $latest_change = $post->creation_date();
+    $latest_change = $post->updated_at;
     $this->template = new View_Post_View;
     $this->template->is_admin = $is_admin;
     $this->template->id = $id;
@@ -155,7 +155,7 @@ class Controller_Post extends Controller_Layout {
       $body = $cache->get('read_posts_'.$current_page);
       if (!empty($body))
       {
-        $latest_change = Model_Post::get_latest_date();
+        $latest_change = Model_Post::get_latest_change();
         if ($cache->get('latest_post') === $latest_change)
         {
           $this->response->body($body);
@@ -310,6 +310,7 @@ class Controller_Post extends Controller_Layout {
         $this->auto_render = FALSE;
         if ($this->request->post('mode') === 'save')
         {
+          $post->updated_at = date('c');
           $post->save();
           $cache = Cache::instance('apcu');
           $cache->set('post_'.$post->id, NULL);
@@ -334,6 +335,7 @@ class Controller_Post extends Controller_Layout {
         {
           if ($mode === 'edit')
           {
+            $post->updated_at = date('c');
             $post->save();
             $cache = Cache::instance('apcu');
             $cache->set('post_'.$post->id, NULL);

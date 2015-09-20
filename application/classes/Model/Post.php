@@ -25,14 +25,14 @@ class Model_Post extends ORM {
    * @return array validation rules
    **/
   public function rules()
-	{
-		return array(
+  {
+    return array(
       'name' => array(
-				array('not_empty'),
+	array('not_empty'),
       ),
       'content' => array(
-				array('not_empty'),
-				array('min_length', array(':value', 4)),
+	array('not_empty'),
+	array('min_length', array(':value', 4)),
       ),
       'draft' => array(
         array('numeric')
@@ -40,8 +40,8 @@ class Model_Post extends ORM {
       'posted_at' => array(
         array('date')
       ),
-		);
-	}
+    );
+  }
 
   protected $_has_many = array(
     'comments' => array(
@@ -63,7 +63,8 @@ class Model_Post extends ORM {
     'content' => 'Текст записи',
     'is_draft' => 'Черновик',
     'posted_at' => 'Дата',
-    'password' => 'Пароль для расшифровки'
+    'password' => 'Пароль для расшифровки',
+    'updated_at' => 'Дата изменения',
   );
 
   /**
@@ -81,6 +82,12 @@ class Model_Post extends ORM {
   public static function get_latest_date()
   {
     $query = DB::select(array(DB::expr('MAX(`posted_at`)'), 'max_date'))->from('posts');
+    return $query->execute()->get('max_date');
+  }
+  
+  public static function get_latest_change()
+  {
+    $query = DB::select(array(DB::expr('MAX(`updated_at`)'), 'max_date'))->from('posts');
     return $query->execute()->get('max_date');
   }
 
