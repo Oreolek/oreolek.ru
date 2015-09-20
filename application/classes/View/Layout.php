@@ -108,7 +108,7 @@ class View_Layout {
         case 'lightbox':
           return HTML::script('https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.1/js/lightbox.min.js');
         default:
-          return HTML::script('application/assets/javascript/'.$script);
+          return HTML::script('application/assets/javascript/'.$shortcut);
       }
     }
     return HTML::script($shortcut);
