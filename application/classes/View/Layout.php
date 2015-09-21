@@ -58,7 +58,10 @@ class View_Layout {
   }
   public function stylesheet()
   {
-    return HTML::style('https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css')."\n".Less::compile(APPPATH.'assets/stylesheets/main', 'all')."\n".HTML::style('https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.1/css/lightbox.css');
+    return HTML::style('https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css')."\n"
+      .Less::compile(APPPATH.'assets/stylesheets/main', 'all')."\n"
+      .HTML::style('https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.1/css/lightbox.css')."\n"
+      .HTML::style('https://fonts.googleapis.com/css?family=PT+Sans&subset=latin,cyrillic');
   }
 
   public function get_content()
