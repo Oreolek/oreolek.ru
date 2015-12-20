@@ -180,21 +180,17 @@ footer{
   }
   hyphens: auto;
   -moz-hyphens: auto;
-  margin-top: -@font-size-base / 2;
-  margin-bottom: -@font-size-base / 2;
+  background-color: lighten(@body-bg, 5%);
+  padding: 0 @grid-gutter-width;
 }
 
 .sideblock_left {
   .sideblock();
-  padding-left: 0;
-  padding-right: @grid-gutter-width * 2;
 }
 
 .sideblock_right {
   .sideblock();
   &:extend(.f_right);
-  padding-left: @grid-gutter-width * 2;
-  padding-right: 0;
 }
 
 .tag_content,
