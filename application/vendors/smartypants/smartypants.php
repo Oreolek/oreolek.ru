@@ -635,7 +635,9 @@ class SmartyPantsTypographer_Parser extends SmartyPants_Parser {
 	# Expression of a space (breakable or not):
 	var $space = '(?: | |&nbsp;|&#0*160;|&#x0*[aA]0;)';
 
-	
+	function __construct($attr = SMARTYPANTS_ATTR) {
+		return $this->SmartyPantsTypographer_Parser($attr);
+	}
 
 	function SmartyPantsTypographer_Parser($attr = SMARTYPANTS_ATTR) {
 	#
