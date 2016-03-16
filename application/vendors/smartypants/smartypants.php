@@ -165,6 +165,9 @@ class SmartyPants_Parser {
 	var $convert_quot = 0; # should we translate &quot; entities into normal quotes?
 
 	function __construct($attr = SMARTYPANTS_ATTR) {
+		return $this->SmartyPants_Parser($attr);
+	}
+	function SmartyPants_Parser($attr = SMARTYPANTS_ATTR) {
 	#
 	# Initialize a SmartyPants_Parser with certain attributes.
 	#
