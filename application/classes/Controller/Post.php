@@ -142,6 +142,9 @@ class Controller_Post extends Controller_Layout {
    **/
   public function action_read()
   {
+    if($this->request->param('p')) {
+      $this->redirect('/Post/view/'.$this->request->param('p'));
+    }
     $this->auto_render = FALSE;
     $cache = Cache::instance('apcu');
     $logged_in = Auth::instance()->logged_in();
