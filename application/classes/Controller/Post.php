@@ -142,8 +142,8 @@ class Controller_Post extends Controller_Layout {
    **/
   public function action_read()
   {
-    if($this->request->get('p')) {
-      $this->redirect('/Post/view/'.$this->request->get('p'));
+    if($this->request->query('p')) {
+      $this->redirect('/Post/view/'.$this->request->query('p'));
     }
     $this->auto_render = FALSE;
     $cache = Cache::instance('apcu');
