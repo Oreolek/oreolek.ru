@@ -27,7 +27,7 @@
 
 .comment {
   &:nth-child(odd) {
-    background: lighten(@body-bg, 2%);
+    background: fade(lighten(@body-bg, 2%), 50%);
   }
 }
 
@@ -52,7 +52,17 @@ a {
   cursor: pointer;
 }
 
-@body-bg:                     @color-bg;
+body {
+  background-color: @color-bg;
+  background-image: linear-gradient(90deg, rgba(255,255,255,.07) 50%, transparent 50%),
+    linear-gradient(90deg, rgba(255,255,255,.13) 50%, transparent 50%),
+    linear-gradient(90deg, transparent 50%, rgba(255,255,255,.17) 50%),
+    linear-gradient(90deg, transparent 50%, rgba(255,255,255,.25) 50%);
+  background-size: 13px, 29px, 37px, 53px;
+}
+.main_content {
+  background-color: fade(@color-bg, 50%);
+}
 @text-color:                  @color-text;
 @brand-primary:               @color-link-text;
 @dropdown-link-color:         @color-nav-text;
@@ -63,6 +73,7 @@ a {
 @panel-footer-bg:             @color-well-bg;
 @panel-default-text:          @color-text;
 @panel-default-heading-bg:    @color-well-bg;
+@btn-default-bg: darken(@color-bg, 5%);
 @well-bg:                     @color-well-bg;
 @hr-border:                   @color-jumbotron-bg;
 @jumbotron-bg:                @color-jumbotron-bg;
@@ -78,5 +89,5 @@ a {
 @navbar-default-brand-hover-color:         darken(@navbar-default-brand-color, 10%);
 @navbar-default-brand-hover-bg:            transparent;
 
-@breadcrumb-bg:               darken(@color-bg, 5%);
+@breadcrumb-bg:               fade(darken(@color-bg, 5%), 50%);
 @breadcrumb-color:            @color-text;
