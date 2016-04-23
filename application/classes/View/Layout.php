@@ -34,6 +34,17 @@ class View_Layout {
     'common.js',
     'lightbox',
   );
+  public $prefetch = '
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//code.jquery.com">
+    <link rel="dns-prefetch" href="//netdna.bootstrapcdn.com">
+    <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="//site.yandex.net">
+    <link rel="dns-prefetch" href="//mc.yandex.ru">
+    <link rel="dns-prefetch" href="//yastatic.net">
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+  ';
  
   /**
    * Inherited paging function
