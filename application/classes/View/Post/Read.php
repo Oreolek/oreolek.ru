@@ -36,7 +36,6 @@ class View_Post_Read extends View_Read {
         'date' => '',
         'heading' => '',
         'content' => '',
-        'comment_count' => '',
         'edit_link' => '',
         'view_link' => '',
         'comments_link' => '',
@@ -53,7 +52,6 @@ class View_Post_Read extends View_Read {
     $output['speed'] = '<span class="fa fa-clock-o"></span> ≈'.Text::time_to_read($item->content).' '.__('min');
     $output['view_link'] = Route::url('default', array('controller' => Request::current()->controller(), 'action' => 'view','id' => $item->id));
     $output['heading'] = $item->name;
-    $output['comment_count'] = $item->comment_count;
     $output['comments_link'] = Route::url('default', array('controller' => Request::current()->controller(), 'action' => 'view','id' => $item->id)).'#comments';
     if (!empty($item->password))
     {

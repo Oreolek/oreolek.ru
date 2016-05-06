@@ -176,7 +176,6 @@ class Controller_Post extends Controller_Layout {
     $page_size = Kohana::$config->load('common.page_size');
     $first_item = $page_size * $current_page;
     $this->template->items = ORM::factory('Post')
-      ->with_count('comments', 'comment_count')
       ->where('is_draft', '=', '0')
       ->and_where(DB::expr('DATEDIFF(SYSDATE(), `post`.`posted_at`)'), '>=', '0')
       ->order_by('posted_at', 'DESC')
