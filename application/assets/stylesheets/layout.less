@@ -204,13 +204,25 @@ footer{
 .post,
 .comment_section,
 .rss,
-.donate {
+#donate {
   clear: both;
   &:extend(.clearfix);
 }
 
-.donate {
+#donate {
   &:extend(.row);
+  margin-top: 1em;
+  padding-bottom: 1em;
+  text-align: center;
+  #donate_forms {
+    .make-sm-column(4);
+    .make-sm-column-offset(4);
+  }
+  form {
+    display: inline-block;
+    margin-right: 1em;
+    text-align: center;
+  }
 }
 
 .sidebar {

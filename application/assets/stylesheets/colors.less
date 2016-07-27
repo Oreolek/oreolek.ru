@@ -63,6 +63,14 @@ body {
 .main_content {
   background-color: fade(@color-bg, 50%);
 }
+
+#donate {
+  background-color: lighten(saturate(@color-well-bg, 25%), 40%);
+  button {
+    background-color: lighten(saturate(@color-well-bg, 25%), 20%);
+    color: @color-text;
+  }
+}
 @text-color:                  @color-text;
 @brand-primary:               @color-link-text;
 @dropdown-link-color:         @color-nav-text;
