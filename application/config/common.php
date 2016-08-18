@@ -5,6 +5,7 @@ return array(
  'author' => 'Александр Яковлев',
  'author_about' => 'Чаеголик, сайтобурист, картофан.',
  'author_img' => '/application/assets/images/author_small.png',
+ 'patreon_img' => '/application/assets/images/patreon.png',
  'author_img_alt' => 'Фотограф Евгения Цвеклинская, 2014',
  'author_email' => 'keloero@oreolek.ru',
  'uploads_dir' => '/uploads',

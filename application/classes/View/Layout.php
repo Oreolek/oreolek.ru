@@ -254,4 +254,9 @@ EOL
   {
     return HTML::anchor(Route::url('default', array('controller' => 'Post', 'action' => 'feed')), '<span class="fa fa-rss">&nbsp;</span> RSS дневника');
   }
+
+  public function patreon()
+  {
+    return HTML::anchor('https://patreon.com/oreolek', HTML::image(Kohana::$config->load('common.patreon_img')));
+  }
 }
