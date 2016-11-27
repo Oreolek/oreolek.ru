@@ -1,0 +1,55 @@
+{
+	"name": "kohana/kohana",
+	"description": "Kohana framework application skeleton",
+	"homepage": "http://kohanaframework.org",
+	"license": "BSD-3-Clause",
+	"authors": [
+		{
+			"name": "Kohana Team",
+			"email": "team@kohanaframework.org",
+			"homepage": "http://kohanaframework.org/team",
+			"role": "developer"
+		}
+	],
+	"support": {
+		"issues": "https://github.com/kohana/kohana/issues",
+		"forum": "http://discourse.kohanaframework.org",
+		"irc": "irc://irc.freenode.net/kohana",
+		"source": "http://github.com/kohana/kohana"
+	},
+	"repositories": [
+		{
+			"type": "git",
+			"url": "git@github.com:Oreolek/kohana-migrations.git"
+		}
+	],
+	"require": {
+		"php": ">=5.4.0",
+		"kohana/core": "3.4.*",
+		"kohana/auth": "3.4.*",
+		"kohana/cache": "3.4.*",
+		"kohana/codebench": "3.4.*",
+		"kohana/database": "3.4.*",
+		"kohana/image": "3.4.*",
+		"kohana/minion": "3.4.*",
+		"kohana/orm": "3.4.*",
+		"psr/log": "^1.0",
+		"zombor/kostache": "^4.0",
+		"twbs/bootstrap-sass": "^3.3",
+		"oreolek/kohana-migrations": "dev-3.4/develop",
+		"cebe/markdown": "^1.1"
+	},
+	"require-dev": {
+	    "phing/phing": "dev-master",
+	    "kohana/unittest": "3.4.*",
+	    "phpunit/dbunit": ">=1.2",
+	    "kohana/userguide": "3.4.*",
+	    "kohana/coding-standards": "*"
+	},
+	"minimum-stability": "dev",
+	"extra": {
+	    "installer-paths": {
+		"vendor/{$vendor}/{$name}": ["type:kohana-module"]
+	    }
+	}
+}

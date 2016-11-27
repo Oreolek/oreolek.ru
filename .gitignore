@@ -4,3 +4,5 @@ application/config/stats.php
 application/config/sphinxql.php
 application/cache
 application/logs
+vendor
+public/uploads

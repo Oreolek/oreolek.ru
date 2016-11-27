@@ -33,6 +33,13 @@ date_default_timezone_set('Asia/Novosibirsk');
 setlocale(LC_ALL, 'ru_RU.utf-8');
 
 /**
+ * Enable Composer auto-loader.
+ *
+ * @link https://getcomposer.org/doc/00-intro.md#autoloading
+ */
+require $vendor_path.'autoload.php';
+
+/**
  * Enable the Kohana auto-loader.
  *
  * @see  http://kohanaframework.org/guide/using.autoloading
@@ -51,9 +58,29 @@ ini_set('unserialize_callback_func', 'spl_autoload_call');
 // -- Configuration and initialization -----------------------------------------
 
 /**
- * Set the default language
+ * Enable modules. Modules are referenced by a relative or absolute path.
  */
-I18n::lang('ru');
+$modules = array(
+	 'markdown'      => MODPATH.'markdown',          // Markdown module
+	 'kostache'      => MODPATH.'kostache',          // Logic-less Mustache views
+   'sitemap'       => MODPATH.'sitemap',           // Sitemap generator
+   'image'         => $vendor_path.'kohana/image', // Image manipulation
+   'auth'          => $vendor_path.'kohana/auth',  // Basic authentication
+   'cache'         => $vendor_path.'kohana/cache', // Caching with multiple backends
+   'database'      => $vendor_path.'kohana/database',  // Database access
+   'minion'        => $vendor_path.'kohana/minion',    // CLI Tasks
+   'orm'           => $vendor_path.'kohana/orm',       // Object Relationship Mapping
+   'kostache'      => $vendor_path.'zombor/kostache',  // Logic-less Mustache views
+   'migrations'    => $vendor_path.'oreolek/kohana-migrations', // SQL migrations
+   'core'          => SYSPATH,                         // Core system
+);
+if (Kohana::$environment === Kohana::DEVELOPMENT)
+{
+  $modules = array_merge($modules, array(
+  ));
+}
+Kohana::modules($modules);
+unset($modules);
 
 /**
  * Set Kohana::$environment if a 'KOHANA_ENV' environment variable has been supplied.
@@ -83,9 +110,15 @@ Kohana::init(array(
   'base_url'   => '/',
   'index_file' => FALSE,
   'errors'     => (Kohana::$environment === Kohana::DEVELOPMENT),
-  'profile'    => (Kohana::$environment === Kohana::DEVELOPMENT), 
-  'caching'    => (Kohana::$environment === Kohana::PRODUCTION) 
+  'profile'    => (Kohana::$environment === Kohana::DEVELOPMENT),
+  'caching'    => (Kohana::$environment === Kohana::PRODUCTION)
 ));
+
+if (isset($_SERVER['SERVER_PROTOCOL']))
+{
+	// Replace the default protocol.
+	HTTP::$protocol = $_SERVER['SERVER_PROTOCOL'];
+}
 
 /**
  * Attach the file write to logging. Multiple writers are supported.
@@ -97,34 +130,22 @@ Kohana::$log->attach(new Log_File(APPPATH.'logs'));
  */
 Kohana::$config->attach(new Config_File);
 
+// Initialize modules
+Kohana::init_modules();
+
 /**
  * Set cookie salt (required)
  */
-Cookie::$salt = Kohana::$config->load('auth.cookie_salt');
+Cookie::$salt = $_SERVER['SECRET_SALT'];
+// Only transmit cookies over secure connections
+Cookie::$secure = TRUE;
+// Only transmit cookies over HTTP, disabling Javascript access
+Cookie::$httponly = TRUE;
 
 /**
- * Enable modules. Modules are referenced by a relative or absolute path.
+ * Set the default language
  */
-$modules = array(
-	 'auth'          => MODPATH.'auth',              // Basic authentication
-	 'database'      => MODPATH.'database',          // Database access
-	 'orm'           => MODPATH.'orm',               // Object Relationship Mapping
-	 'markdown'      => MODPATH.'markdown',          // Markdown module
-   'less'          => MODPATH.'less',              // LEaner CSS
-	 'image'         => MODPATH.'image',             // Image manipulation
-	 'kostache'      => MODPATH.'kostache',          // Logic-less Mustache views
-	 'cache'         => MODPATH.'cache',             // Caching with multiple backends
-	 'sitemap'       => MODPATH.'sitemap',           // Sitemap generator
-);
-if (Kohana::$environment === Kohana::DEVELOPMENT)
-{
-  $modules = array_merge($modules, array(
-    'debug-toolbar' => MODPATH.'debug-toolbar',     // Debug toolbar
-	  'unittest'      => MODPATH.'unittest',          // Unit testing
-//  'codebench'     => MODPATH.'codebench',         // Benchmarking tool
-  ));
-}
-Kohana::modules($modules);
+I18n::lang('ru');
 
 /**
  * Set the routes. Each route must have a minimum of a name, a URI and a set of
@@ -138,7 +159,7 @@ Route::set('sitemap_index', 'sitemap.xml(<gzip>)', array('gzip' => '\.gz'))
 
 
 Route::set('error', 'error/<action>(/<message>)', array('action' => '[0-9]++','message' => '.+'))
- ->defaults(array( 
+ ->defaults(array(
   'controller' => 'Error',
 ));
 

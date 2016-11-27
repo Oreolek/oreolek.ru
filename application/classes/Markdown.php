@@ -14,51 +14,27 @@
  *  GNU Affero General Public License for more details.
  *
  *  You should have received a copy of the GNU Affero General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>. 
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-require_once(APPPATH.'vendors/smartypants/smartypants.php');
 
 /**
  * Markdown class with custom tags.
  **/
-class Markdown extends Kohana_Markdown {
-  /* Transformations that occur *within* block-level tags */
-  protected $span_gamut = array(
-    "parseSpan"        => -30,
-    "do_local_images" => 5,
-    "do_images"        => 10,
-    "do_anchors"      => 20,
-
-    "doAutoLinks"      => 30,
-    "do_smartypants"    => 35,
-    "encode_amps_and_angles"  => 40,
-
-    "do_italics_and_bold"  => 50,
-    "do_hard_breaks"    => 60,
-  );
-
-  /**
-   * Turn custom image shortcuts into <img> tags with preview.
-   * Shortcut is: !thumb[alt text](url "optional title")
-   * @see do_images
-   *
-   * @param   string   The markdown getting transformed.
-   * @return  string   String that will replace the tag.
-   */
-  protected function do_local_images($text)
+class Markdown extends \cebe\markdown\MarkdownExtra {
+  public $html5 = TRUE;
+  protected function image_regex()
   {
-    $text = preg_replace_callback('{
-      (        # wrap whole match in $1
-        !thumb\[
+    return '{
+      ( # wrap whole match in $1
+      !thumb\[
         ('.$this->nested_brackets_re.')    # alt text = $2
         \]
         \s?      # One optional whitespace character
         \(      # literal paren
-        [ \n]*
-        (?:
+          [ \n]*
+          (?:
           <(\S*)>  # src url = $3
-        |
+          |
           ('.$this->nested_url_parenthesis_re.')  # src url = $4
         )
         [ \n]*
@@ -70,13 +46,27 @@ class Markdown extends Kohana_Markdown {
         )?      # class is optional
         \)
       )
-      }xs',
-      array(&$this, '_do_local_images_callback'), $text);
-
-    return $text;
+    }xs';
   }
 
-  protected function _do_local_images_callback($matches)
+  protected function identifyImage($line, $lines, $current)
+  {
+    // if a line starts with at least 3 backticks it is identified as a fenced code block
+    if (preg_match($this->image_regex())
+    {
+      return 'localImages';
+    }
+  }
+
+  /**
+   * Turn custom image shortcuts into <img> tags with preview.
+   * Shortcut is: !thumb[alt text](url "optional title")
+   * @see do_images
+   *
+   * @param   string   The markdown getting transformed.
+   * @return  string   String that will replace the tag.
+   */
+  protected function consumeLocalImages($text)
   {
     $whole_match  = $matches[1];
     $alt_text    = $matches[2];
@@ -110,22 +100,8 @@ class Markdown extends Kohana_Markdown {
     return $this->hash_part($result);
   }
 
-  /**
-   * Smartypants transformation
-   * @see APPPATH/vendors/smartypants/smartypants.php
-   **/
-  protected function do_smartypants($text)
+  protected function renderLocalImages($block)
   {
-    return Smartypants($text);
-  }
-
-  protected function run_span_gamut($text)
-  {
-    foreach ($this->span_gamut as $method => $priority) {
-      $text = $this->$method($text);
-    }
-
-    return $text;
   }
 
 }
