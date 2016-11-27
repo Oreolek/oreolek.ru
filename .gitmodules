@@ -1,6 +1,3 @@
-[submodule "ko3-markdown"]
-	path = modules/markdown
-	url = git://github.com/Oreolek/kohana-markdown.git
 [submodule "modules/sitemap"]
 	path = modules/sitemap
 	url = git@github.com:flody/kohana-sitemap.git
