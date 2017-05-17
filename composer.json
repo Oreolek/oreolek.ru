@@ -37,10 +37,10 @@
 		"zombor/kostache": "^4.0",
 		"twbs/bootstrap-sass": "^3.3",
 		"oreolek/kohana-migrations": "dev-3.4/develop",
-		"cebe/markdown": "^1.1"
+		"cebe/markdown": "^1.1",
+		"etdsolutions/simplemde-markdown-editor": "^1.11"
 	},
 	"require-dev": {
-	    "phing/phing": "dev-master",
 	    "kohana/unittest": "3.4.*",
 	    "phpunit/dbunit": ">=1.2",
 	    "kohana/userguide": "3.4.*",

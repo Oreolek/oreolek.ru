@@ -14,7 +14,7 @@
  *  GNU Affero General Public License for more details.
  *
  *  You should have received a copy of the GNU Affero General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>. 
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 /**
  * Layout view controller. It is the parent view of them all (except for AJAX ones).
@@ -45,7 +45,7 @@ class View_Layout {
     <link rel="dns-prefetch" href="//yastatic.net">
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
   ';
- 
+
   /**
    * Inherited paging function
    **/
@@ -55,7 +55,7 @@ class View_Layout {
    * Inherited breadcrumbs function
    **/
   public function get_breadcrumbs() {}
-  
+
   public function site_title()
   {
     if (Auth::instance()->logged_in())
@@ -67,12 +67,15 @@ class View_Layout {
       return Kohana::$config->load('common.title');
     }
   }
+
   public function stylesheet()
   {
-    return HTML::style('https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css')."\n"
-      .Less::compile(APPPATH.'assets/stylesheets/main', 'all')."\n"
-      .HTML::style('https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.1/css/lightbox.css')."\n"
-      .HTML::style('https://fonts.googleapis.com/css?family=PT+Sans&subset=latin,cyrillic');
+    return Less::compile(APPPATH.'assets/stylesheets/main', 'all')."\n"
+      .HTML::style_tag([
+        'https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css',
+        'https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.1/css/lightbox.css',
+        'https://fonts.googleapis.com/css?family=PT+Sans&subset=latin,cyrillic'
+      ]);
   }
 
   public function get_content()
@@ -110,22 +113,22 @@ class View_Layout {
       switch ($shortcut) // CDN shortcuts
       {
         case 'jquery':
-          return HTML::script('https://code.jquery.com/jquery-2.1.4.min.js');
+          return HTML::asyncscript('https://code.jquery.com/jquery-2.1.4.min.js');
         case 'bootstrap':
-          return HTML::script('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js');
+          return HTML::asyncscript('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js');
         case 'hyphenator':
-          return HTML::script('https://cdn.jsdelivr.net/hyphenator/4.3.0/hyphenator.min.js');
+          return HTML::asyncscript('https://cdn.jsdelivr.net/hyphenator/4.3.0/hyphenator.min.js');
         case 'moment':
-          return HTML::script('https://cdn.jsdelivr.net/momentjs/2.10.6/moment.min.js');
+          return HTML::asyncscript('https://cdn.jsdelivr.net/momentjs/2.10.6/moment.min.js');
         case 'autosize':
-          return HTML::script('https://cdn.jsdelivr.net/jquery.autosize/3.0.8/autosize.min.js');
+          return HTML::asyncscript('https://cdn.jsdelivr.net/jquery.autosize/3.0.8/autosize.min.js');
         case 'lightbox':
-          return HTML::script('https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.1/js/lightbox.min.js');
+          return HTML::asyncscript('https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.1/js/lightbox.min.js');
         default:
           return HTML::script('application/assets/javascript/'.$shortcut);
       }
     }
-    return HTML::script($shortcut);
+    return HTML::asyncscript($shortcut);
   }
 
   /**
