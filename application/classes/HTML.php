@@ -14,7 +14,7 @@
  *  GNU Affero General Public License for more details.
  *
  *  You should have received a copy of the GNU Affero General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>. 
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 /**
@@ -33,11 +33,11 @@ class HTML extends Kohana_HTML {
       'output-html' => TRUE,
       'show-body-only' => TRUE,
       'wrap' => 0,
-    ); 
+    );
     $tidy = new tidy();
     $tidy->ParseString($html, $tidy_config, 'utf8');
     $tidy->cleanRepair();
-    return $tidy->body(); 
+    return $tidy->body();
   }
 
   /**
@@ -46,5 +46,22 @@ class HTML extends Kohana_HTML {
   public static function remove_scripts($html)
   {
     return preg_replace('/<script\b[^>]*>(.*?)<\/script>/is', '', $html);
+  }
+
+  public static function style_tag($urls) {
+    $out = '';
+    foreach ($urls as $url) {
+      $out .= '<link rel="preload" href="'.$url.'" as="style" onload="this.rel=\'stylesheet\'">';
+      $out .= "\n";
+    }
+    $out .= '<noscript>';
+    foreach ($urls as $url) {
+      $out .= HTML::style($url);
+      $out .= "\n";
+    }
+    $out .= '</noscript>';
+  }
+  public static function asyncscript($url) {
+    return '<script async defer src="'.$url.'"></script>'
   }
 }
