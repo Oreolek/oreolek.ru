@@ -62,6 +62,6 @@ class HTML extends Kohana_HTML {
     $out .= '</noscript>';
   }
   public static function asyncscript($url) {
-    return '<script async defer src="'.$url.'"></script>'
+    return '<script async defer src="'.$url.'"></script>';
   }
 }
