@@ -119,7 +119,7 @@ class View_Layout {
         case 'hyphenator':
           return HTML::asyncscript('https://cdn.jsdelivr.net/hyphenator/4.3.0/hyphenator.min.js');
         case 'moment':
-          return HTML::asyncscript('https://cdn.jsdelivr.net/momentjs/2.10.6/moment.min.js');
+          return HTML::script('https://cdn.jsdelivr.net/momentjs/2.10.6/moment.min.js');
         case 'autosize':
           return HTML::asyncscript('https://cdn.jsdelivr.net/jquery.autosize/3.0.8/autosize.min.js');
         case 'lightbox':
