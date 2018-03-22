@@ -113,22 +113,22 @@ class View_Layout {
       switch ($shortcut) // CDN shortcuts
       {
         case 'jquery':
-          return HTML::asyncscript('https://code.jquery.com/jquery-2.1.4.min.js');
+          return HTML::script('https://code.jquery.com/jquery-2.1.4.min.js');
         case 'bootstrap':
-          return HTML::asyncscript('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js');
+          return HTML::script('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js');
         case 'hyphenator':
-          return HTML::asyncscript('https://cdn.jsdelivr.net/hyphenator/4.3.0/hyphenator.min.js');
+          return HTML::script('https://cdn.jsdelivr.net/hyphenator/4.3.0/hyphenator.min.js');
         case 'moment':
           return HTML::script('https://cdn.jsdelivr.net/momentjs/2.10.6/moment.min.js');
         case 'autosize':
-          return HTML::asyncscript('https://cdn.jsdelivr.net/jquery.autosize/3.0.8/autosize.min.js');
+          return HTML::script('https://cdn.jsdelivr.net/jquery.autosize/3.0.8/autosize.min.js');
         case 'lightbox':
-          return HTML::asyncscript('https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.1/js/lightbox.min.js');
+          return HTML::script('https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.1/js/lightbox.min.js');
         default:
           return HTML::script('application/assets/javascript/'.$shortcut);
       }
     }
-    return HTML::asyncscript($shortcut);
+    return HTML::script($shortcut);
   }
 
   /**
